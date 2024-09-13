@@ -1,0 +1,30 @@
+.container {
+  width: auto;
+  height: 100%;
+}
+
+.logo {
+  height: 60px;
+  margin: 10px;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+mat-nav-list {
+  width: 100%;
+}
+
+mat-list-item {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+}
+
+mat-list-item mat-icon {
+  margin-right: 10px;
+}

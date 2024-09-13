@@ -1,1 +1,30 @@
-<router-outlet></router-outlet>
+<mat-drawer-container class="container">
+  <!-- Side Navigation Bar -->
+  <mat-drawer mode="side" opened>
+    <mat-nav-list>
+      <a routerLink="/">
+        <img src="/logo.png" alt="Logo" class="logo" />
+      </a>
+      <mat-list-item>
+        <a routerLink="/notes">
+          <mat-icon>description</mat-icon>
+          <span>Notas</span>
+        </a>
+      </mat-list-item>
+      <mat-list-item>
+        <a routerLink="/tasks">
+          <mat-icon>assignment</mat-icon>
+          <span>Tareas</span></a
+        >
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon>folder</mat-icon>
+        <span>Proyectos</span>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-drawer>
+  <!-- Main Content -->
+  <mat-drawer-content>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>
