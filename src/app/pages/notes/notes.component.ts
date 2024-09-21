@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { EditorComponent } from "../../components/editor/editor.component";
+import { EditorComponent, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -7,6 +7,9 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'notes-page',
   standalone: true,
   imports: [EditorComponent, MatCardModule, MatIconModule],
+  providers: [
+    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
+  ],
   templateUrl: './notes.component.html',
   styleUrl: './notes.component.css'
 })
@@ -23,4 +26,10 @@ export class NotesComponent {
       content: "This is the second note"
     },
   ];
+
+  init: EditorComponent['init'] = {
+    plugins: 'lists link image table code help wordcount',
+    base_url: '/tinymce',
+    suffix: '.min'
+  };
 }
