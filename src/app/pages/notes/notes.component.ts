@@ -28,8 +28,21 @@ export class NotesComponent {
   ];
 
   init: EditorComponent['init'] = {
-    plugins: 'lists link image table code help wordcount',
     base_url: '/tinymce',
-    suffix: '.min'
+    suffix: '.min',
+    menubar: false,
+    statusbar: false,
+    plugins: "codesample hr image link lists checklist",
+    toolbar:
+      "styles | bold italic underline strikethrough forecolor backcolor | image link codesample hr | bullist numlist checklist",
+    style_formats: [
+      { title: "Title", block: "h1" },
+      { title: "Heading", block: "h2" },
+      { title: "Sub heading", block: "h3" },
+      { title: "Paragraph", block: "p" },
+      { title: "Code", inline: "code" },
+      { title: "Quote", block: "blockquote" },
+      { title: "Callout", block: "div", classes: "call-out" },
+    ],
   };
 }
