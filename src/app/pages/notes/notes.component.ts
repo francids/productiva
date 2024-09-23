@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { EditorComponent, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'notes-page',
   standalone: true,
-  imports: [EditorComponent, MatCardModule, MatIconModule],
+  imports: [EditorComponent, MatCardModule],
   providers: [
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
   ],
