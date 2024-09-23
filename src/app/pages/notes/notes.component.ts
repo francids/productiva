@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import { EditorComponent, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'notes-page',
   standalone: true,
-  imports: [EditorComponent, MatCardModule],
+  imports: [EditorComponent, MatCardModule, MatListModule, MatDividerModule, MatButtonModule],
   providers: [
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
   ],
@@ -17,12 +20,10 @@ export class NotesComponent {
     {
       id: 1,
       title: "Note 1",
-      content: "This is the first note"
     },
     {
       id: 2,
       title: "Note 2",
-      content: "This is the second note"
     },
   ];
 

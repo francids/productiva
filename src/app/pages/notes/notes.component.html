@@ -1,14 +1,14 @@
 <main>
-  <div class="notes-list">
-    <h1>Notes</h1>
+  <mat-nav-list>
+    <button mat-flat-button>Nueva nota</button>
+    <mat-divider></mat-divider>
     @for (note of notes; track note.id) {
-    <mat-card class="note-card" appearance="outlined">
-      <mat-card-header>
-        <mat-card-title>{{ note.title }}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>{{ note.content }}</mat-card-content>
-    </mat-card>
+    <a mat-list-item>
+      {{ note.title }}
+    </a>
     }
-  </div>
-  <editor [init]="init" />
+  </mat-nav-list>
+  <section>
+    <editor [init]="init" />
+  </section>
 </main>

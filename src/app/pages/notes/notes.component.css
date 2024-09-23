@@ -1,9 +1,13 @@
 main {
-  margin: 2rem 1rem;
+  display: flex;
+  flex-direction: row;
 }
 
-.notes-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+mat-nav-list {
+  margin: 1rem;
+  width: 15%;
+}
+
+mat-divider {
+  margin: 1rem;
 }
