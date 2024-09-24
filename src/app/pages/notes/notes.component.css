@@ -15,4 +15,5 @@ mat-divider {
 section {
   margin: 1rem;
   width: 100%;
+  height: auto;
 }
