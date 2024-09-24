@@ -42,7 +42,6 @@ export class NotesComponent {
       { title: "Paragraph", block: "p" },
       { title: "Code", inline: "code" },
       { title: "Quote", block: "blockquote" },
-      { title: "Callout", block: "div", classes: "call-out" },
     ],
   };
 }
