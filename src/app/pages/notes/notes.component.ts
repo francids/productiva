@@ -4,11 +4,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'notes-page',
   standalone: true,
-  imports: [EditorComponent, MatCardModule, MatListModule, MatDividerModule, MatButtonModule],
+  imports: [RouterLink, RouterOutlet, EditorComponent, MatCardModule, MatListModule, MatDividerModule, MatButtonModule],
   providers: [
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
   ],

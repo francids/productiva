@@ -1,14 +1,15 @@
 <main>
   <mat-nav-list>
-    <button mat-flat-button>Nueva nota</button>
+    <button mat-flat-button routerLink="new">Nueva nota</button>
     <mat-divider></mat-divider>
     @for (note of notes; track note.id) {
-    <a mat-list-item>
+    <a mat-list-item routerLink="{{ note.id }}">
       {{ note.title }}
     </a>
     }
   </mat-nav-list>
   <section>
     <editor [init]="init" />
+    <router-outlet></router-outlet>
   </section>
 </main>

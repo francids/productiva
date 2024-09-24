@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
 
-import { NotesComponent } from './pages/notes/notes.component';
+import { notesRoutes } from './pages/notes/notes.routes';
 import { TasksComponent } from './pages/tasks/tasks.component';
 
 export const routes: Routes = [
-  { path: 'notes', component: NotesComponent },
+  { path: 'notes', children: notesRoutes },
   { path: 'tasks', component: TasksComponent }
 ];
