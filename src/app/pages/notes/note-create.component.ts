@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import EditorJS, { BlockToolConstructable } from '@editorjs/editorjs';
 import Header from '@editorjs/header';
-import List from '@editorjs/list';
+import NestedList from '@editorjs/nested-list';
 
 @Component({
   selector: 'note-create',
@@ -20,9 +20,10 @@ export class NoteCreateComponent implements AfterViewInit {
     this.editor = new EditorJS({
       minHeight: 300,
       holder: this.editorElement?.nativeElement,
+      placeholder: 'Escribe algo interesante...',
       tools: {
         list: {
-          class: List as unknown as BlockToolConstructable,
+          class: NestedList as unknown as BlockToolConstructable,
           inlineToolbar: true,
           config: {
             defaultStyle: 'unordered'
@@ -31,9 +32,9 @@ export class NoteCreateComponent implements AfterViewInit {
         header: {
           class: Header as unknown as BlockToolConstructable,
           config: {
-            placeholder: 'Enter a header',
+            placeholder: 'Introduce un encabezado...',
             levels: [2, 3, 4],
-            defaultLevel: 2
+            defaultLevel: 2,
           }
         },
       }
