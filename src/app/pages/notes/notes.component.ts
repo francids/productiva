@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { v4 as uuidv4 } from 'uuid';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'notes-page',
@@ -23,4 +24,11 @@ export class NotesComponent {
       title: "Note 2",
     },
   ];
+
+  constructor(private router: Router) { }
+
+  createNewNote() {
+    const newNoteId = uuidv4();
+    this.router.navigate(['/notes', newNoteId]);
+  }
 }

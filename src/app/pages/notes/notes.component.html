@@ -1,6 +1,6 @@
 <main>
   <mat-nav-list>
-    <button mat-flat-button routerLink="new">Nueva nota</button>
+    <button mat-flat-button (click)="createNewNote()">Nueva nota</button>
     <mat-divider></mat-divider>
     @for (note of notes; track note.id) {
     <a mat-list-item routerLink="{{ note.id }}">
