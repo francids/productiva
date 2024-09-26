@@ -6,7 +6,9 @@ import NestedList from '@editorjs/nested-list';
 
 @Component({
   selector: 'note-edit',
-  templateUrl: "./note-edit.component.html"
+  template: `
+    <div #editor></div>
+  `
 })
 export class NoteEditComponent implements AfterViewInit {
   noteId: string | undefined;
