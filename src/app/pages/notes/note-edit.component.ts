@@ -6,6 +6,7 @@ import NestedList from '@editorjs/nested-list';
 import { RxdbService } from '../../services/rxdb.service';
 import { OutputData } from '@editorjs/editorjs';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Note } from '../../models/note.model';
 import { MatDialog } from '@angular/material/dialog';
 import { DelNoteDialogComponent } from './del-note-dialog.component';
@@ -50,6 +51,7 @@ export class NoteEditComponent {
   editorElement: ElementRef | undefined;
 
   private editor: EditorJS | undefined;
+  private _snackBar = inject(MatSnackBar);
 
   constructor(private route: ActivatedRoute, private router: Router, private rxdbService: RxdbService) {
     this.route.params.subscribe(async params => {
@@ -100,7 +102,6 @@ export class NoteEditComponent {
           },
         }
       });
-      console.log(this.note()!.content);
     });
   };
 
@@ -109,6 +110,7 @@ export class NoteEditComponent {
     this.editor?.save().then((outputData: OutputData) => {
       this.rxdbService.updateNoteContent(this.noteId!, outputData);
     });
+    this._snackBar.open('Nota guardada', 'Cerrar', { duration: 2000 });
     console.log('Note saved');
   };
 
@@ -125,8 +127,9 @@ export class NoteEditComponent {
           ...this.note()!,
           title: result
         });
-      }
-    })
+        this._snackBar.open('Título de la nota editado', 'Cerrar', { duration: 2000 });
+      };
+    });
   };
 
   openDialogDeleteNote(): void {
@@ -138,6 +141,7 @@ export class NoteEditComponent {
         this.rxdbService.deleteNoteById(this.noteId!);
         this.editor?.destroy();
         this.router.navigate(['/notes']);
+        this._snackBar.open('Nota eliminada', 'Cerrar', { duration: 2000 });
       };
     });
   };

@@ -1,5 +1,5 @@
 import { Component, inject, model } from "@angular/core"
-import { FormsModule } from "@angular/forms";
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { MatDialogModule } from '@angular/material/dialog';
@@ -10,14 +10,26 @@ import { MatInputModule } from '@angular/material/input';
   selector: 'new-note-dialog',
   templateUrl: './new-note-dialog.component.html',
   standalone: true,
-  imports: [MatDialogModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
+  imports: [MatDialogModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule],
 })
 export class NewNoteDialogComponent {
   readonly dialogRef = inject(MatDialogRef<NewNoteDialogComponent>);
   readonly data = inject<{ title: string }>(MAT_DIALOG_DATA);
-  readonly title = model(this.data.title);
+  titleForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.titleForm = this.fb.group({
+      title: [this.data.title, [Validators.required]]
+    });
+  };
 
   onNoClick(): void {
     this.dialogRef.close();
-  }
-}
+  };
+
+  onSaveClick(): void {
+    if (this.titleForm.valid) {
+      this.dialogRef.close(this.titleForm.value.title);
+    };
+  };
+};

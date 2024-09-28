@@ -66,7 +66,7 @@ export class RxdbService {
 
   async getNotesObservable(): Promise<Observable<Note[]>> {
     await this.ensureDbInitialized();
-    return this.noteCollection!.find().$;
+    return this.noteCollection!.find({ sort: [{ title: 'asc' }] }).$;
   }
 
   async getNoteById(id: string): Promise<Note> {

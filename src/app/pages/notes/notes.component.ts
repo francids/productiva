@@ -67,6 +67,7 @@ export class NotesComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
+        console.log(result);
         this.newNoteTitle.set(result);
         this.createNewNote(this.newNoteTitle());
       }
