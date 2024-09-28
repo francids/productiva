@@ -2,11 +2,16 @@ import { Injectable } from '@angular/core';
 import {
   createRxDatabase,
   RxDatabase,
-  RxCollection
+  RxCollection,
+  addRxPlugin
 } from 'rxdb';
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie';
 import { Note } from '../models/note.model';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { OutputData } from '@editorjs/editorjs';
+import { RxDBUpdatePlugin } from 'rxdb/plugins/update';
+
+addRxPlugin(RxDBUpdatePlugin);
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +19,10 @@ import { map, Observable } from 'rxjs';
 export class RxdbService {
   private db: RxDatabase | undefined;
   private noteCollection: RxCollection | undefined;
+  private dbInitialized: Promise<void>;
 
   constructor() {
-    this.initDatabase();
+    this.dbInitialized = this.initDatabase();
   }
 
   async initDatabase() {
@@ -54,26 +60,31 @@ export class RxdbService {
     console.log('Database initialized');
   }
 
-  getNotesObservable(): Observable<Note[]> {
+  private async ensureDbInitialized() {
+    await this.dbInitialized;
+  }
+
+  async getNotesObservable(): Promise<Observable<Note[]>> {
+    await this.ensureDbInitialized();
     return this.noteCollection!.find().$;
   }
 
-  async getNotes(): Promise<Note[]> {
-    if (!this.noteCollection) {
-      console.warn("Database not initialized");
-      return [];
-    }
-    const notes: Note[] = await this.noteCollection!.find().exec();
-    return notes;
-  }
+  async getNoteById(id: string): Promise<Note> {
+    await this.ensureDbInitialized();
+    return this.noteCollection!.findOne(id).exec();
+  };
 
-  async createNote(note: Note) {
-    if (
-      this.noteCollection === undefined ||
-      this.db === undefined
-    ) {
-      console.error('Database not initialized');
-    }
+  async createNote(note: Note): Promise<void> {
+    await this.ensureDbInitialized();
     await this.noteCollection!.insert(note);
-  }
+  };
+
+  async updateNoteContent(noteId: string, noteContent: OutputData): Promise<void> {
+    await this.ensureDbInitialized();
+    this.noteCollection!.findOne(noteId).update({
+      $set: {
+        content: JSON.stringify(noteContent)
+      }
+    });
+  };
 }

@@ -30,7 +30,7 @@ export class NotesComponent implements AfterViewInit {
   }
 
   async loadNotes(): Promise<void> {
-    this.rxdbService.getNotesObservable().subscribe((notes: Note[]) => {
+    (await this.rxdbService.getNotesObservable()).subscribe((notes: Note[]) => {
       this.notes = notes;
     });
   }
