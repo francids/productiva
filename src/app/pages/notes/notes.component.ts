@@ -9,7 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { RxdbService } from '../../services/rxdb.service';
 import { Note } from '../../models/note.model';
-import { NewNoteDialogComponent } from './new-note-dialog.component';
+import { NewNoteDialogComponent } from '../../components/notes/new-note-dialog.component';
 
 @Component({
   selector: 'notes-page',
@@ -29,10 +29,6 @@ export class NotesComponent {
 
   constructor(private router: Router, private rxdbService: RxdbService) {
     this.loadNotes();
-  };
-
-  trackByNoteId(index: number, note: Note): string {
-    return note.id;
   };
 
   async loadNotes(): Promise<void> {

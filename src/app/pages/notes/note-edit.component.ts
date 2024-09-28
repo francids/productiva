@@ -9,14 +9,18 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Note } from '../../models/note.model';
 import { MatDialog } from '@angular/material/dialog';
-import { DelNoteDialogComponent } from './del-note-dialog.component';
-import { EditTitleNoteDialogComponent } from './edit-title-note-dialog.component';
+import { DelNoteDialogComponent } from '../../components/notes/del-note-dialog.component';
+import { EditTitleNoteDialogComponent } from '../../components/notes/edit-title-note-dialog.component';
 
 @Component({
   selector: 'note-edit',
   template: `
     <div class="note-edit-header">
-      <p class="note-title" (click)="openDialogEditTitleNote()">{{note()!.title}}</p>
+      <p class="note-title" (click)="openDialogEditTitleNote()">
+        @if (note()) {
+          {{note()!.title}}
+        }
+      </p>
       <div>
         <button mat-button (click)="saveNote()">Guardar nota</button>
         <button mat-button (click)="openDialogDeleteNote()">Eliminar nota</button>
