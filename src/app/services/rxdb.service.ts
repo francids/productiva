@@ -87,4 +87,9 @@ export class RxdbService {
       }
     });
   };
+
+  async deleteNoteById(id: string): Promise<void> {
+    await this.ensureDbInitialized();
+    await this.noteCollection!.findOne(id).remove();
+  };
 }

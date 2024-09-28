@@ -12,7 +12,7 @@ import { Note } from '../../models/note.model';
   selector: 'note-edit',
   template: `
     <div class="note-edit-header">
-      <p class="note-title">{{noteTitle}}</p>
+      <p class="note-title">{{note!.title}}</p>
       <button mat-button (click)="saveNote()">Guardar nota</button>
     </div>
     <div #editor></div>
@@ -32,9 +32,6 @@ import { Note } from '../../models/note.model';
 })
 export class NoteEditComponent {
   noteId: string | undefined;
-  noteTitle: string | undefined;
-  noteContent: OutputData | string | undefined;
-
   note: Note | undefined;
 
   @ViewChild("editor", {

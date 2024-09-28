@@ -1,0 +1,13 @@
+<mat-dialog-content>
+  <p>Crear nota</p>
+  <mat-form-field>
+    <mat-label>Título de la nota</mat-label>
+    <input matInput [(ngModel)]="title" />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="title()" cdkFocusInitial>
+    Crear nota
+  </button>
+</mat-dialog-actions>
