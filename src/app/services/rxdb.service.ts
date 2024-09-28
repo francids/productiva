@@ -79,6 +79,15 @@ export class RxdbService {
     await this.noteCollection!.insert(note);
   };
 
+  async updateNoteTitle(noteId: string, newTitle: string): Promise<void> {
+    await this.ensureDbInitialized();
+    this.noteCollection!.findOne(noteId).update({
+      $set: {
+        title: newTitle
+      }
+    });
+  };
+
   async updateNoteContent(noteId: string, noteContent: OutputData): Promise<void> {
     await this.ensureDbInitialized();
     this.noteCollection!.findOne(noteId).update({

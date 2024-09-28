@@ -1,0 +1,13 @@
+<mat-dialog-content>
+  <p>Editar título</p>
+  <mat-form-field>
+    <mat-label>Título de la nota</mat-label>
+    <input matInput [(ngModel)]="title" />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button [mat-dialog-close]="title()" cdkFocusInitial>
+    Cambiar título
+  </button>
+</mat-dialog-actions>

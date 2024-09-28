@@ -9,12 +9,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { Note } from '../../models/note.model';
 import { MatDialog } from '@angular/material/dialog';
 import { DelNoteDialogComponent } from './del-note-dialog.component';
+import { EditTitleNoteDialogComponent } from './edit-title-note-dialog.component';
 
 @Component({
   selector: 'note-edit',
   template: `
     <div class="note-edit-header">
-      <p class="note-title">{{note()!.title}}</p>
+      <p class="note-title" (click)="openDialogEditTitleNote()">{{note()!.title}}</p>
       <div>
         <button mat-button (click)="saveNote()">Guardar nota</button>
         <button mat-button (click)="openDialogDeleteNote()">Eliminar nota</button>
@@ -30,6 +31,7 @@ import { DelNoteDialogComponent } from './del-note-dialog.component';
     }
     .note-title {
       font-weight: 300;
+      font-size: 1rem;
     }
   `],
   standalone: true,
@@ -108,6 +110,23 @@ export class NoteEditComponent {
       this.rxdbService.updateNoteContent(this.noteId!, outputData);
     });
     console.log('Note saved');
+  };
+
+  openDialogEditTitleNote(): void {
+    const dialogRef = this.dialog.open(EditTitleNoteDialogComponent, {
+      data: { title: this.note()!.title }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        console.log('Editing note title...');
+        this.rxdbService.updateNoteTitle(this.noteId!, result);
+        this.note.set({
+          ...this.note()!,
+          title: result
+        });
+      }
+    })
   };
 
   openDialogDeleteNote(): void {

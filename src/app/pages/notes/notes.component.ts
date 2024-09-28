@@ -41,10 +41,6 @@ export class NotesComponent {
         id: note.id,
         title: note.title,
       })));
-      // this.notes = notes.map(note => ({
-      //   id: note.id,
-      //   title: note.title,
-      // }));
     });
   };
 
