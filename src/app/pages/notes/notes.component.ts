@@ -20,27 +20,37 @@ import { NewNoteDialogComponent } from './new-note-dialog.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotesComponent {
-  notes: Note[] = [];
+  notes = signal<{
+    id: string,
+    title: string,
+  }[]>([]);
   readonly dialog = inject(MatDialog);
-  readonly noteTitle = signal('');
+  readonly newNoteTitle = signal('');
 
   constructor(private router: Router, private rxdbService: RxdbService) {
     this.loadNotes();
-  }
+  };
 
   trackByNoteId(index: number, note: Note): string {
     return note.id;
-  }
+  };
 
   async loadNotes(): Promise<void> {
     (await this.rxdbService.getNotesObservable()).subscribe((notes: Note[]) => {
-      this.notes = notes;
+      this.notes.set(notes.map(note => ({
+        id: note.id,
+        title: note.title,
+      })));
+      // this.notes = notes.map(note => ({
+      //   id: note.id,
+      //   title: note.title,
+      // }));
     });
-  }
+  };
 
   isPageEditingNote(): boolean {
     return !(this.router.url === "/notes");
-  }
+  };
 
   createNewNote(title: string): void {
     const newNoteId = uuidv4();
@@ -52,18 +62,18 @@ export class NotesComponent {
       }
     );
     this.router.navigate(['/notes', newNoteId]);
-  }
+  };
 
   openDialogCreateNote(): void {
     const dialogRef = this.dialog.open(NewNoteDialogComponent, {
-      data: { title: this.noteTitle() },
+      data: { title: this.newNoteTitle() },
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        this.noteTitle.set(result);
-        this.createNewNote(this.noteTitle());
+        this.newNoteTitle.set(result);
+        this.createNewNote(this.newNoteTitle());
       }
     });
-  }
-}
+  };
+};

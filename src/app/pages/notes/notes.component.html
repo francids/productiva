@@ -9,7 +9,7 @@
     }
     <button mat-flat-button (click)="openDialogCreateNote()">Nueva nota</button>
     <mat-divider></mat-divider>
-    @for (note of notes; track note.id) {
+    @for (note of notes(); track note.id) {
     <a mat-list-item routerLink="{{ note.id }}">
       {{ note.title }}
     </a>

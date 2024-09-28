@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, ViewChild, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import EditorJS, { BlockToolConstructable } from '@editorjs/editorjs';
 import Header from '@editorjs/header';
@@ -14,7 +14,7 @@ import { DelNoteDialogComponent } from './del-note-dialog.component';
   selector: 'note-edit',
   template: `
     <div class="note-edit-header">
-      <p class="note-title">{{note!.title}}</p>
+      <p class="note-title">{{note()!.title}}</p>
       <div>
         <button mat-button (click)="saveNote()">Guardar nota</button>
         <button mat-button (click)="openDialogDeleteNote()">Eliminar nota</button>
@@ -38,7 +38,7 @@ import { DelNoteDialogComponent } from './del-note-dialog.component';
 })
 export class NoteEditComponent {
   noteId: string | undefined;
-  note: Note | undefined;
+  note = signal<Note | undefined>(undefined);
   readonly dialog = inject(MatDialog);
 
   @ViewChild("editor", {
@@ -55,14 +55,15 @@ export class NoteEditComponent {
         this.editor.destroy();
       };
       this.noteId = params['id'];
-      this.note = await this.rxdbService.getNoteById(this.noteId!);
+      const fetchedNote = await this.rxdbService.getNoteById(this.noteId!);
+      this.note.set(fetchedNote);
       let noteValue: {
         time: number,
         blocks: [],
         version: string
       } | undefined;
       try {
-        noteValue = JSON.parse(this.note?.content!);
+        noteValue = JSON.parse(this.note()!.content!);
       } catch (error) {
         noteValue = undefined;
       }
@@ -97,7 +98,7 @@ export class NoteEditComponent {
           },
         }
       });
-      console.log(this.note?.content);
+      console.log(this.note()!.content);
     });
   };
 
@@ -121,4 +122,4 @@ export class NoteEditComponent {
       };
     });
   };
-}
+};
