@@ -10,7 +10,7 @@ import { MatInputModule } from '@angular/material/input';
   selector: 'new-note-dialog',
   templateUrl: './new-note-dialog.component.html',
   standalone: true,
-  imports: [MatDialogModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule]
+  imports: [MatDialogModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
 })
 export class NewNoteDialogComponent {
   readonly dialogRef = inject(MatDialogRef<NewNoteDialogComponent>);

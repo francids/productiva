@@ -1,5 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import EditorJS, { BlockToolConstructable } from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import NestedList from '@editorjs/nested-list';
@@ -7,13 +7,18 @@ import { RxdbService } from '../../services/rxdb.service';
 import { OutputData } from '@editorjs/editorjs';
 import { MatButtonModule } from '@angular/material/button';
 import { Note } from '../../models/note.model';
+import { MatDialog } from '@angular/material/dialog';
+import { DelNoteDialogComponent } from './del-note-dialog.component';
 
 @Component({
   selector: 'note-edit',
   template: `
     <div class="note-edit-header">
       <p class="note-title">{{note!.title}}</p>
-      <button mat-button (click)="saveNote()">Guardar nota</button>
+      <div>
+        <button mat-button (click)="saveNote()">Guardar nota</button>
+        <button mat-button (click)="openDialogDeleteNote()">Eliminar nota</button>
+      </div>
     </div>
     <div #editor></div>
   `,
@@ -28,11 +33,13 @@ import { Note } from '../../models/note.model';
     }
   `],
   standalone: true,
-  imports: [MatButtonModule]
+  imports: [MatButtonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NoteEditComponent {
   noteId: string | undefined;
   note: Note | undefined;
+  readonly dialog = inject(MatDialog);
 
   @ViewChild("editor", {
     read: ElementRef,
@@ -42,7 +49,7 @@ export class NoteEditComponent {
 
   private editor: EditorJS | undefined;
 
-  constructor(private route: ActivatedRoute, private rxdbService: RxdbService) {
+  constructor(private route: ActivatedRoute, private router: Router, private rxdbService: RxdbService) {
     this.route.params.subscribe(async params => {
       if (this.editor) {
         this.editor.destroy();
@@ -92,7 +99,7 @@ export class NoteEditComponent {
       });
       console.log(this.note?.content);
     });
-  }
+  };
 
   saveNote(): void {
     console.log('Saving note...');
@@ -100,5 +107,18 @@ export class NoteEditComponent {
       this.rxdbService.updateNoteContent(this.noteId!, outputData);
     });
     console.log('Note saved');
-  }
+  };
+
+  openDialogDeleteNote(): void {
+    const dialogRef = this.dialog.open(DelNoteDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        console.log('Deleting note...');
+        this.rxdbService.deleteNoteById(this.noteId!);
+        this.editor?.destroy();
+        this.router.navigate(['/notes']);
+      };
+    });
+  };
 }
