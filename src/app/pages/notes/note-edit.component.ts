@@ -1,15 +1,26 @@
+// Angular
 import { ChangeDetectionStrategy, Component, ElementRef, inject, ViewChild, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+
+// EditorJS
 import EditorJS, { BlockToolConstructable } from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import NestedList from '@editorjs/nested-list';
-import { RxdbService } from '../../services/rxdb.service';
 import { OutputData } from '@editorjs/editorjs';
+
+// Services
+import { RxdbService } from '../../services/rxdb.service';
+
+// Material Components
+import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
+
+// Models
 import { Note } from '../../models/note.model';
+
+// Dialogs
 import { DelNoteDialogComponent } from '../../components/notes/del-note-dialog.component';
 import { EditTitleNoteDialogComponent } from '../../components/notes/edit-title-note-dialog.component';
 

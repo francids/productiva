@@ -23,6 +23,7 @@ article.list-notes {
 article.list-notes .card-note {
   margin-bottom: 1rem;
   width: 100%;
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {

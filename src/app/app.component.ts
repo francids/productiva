@@ -13,4 +13,4 @@ import 'zone.js/plugins/zone-patch-rxjs';
 })
 export class AppComponent {
   title = 'productiva-mente';
-}
+};

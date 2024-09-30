@@ -1,13 +1,24 @@
+// Angular
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterLink } from '@angular/router';
+
+// Services
 import { RxdbService } from '../../services/rxdb.service';
-import { Note } from '../../models/note.model';
-import { v4 as uuidv4 } from 'uuid';
-import { NewNoteDialogComponent } from '../../components/notes/new-note-dialog.component';
+
+// Material Components
+import { MatDialog } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+
+// Utils
+import { v4 as uuidv4 } from 'uuid';
+
+// Models
+import { Note } from '../../models/note.model';
+
+// Dialogs
+import { NewNoteDialogComponent } from '../../components/notes/new-note-dialog.component';
 
 @Component({
   selector: 'note-welcome',
