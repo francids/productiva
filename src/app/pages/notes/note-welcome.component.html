@@ -1,0 +1,29 @@
+<section>
+  <p class="mat-headline-large">¡Bienvenido a tus notas!</p>
+
+  <p class="mat-body-1">Aquí podrás ver todas tus notas y crear nuevas.</p>
+
+  <button mat-flat-button (click)="openDialogCreateNote()">
+    Crear nueva nota
+  </button>
+
+  <mat-divider></mat-divider>
+
+  @if (notes().length === 0) {
+  <p class="mat-body-1">Aún no tienes notas. Crea una nueva para empezar.</p>
+  } @else {
+  <p class="mat-body-1">Selecciona una nota para ver su contenido.</p>
+  }
+
+  <article class="list-notes">
+    @for (note of notes(); track note.id) {
+    <mat-card
+      appearance="outlined"
+      class="card-note"
+      routerLink="{{ note.id }}"
+    >
+      <mat-card-content>{{ note.title }}</mat-card-content>
+    </mat-card>
+    }
+  </article>
+</section>

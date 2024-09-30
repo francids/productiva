@@ -1,72 +1,19 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { v4 as uuidv4 } from 'uuid';
-import { MatCardModule } from '@angular/material/card';
-import { MatListModule } from '@angular/material/list';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDialog } from '@angular/material/dialog';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { RxdbService } from '../../services/rxdb.service';
-import { Note } from '../../models/note.model';
-import { NewNoteDialogComponent } from '../../components/notes/new-note-dialog.component';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'notes-page',
   standalone: true,
-  imports: [RouterLink, RouterOutlet, MatCardModule, MatListModule, MatDividerModule, MatButtonModule, MatIconModule],
-  templateUrl: './notes.component.html',
-  styleUrl: './notes.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [RouterOutlet],
+  template: `
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+  `,
+  styles: [`
+  main {
+    margin: 1rem;
+  }
+  `],
 })
-export class NotesComponent {
-  notes = signal<{
-    id: string,
-    title: string,
-  }[]>([]);
-  readonly dialog = inject(MatDialog);
-  readonly newNoteTitle = signal('');
-
-  constructor(private router: Router, private rxdbService: RxdbService) {
-    this.loadNotes();
-  };
-
-  async loadNotes(): Promise<void> {
-    (await this.rxdbService.getNotesObservable()).subscribe((notes: Note[]) => {
-      this.notes.set(notes.map(note => ({
-        id: note.id,
-        title: note.title,
-      })));
-    });
-  };
-
-  isPageEditingNote(): boolean {
-    return !(this.router.url === "/notes");
-  };
-
-  createNewNote(title: string): void {
-    const newNoteId = uuidv4();
-    this.rxdbService.createNote(
-      {
-        id: newNoteId,
-        title: title,
-        content: ''
-      }
-    );
-    this.router.navigate(['/notes', newNoteId]);
-  };
-
-  openDialogCreateNote(): void {
-    const dialogRef = this.dialog.open(NewNoteDialogComponent, {
-      data: { title: this.newNoteTitle() },
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
-        console.log(result);
-        this.newNoteTitle.set(result);
-        this.createNewNote(this.newNoteTitle());
-      }
-    });
-  };
-};
+export class NotesComponent { };

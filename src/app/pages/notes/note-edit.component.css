@@ -1,0 +1,24 @@
+.note-edit-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.note-title {
+  height: 48px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.note-title p {
+  margin: 0;
+}
+
+.note-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
