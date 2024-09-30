@@ -20,6 +20,7 @@
     "@angular/platform-browser": "^18.2.0",
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
+    "@angular/service-worker": "^18.2.0",
     "@editorjs/editorjs": "^2.30.6",
     "@editorjs/header": "^2.8.7",
     "@editorjs/list": "^1.10.0",
@@ -34,7 +35,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.2.3",
-    "@angular/cli": "^18.2.3",
+    "@angular/cli": "^18.2.6",
     "@angular/compiler-cli": "^18.2.0",
     "@types/jasmine": "~5.1.0",
     "@types/pouchdb-adapter-idb": "^6.1.7",
