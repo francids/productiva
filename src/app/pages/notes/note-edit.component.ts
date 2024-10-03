@@ -6,6 +6,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import EditorJS, { BlockToolConstructable } from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import NestedList from '@editorjs/nested-list';
+import Table from '@editorjs/table';
 import { OutputData } from '@editorjs/editorjs';
 
 // Services
@@ -87,6 +88,16 @@ export class NoteEditComponent {
               defaultLevel: 2,
             }
           },
+          table: {
+            class: Table as unknown as BlockToolConstructable,
+            inlineToolbar: true,
+            config: {
+              rows: 2,
+              cols: 3,
+              maxRows: 10,
+              maxCols: 10,
+            }
+          }
         }
       });
     });

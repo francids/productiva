@@ -25,6 +25,7 @@
     "@editorjs/header": "^2.8.7",
     "@editorjs/list": "^1.10.0",
     "@editorjs/nested-list": "^1.4.3",
+    "@editorjs/table": "^2.4.1",
     "@types/uuid": "^10.0.0",
     "pouchdb-adapter-idb": "^9.0.0",
     "rxdb": "^15.33.0",
