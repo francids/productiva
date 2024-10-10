@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">productiva-mente</string>
-    <string name="title_activity_main">productiva-mente</string>
+    <string name="app_name">Productiva Mente</string>
+    <string name="title_activity_main">Productiva Mente</string>
     <string name="package_name">com.productiva.mente</string>
     <string name="custom_url_scheme">com.productiva.mente</string>
 </resources>
