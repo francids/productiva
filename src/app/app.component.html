@@ -1,10 +1,35 @@
-<mat-toolbar>
-  <a routerLink="/">
-    <img src="/logo.png" alt="Logo" class="logo" />
-  </a>
-  <button mat-button routerLink="/notes">Notas</button>
-  <button mat-button routerLink="/tasks">Tareas</button>
-  <button mat-button>Proyectos</button>
-</mat-toolbar>
+<mat-drawer-container class="container" autosize>
+  <mat-drawer #drawer class="sidenav" mode="over">
+    <div class="top">
+      <a routerLink="/" (click)="drawer.toggle()">
+        <img src="/logo.png" alt="Logo" class="logo" />
+      </a>
+      <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <mat-list role="list">
+      <mat-list-item role="listitem">
+        <button mat-button (click)="drawer.toggle()" routerLink="/notes">
+          Notas
+        </button>
+      </mat-list-item>
+      <mat-list-item role="listitem">
+        <button mat-button (click)="drawer.toggle()" routerLink="/tasks">
+          Tareas
+        </button>
+      </mat-list-item>
+      <mat-list-item role="listitem">
+        <button mat-button (click)="drawer.toggle()">Proyectos</button>
+      </mat-list-item>
+    </mat-list>
+  </mat-drawer>
 
-<router-outlet></router-outlet>
+  <mat-toolbar>
+    <button mat-icon-button (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <router-outlet></router-outlet>
+</mat-drawer-container>
