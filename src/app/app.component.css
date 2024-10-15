@@ -3,15 +3,24 @@
   height: 100%;
 }
 
+mat-drawer {
+  overflow: hidden;
+}
+
+mat-divider {
+  opacity: 0.3;
+}
+
 .sidenav {
-  width: 200px;
+  width: 260px;
+  padding: 10px;
+  overflow: hidden;
 }
 
 .sidenav .top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
 }
 
 .logo {

@@ -8,21 +8,52 @@
         <mat-icon>close</mat-icon>
       </button>
     </div>
-    <mat-list role="list">
-      <mat-list-item role="listitem">
-        <button mat-button (click)="drawer.toggle()" routerLink="/notes">
-          Notas
-        </button>
-      </mat-list-item>
-      <mat-list-item role="listitem">
-        <button mat-button (click)="drawer.toggle()" routerLink="/tasks">
-          Tareas
-        </button>
-      </mat-list-item>
-      <mat-list-item role="listitem">
-        <button mat-button (click)="drawer.toggle()">Proyectos</button>
-      </mat-list-item>
-    </mat-list>
+    <mat-divider></mat-divider>
+    <mat-nav-list role="list">
+      <a
+        mat-list-item
+        routerLink="/"
+        (click)="drawer.toggle()"
+        [activated]="router.url === '/'"
+      >
+        <mat-icon matListItemIcon fontSet="material-icons-outlined">
+          home
+        </mat-icon>
+        <div matListItemTitle>Inicio</div>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/notes"
+        (click)="drawer.toggle()"
+        [activated]="router.url === '/notes'"
+      >
+        <mat-icon matListItemIcon>notes</mat-icon>
+        <div matListItemTitle>Notas</div>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/tasks"
+        (click)="drawer.toggle()"
+        [activated]="router.url === '/tasks'"
+      >
+        <mat-icon matListItemIcon>task_alt</mat-icon>
+        <div matListItemTitle>Tareas</div>
+      </a>
+    </mat-nav-list>
+    <mat-divider></mat-divider>
+    <mat-nav-list role="list">
+      <a
+        mat-list-item
+        routerLink="/settings"
+        (click)="drawer.toggle()"
+        [activated]="router.url === '/settings'"
+      >
+        <mat-icon matListItemIcon fontSet="material-icons-outlined">
+          settings
+        </mat-icon>
+        <div matListItemTitle>Configuración</div>
+      </a>
+    </mat-nav-list>
   </mat-drawer>
 
   <mat-toolbar>
