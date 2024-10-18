@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { Router, RouterLink } from '@angular/router';
 
 // Services
-import { RxdbService } from '../../services/rxdb.service';
+import { NotesService } from '../../services/notes.service';
 
 // Material Components
 import { MatDialog } from '@angular/material/dialog';
@@ -36,12 +36,15 @@ export class NoteWelcomeComponent {
   readonly dialog = inject(MatDialog);
   readonly newNoteTitle = signal('');
 
-  constructor(private router: Router, private rxdbService: RxdbService) {
+  constructor(
+    private router: Router,
+    private notesService: NotesService,
+  ) {
     this.loadNotes();
   };
 
   async loadNotes(): Promise<void> {
-    (await this.rxdbService.getNotesObservable()).subscribe((notes: Note[]) => {
+    this.notesService.notes$?.subscribe((notes: Note[]) => {
       this.notes.set(notes.map(note => ({
         id: note.id,
         title: note.title,
@@ -51,20 +54,21 @@ export class NoteWelcomeComponent {
 
   createNewNote(title: string): void {
     const newNoteId = uuidv4();
-    this.rxdbService.createNote(
-      {
-        id: newNoteId,
-        title: title,
-        content: ''
-      }
-    );
+    this.notesService.saveNote({
+      id: newNoteId,
+      title: title,
+      content: ''
+    });
     this.router.navigate(['/notes', newNoteId]);
   };
 
   openDialogCreateNote(): void {
-    const dialogRef = this.dialog.open(NewNoteDialogComponent, {
-      data: { title: this.newNoteTitle() },
-    });
+    const dialogRef = this.dialog.open(
+      NewNoteDialogComponent,
+      {
+        data: { title: this.newNoteTitle() },
+      }
+    );
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {

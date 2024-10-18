@@ -10,7 +10,7 @@ import Table from '@editorjs/table';
 import { OutputData } from '@editorjs/editorjs';
 
 // Services
-import { RxdbService } from '../../services/rxdb.service';
+import { NotesService } from '../../services/notes.service';
 
 // Material Components
 import { MatDialog } from '@angular/material/dialog';
@@ -47,13 +47,17 @@ export class NoteEditComponent {
   private editor: EditorJS | undefined;
   private _snackBar = inject(MatSnackBar);
 
-  constructor(private route: ActivatedRoute, private router: Router, private rxdbService: RxdbService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private notesService: NotesService,
+  ) {
     this.route.params.subscribe(async params => {
       if (this.editor) {
         this.editor.destroy();
       };
       this.noteId = params['id'];
-      const fetchedNote = await this.rxdbService.getNoteById(this.noteId!);
+      const fetchedNote = await this.notesService.getNoteById(this.noteId!);
       this.note.set(fetchedNote);
       let noteValue: {
         time: number,
@@ -105,7 +109,11 @@ export class NoteEditComponent {
 
   saveNote(): void {
     this.editor?.save().then((outputData: OutputData) => {
-      this.rxdbService.updateNoteContent(this.noteId!, outputData);
+      this.notesService.updateNote(this.noteId!, {
+        id: this.noteId!,
+        title: this.note()!.title,
+        content: JSON.stringify(outputData)
+      });
     });
     this._snackBar.open('Nota guardada', 'Cerrar', { duration: 2000 });
   };
@@ -117,7 +125,11 @@ export class NoteEditComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        this.rxdbService.updateNoteTitle(this.noteId!, result);
+        this.notesService.updateNote(this.noteId!, {
+          id: this.noteId!,
+          title: result,
+          content: this.note()!.content
+        });
         this.note.set({
           ...this.note()!,
           title: result
@@ -132,7 +144,7 @@ export class NoteEditComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        this.rxdbService.deleteNoteById(this.noteId!);
+        this.notesService.deleteNote(this.noteId!);
         this.editor?.destroy();
         this.router.navigate(['/notes']);
         this._snackBar.open('Nota eliminada', 'Cerrar', { duration: 2000 });
