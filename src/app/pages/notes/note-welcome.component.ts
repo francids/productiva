@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatRippleModule } from '@angular/material/core';
 
 // Utils
 import { v4 as uuidv4 } from 'uuid';
@@ -25,7 +26,7 @@ import { NewNoteDialogComponent } from '../../components/notes/new-note-dialog.c
   standalone: true,
   templateUrl: './note-welcome.component.html',
   styleUrl: './note-welcome.component.css',
-  imports: [RouterLink, MatCardModule, MatButtonModule, MatDividerModule],
+  imports: [RouterLink, MatCardModule, MatButtonModule, MatDividerModule, MatRippleModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NoteWelcomeComponent {

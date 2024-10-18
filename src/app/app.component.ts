@@ -16,7 +16,5 @@ import 'zone.js/plugins/zone-patch-rxjs';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'productiva-mente';
-
   constructor(public router: Router) { }
 };
