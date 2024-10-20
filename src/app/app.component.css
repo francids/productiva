@@ -12,7 +12,7 @@ mat-divider {
 }
 
 .sidenav {
-  width: 260px;
+  width: 30%;
   padding: 10px;
   overflow: hidden;
 }
@@ -21,6 +21,7 @@ mat-divider {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0 1rem 0 0;
 }
 
 .logo {

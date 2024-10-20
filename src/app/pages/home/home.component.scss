@@ -1,6 +1,7 @@
 @use "sass:map";
 @use "@angular/material" as mat;
-@import "../../../../m3-theme.scss";
+// @use "../../../m3-theme.scss" as m3-theme;
+@use "../../../m3-theme.scss";
 
 main {
   height: auto;
@@ -12,5 +13,5 @@ main {
   border: none;
   border-radius: 1rem;
   padding: 2rem;
-  background-color: mat.get-theme-color($light-theme, primary-container);
+  background-color: mat.get-theme-color(m3-theme.$light-theme, surface-container);
 }
