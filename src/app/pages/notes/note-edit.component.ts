@@ -11,6 +11,7 @@ import { OutputData } from '@editorjs/editorjs';
 
 // Services
 import { NotesService } from '../../services/notes.service';
+import { TitleService } from '../../services/title.service';
 
 // Material Components
 import { MatDialog } from '@angular/material/dialog';
@@ -51,6 +52,7 @@ export class NoteEditComponent {
     private route: ActivatedRoute,
     private router: Router,
     private notesService: NotesService,
+    private titleService: TitleService,
   ) {
     this.route.params.subscribe(async params => {
       if (this.editor) {
@@ -58,7 +60,12 @@ export class NoteEditComponent {
       };
       this.noteId = params['id'];
       const fetchedNote = await this.notesService.getNoteById(this.noteId!);
+      if (!fetchedNote) {
+        this.router.navigate(['/notes']);
+        return;
+      }
       this.note.set(fetchedNote);
+      this.titleService.updateTitle(fetchedNote.title);
       let noteValue: {
         time: number,
         blocks: [],
@@ -137,6 +144,7 @@ export class NoteEditComponent {
           ...this.note()!,
           title: result
         });
+        this.titleService.updateTitle(result);
         this._snackBar.open('Título de la nota editado', 'Cerrar', { duration: 2000 });
       };
     });

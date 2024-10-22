@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 
 // Services
 import { NotesService } from '../../services/notes.service';
+import { TitleService } from '../../services/title.service';
 
 // Material Components
 import { MatDialog } from '@angular/material/dialog';
@@ -40,7 +41,9 @@ export class NoteWelcomeComponent {
   constructor(
     private router: Router,
     private notesService: NotesService,
+    private titleService: TitleService,
   ) {
+    this.titleService.updateTitle('Notas');
     this.loadNotes();
   };
 
