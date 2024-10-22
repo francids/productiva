@@ -13,16 +13,11 @@ section button {
 }
 
 article.list-notes {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 60%;
+  width: 30%;
 }
 
 article.list-notes .card-note {
   margin-bottom: 1rem;
-  width: 100%;
   cursor: pointer;
   user-select: none;
   min-height: 60px;
