@@ -102,7 +102,8 @@ export class NoteEditComponent {
               maxCols: 10,
             }
           }
-        }
+        },
+        onChange: () => this.saveNote(),
       });
     });
   };
@@ -114,8 +115,10 @@ export class NoteEditComponent {
         title: this.note()!.title,
         content: JSON.stringify(outputData)
       });
+    }).catch((error) => {
+      this._snackBar.open('Error al guardar la nota', 'Cerrar', { duration: 1000 });
+      console.error('Error al guardar la nota', error);
     });
-    this._snackBar.open('Nota guardada', 'Cerrar', { duration: 2000 });
   };
 
   openDialogEditTitleNote(): void {
