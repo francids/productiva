@@ -1,17 +1,7 @@
-@use "sass:map";
-@use "@angular/material" as mat;
-// @use "../../../m3-theme.scss" as m3-theme;
-@use "../../../m3-theme.scss";
-
 main {
+  width: 100%;
   height: auto;
-  padding-inline: 4rem;
-}
-
-.head {
-  height: 100%;
-  border: none;
-  border-radius: 1rem;
-  padding: 2rem;
-  background-color: mat.get-theme-color(m3-theme.$light-theme, surface-container);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
