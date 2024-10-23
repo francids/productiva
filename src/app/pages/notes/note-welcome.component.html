@@ -9,9 +9,9 @@
 
   <article class="list-notes">
     @for (note of notes(); track note.id) {
-    <div>
+    <mat-card appearance="outlined" class="note">
       <mat-card
-        appearance="outlined"
+        appearance="raised"
         class="card-note"
         routerLink="{{ note.id }}"
         matRipple
@@ -21,7 +21,7 @@
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>more_vert</mat-icon>
       </button>
-    </div>
+    </mat-card>
     <mat-menu #menu="matMenu" xPosition="before">
       <button mat-menu-item (click)="openDialogEditTitleNote(note)">
         Editar título

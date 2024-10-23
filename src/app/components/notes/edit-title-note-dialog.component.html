@@ -1,6 +1,6 @@
 <mat-dialog-content>
   <p>Editar título</p>
-  <form [formGroup]="titleForm">
+  <form [formGroup]="titleForm" (ngSubmit)="titleForm.valid && onSaveClick()">
     <mat-form-field>
       <mat-label>Título de la nota</mat-label>
       <input matInput formControlName="title" />
