@@ -10,7 +10,6 @@ import { TitleService } from '../../services/title.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatRippleModule } from '@angular/material/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -32,7 +31,7 @@ import { DelNoteDialogComponent } from '../../components/notes/del-note-dialog.c
   standalone: true,
   templateUrl: './note-welcome.component.html',
   styleUrl: './note-welcome.component.css',
-  imports: [RouterLink, MatCardModule, MatButtonModule, MatDividerModule, MatRippleModule, MatMenuModule, MatIconModule],
+  imports: [RouterLink, MatCardModule, MatButtonModule, MatRippleModule, MatMenuModule, MatIconModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NoteWelcomeComponent {

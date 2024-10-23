@@ -9,6 +9,7 @@ export class TitleService {
   title$ = this.titleSource.asObservable();
 
   updateTitle(newTitle: string) {
+    window.document.title = newTitle;
     this.titleSource.next(newTitle);
   }
 }
