@@ -7,9 +7,10 @@ section {
   text-align: center;
 }
 
-section button {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+.fab-button {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
 }
 
 article.list-notes {
@@ -20,6 +21,7 @@ article.list-notes div {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 1rem;
 }
 
 article.list-notes div .card-note {
