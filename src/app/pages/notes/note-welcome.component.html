@@ -9,11 +9,12 @@
 
   <article class="list-notes">
     @for (note of notes(); track note.id) {
-    <mat-card appearance="outlined" class="note">
+    <mat-card appearance="outlined" class="note" cdkDrag>
       <mat-card
         appearance="raised"
         class="card-note"
-        routerLink="{{ note.id }}"
+        (mousedown)="onMouseDown($event, note.id)"
+        (mouseup)="onMouseUp($event, note.id)"
         matRipple
       >
         <mat-card-content>{{ note.title }}</mat-card-content>

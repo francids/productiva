@@ -14,6 +14,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CdkDrag } from '@angular/cdk/drag-drop';
 
 // Utils
 import { v4 as uuidv4 } from 'uuid';
@@ -31,7 +32,7 @@ import { DelNoteDialogComponent } from '../../components/notes/del-note-dialog.c
   standalone: true,
   templateUrl: './note-welcome.component.html',
   styleUrl: './note-welcome.component.css',
-  imports: [RouterLink, MatCardModule, MatButtonModule, MatRippleModule, MatMenuModule, MatIconModule],
+  imports: [RouterLink, MatCardModule, MatButtonModule, MatRippleModule, MatMenuModule, MatIconModule, CdkDrag],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NoteWelcomeComponent {
@@ -43,6 +44,21 @@ export class NoteWelcomeComponent {
   readonly dialog = inject(MatDialog);
   readonly newNoteTitle = signal('');
   private _snackBar = inject(MatSnackBar);
+  private mouseDownTimeout: any;
+
+  onMouseDown(event: MouseEvent, noteId: string) {
+    this.mouseDownTimeout = setTimeout(() => {
+      this.mouseDownTimeout = null;
+    }, 150);
+  };
+
+  onMouseUp(event: MouseEvent, noteId: string) {
+    if (this.mouseDownTimeout) {
+      clearTimeout(this.mouseDownTimeout);
+      this.mouseDownTimeout = null;
+      this.navigateToNoteDetail(noteId);
+    };
+  };
 
   constructor(
     private router: Router,
@@ -71,6 +87,10 @@ export class NoteWelcomeComponent {
       content: ''
     });
     this.router.navigate(['/notes', newNoteId]);
+  };
+
+  navigateToNoteDetail(noteId: string): void {
+    this.router.navigate(['/notes', noteId]);
   };
 
   openDialogCreateNote(): void {
