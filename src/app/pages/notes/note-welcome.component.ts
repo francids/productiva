@@ -12,6 +12,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatRippleModule } from '@angular/material/core';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 // Utils
 import { v4 as uuidv4 } from 'uuid';
@@ -21,22 +24,26 @@ import { Note } from '../../models/note.model';
 
 // Dialogs
 import { NewNoteDialogComponent } from '../../components/notes/new-note-dialog.component';
+import { EditTitleNoteDialogComponent } from '../../components/notes/edit-title-note-dialog.component';
+import { DelNoteDialogComponent } from '../../components/notes/del-note-dialog.component';
 
 @Component({
   selector: 'note-welcome',
   standalone: true,
   templateUrl: './note-welcome.component.html',
   styleUrl: './note-welcome.component.css',
-  imports: [RouterLink, MatCardModule, MatButtonModule, MatDividerModule, MatRippleModule],
+  imports: [RouterLink, MatCardModule, MatButtonModule, MatDividerModule, MatRippleModule, MatMenuModule, MatIconModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NoteWelcomeComponent {
   notes = signal<{
     id: string,
     title: string,
+    content: string,
   }[]>([]);
   readonly dialog = inject(MatDialog);
   readonly newNoteTitle = signal('');
+  private _snackBar = inject(MatSnackBar);
 
   constructor(
     private router: Router,
@@ -52,6 +59,7 @@ export class NoteWelcomeComponent {
       this.notes.set(notes.map(note => ({
         id: note.id,
         title: note.title,
+        content: note.content,
       })));
     });
   };
@@ -79,6 +87,37 @@ export class NoteWelcomeComponent {
         this.newNoteTitle.set(result);
         this.createNewNote(this.newNoteTitle());
       }
+    });
+  };
+
+  openDialogEditTitleNote(note: Note): void {
+    const dialogRef = this.dialog.open(EditTitleNoteDialogComponent, {
+      data: { title: note.title }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        this.notesService.updateNote(note.id, {
+          id: note.id,
+          title: result,
+          content: note.content
+        });
+        this.notes.set(this.notes().map(n => {
+          return n.id === note.id ? { ...n, title: result } : n;
+        }));
+        this._snackBar.open('Título de la nota editado', 'Cerrar', { duration: 2000 });
+      };
+    });
+  };
+
+  openDialogDeleteNote(note: Note): void {
+    const dialogRef = this.dialog.open(DelNoteDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.notesService.deleteNote(note.id);
+        this._snackBar.open('Nota eliminada', 'Cerrar', { duration: 2000 });
+      };
     });
   };
 }

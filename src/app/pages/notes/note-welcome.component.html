@@ -1,8 +1,4 @@
 <section>
-  <p class="mat-headline-large">¡Bienvenido a tus notas!</p>
-
-  <p class="mat-body-1">Aquí podrás ver todas tus notas y crear nuevas.</p>
-
   <button mat-flat-button (click)="openDialogCreateNote()">
     Crear nueva nota
   </button>
@@ -11,20 +7,31 @@
 
   @if (notes().length === 0) {
   <p class="mat-body-1">Aún no tienes notas. Crea una nueva para empezar.</p>
-  } @else {
-  <p class="mat-body-1">Selecciona una nota para ver su contenido.</p>
   }
 
   <article class="list-notes">
     @for (note of notes(); track note.id) {
-    <mat-card
-      appearance="outlined"
-      class="card-note"
-      routerLink="{{ note.id }}"
-      matRipple
-    >
-      <mat-card-content>{{ note.title }}</mat-card-content>
-    </mat-card>
+    <div>
+      <mat-card
+        appearance="outlined"
+        class="card-note"
+        routerLink="{{ note.id }}"
+        matRipple
+      >
+        <mat-card-content>{{ note.title }}</mat-card-content>
+      </mat-card>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </div>
+    <mat-menu #menu="matMenu" xPosition="before">
+      <button mat-menu-item (click)="openDialogEditTitleNote(note)">
+        Editar título
+      </button>
+      <button mat-menu-item (click)="openDialogDeleteNote(note)">
+        Eliminar nota
+      </button>
+    </mat-menu>
     }
   </article>
 </section>

@@ -22,10 +22,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 // Models
 import { Note } from '../../models/note.model';
 
-// Dialogs
-import { DelNoteDialogComponent } from '../../components/notes/del-note-dialog.component';
-import { EditTitleNoteDialogComponent } from '../../components/notes/edit-title-note-dialog.component';
-
 @Component({
   selector: 'note-edit',
   templateUrl: './note-edit.component.html',
@@ -38,15 +34,14 @@ export class NoteEditComponent {
   noteId: string | undefined;
   note = signal<Note | undefined>(undefined);
   readonly dialog = inject(MatDialog);
+  private _snackBar = inject(MatSnackBar);
 
   @ViewChild("editor", {
     read: ElementRef,
     static: true
   })
   editorElement: ElementRef | undefined;
-
   private editor: EditorJS | undefined;
-  private _snackBar = inject(MatSnackBar);
 
   constructor(
     private route: ActivatedRoute,
@@ -125,41 +120,6 @@ export class NoteEditComponent {
     }).catch((error) => {
       this._snackBar.open('Error al guardar la nota', 'Cerrar', { duration: 1000 });
       console.error('Error al guardar la nota', error);
-    });
-  };
-
-  openDialogEditTitleNote(): void {
-    const dialogRef = this.dialog.open(EditTitleNoteDialogComponent, {
-      data: { title: this.note()!.title }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
-        this.notesService.updateNote(this.noteId!, {
-          id: this.noteId!,
-          title: result,
-          content: this.note()!.content
-        });
-        this.note.set({
-          ...this.note()!,
-          title: result
-        });
-        this.titleService.updateTitle(result);
-        this._snackBar.open('Título de la nota editado', 'Cerrar', { duration: 2000 });
-      };
-    });
-  };
-
-  openDialogDeleteNote(): void {
-    const dialogRef = this.dialog.open(DelNoteDialogComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.notesService.deleteNote(this.noteId!);
-        this.editor?.destroy();
-        this.router.navigate(['/notes']);
-        this._snackBar.open('Nota eliminada', 'Cerrar', { duration: 2000 });
-      };
     });
   };
 };

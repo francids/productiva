@@ -2,17 +2,5 @@
   <button mat-icon-button routerLink="/notes">
     <mat-icon>arrow_back</mat-icon>
   </button>
-  <div class="note-title">
-    <p (click)="openDialogEditTitleNote()">
-      @if (note()) {
-      {{ note()!.title }}
-      }
-    </p>
-  </div>
-  <div class="note-actions">
-    <button mat-icon-button (click)="openDialogDeleteNote()">
-      <mat-icon>delete</mat-icon>
-    </button>
-  </div>
 </div>
 <div #editor></div>

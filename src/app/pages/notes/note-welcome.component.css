@@ -16,10 +16,17 @@ article.list-notes {
   width: 30%;
 }
 
-article.list-notes .card-note {
-  margin-bottom: 1rem;
+article.list-notes div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+article.list-notes div .card-note {
   cursor: pointer;
   user-select: none;
+  min-width: 300px;
+  max-width: 300px;
   min-height: 60px;
   height: 60px;
 }
