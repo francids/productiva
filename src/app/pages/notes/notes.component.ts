@@ -11,8 +11,14 @@ import { RouterOutlet } from '@angular/router';
   </main>
   `,
   styles: [`
+  :host {
+    display: flex;
+    flex-grow: 1;
+  }
   main {
     margin: 1rem;
+    display: flex;
+    flex-grow: 1;
   }
   `],
 })

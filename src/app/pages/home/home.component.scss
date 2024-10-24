@@ -1,7 +1,26 @@
-main {
-  width: 100%;
-  height: auto;
+:host {
   display: flex;
-  flex-direction: column;
+  flex-grow: 1;
+}
+
+main {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  margin: 1rem;
+  gap: 1rem;
+  user-select: none;
+}
+
+.box {
+  display: flex;
+  flex-grow: 1;
   align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+  }
 }

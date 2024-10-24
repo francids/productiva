@@ -17,7 +17,19 @@ article.list-notes {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 100%;
+  width: 80%;
+}
+
+@media (max-width: 1024px) {
+  article.list-notes {
+    width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  article.list-notes {
+    width: 100%;
+  }
 }
 
 article.list-notes .note {
