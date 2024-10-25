@@ -8,7 +8,26 @@ import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'new-note-dialog',
-  templateUrl: './new-note-dialog.component.html',
+  template: `
+  <mat-dialog-content>
+    <p>Crear nota</p>
+    <form [formGroup]="titleForm" (ngSubmit)="titleForm.valid && onSaveClick()">
+      <mat-form-field>
+        <mat-label>Título de la nota</mat-label>
+        <input matInput formControlName="title" />
+        @if (titleForm.get('title')!.hasError('required')) {
+          <mat-error>El título es obligatorio.</mat-error>
+        }
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-button (click)="onSaveClick()" [disabled]="titleForm.invalid">
+      Crear nota
+    </button>
+  </mat-dialog-actions>
+  `,
   standalone: true,
   imports: [MatDialogModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule],
 })

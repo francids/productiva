@@ -4,7 +4,19 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/materia
 
 @Component({
   selector: 'del-note-dialog',
-  templateUrl: './del-note-dialog.component.html',
+  template: `
+  <mat-dialog-content>
+    <p>Eliminar nota</p>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close>
+      Cancelar
+    </button>
+    <button mat-button [mat-dialog-close]="true">
+      Eliminar nota
+    </button>
+  </mat-dialog-actions>
+`,
   standalone: true,
   imports: [MatDialogModule, MatButtonModule],
 })
