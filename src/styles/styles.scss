@@ -1,0 +1,21 @@
+@use "@angular/material" as mat;
+@use "./m3-theme" as theme;
+
+@include mat.core();
+
+html,
+body {
+  height: 100%;
+  margin-top: var(--ion-safe-area-top);
+
+  @include mat.all-component-themes(theme.$light-theme);
+}
+
+.darkmode {
+  @include mat.all-component-colors(theme.$dark-theme);
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
