@@ -1,8 +1,17 @@
 <main>
-  <div class="note-edit-header">
+  <mat-toolbar>
     <button mat-icon-button routerLink="/notes">
       <mat-icon>arrow_back</mat-icon>
     </button>
-  </div>
+    <span class="spacer"></span>
+    <span>{{ this.note()?.title }}</span>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="openDialogEditTitleNote()">
+      <mat-icon fontSet="material-icons-outlined">edit</mat-icon>
+    </button>
+    <button mat-icon-button (click)="openDialogDeleteNote()">
+      <mat-icon fontSet="material-icons-outlined">delete</mat-icon>
+    </button>
+  </mat-toolbar>
   <div #editor></div>
 </main>

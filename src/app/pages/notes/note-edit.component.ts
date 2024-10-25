@@ -11,23 +11,27 @@ import { OutputData } from '@editorjs/editorjs';
 
 // Services
 import { NotesService } from '../../services/notes.service';
-import { TitleService } from '../../services/title.service';
 
 // Material Components
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 // Models
 import { Note } from '../../models/note.model';
+
+// Dialogs
+import { EditTitleNoteDialogComponent } from '../../components/notes/edit-title-note-dialog.component';
+import { DelNoteDialogComponent } from '../../components/notes/del-note-dialog.component';
 
 @Component({
   selector: 'note-edit',
   templateUrl: './note-edit.component.html',
   styleUrls: ['./note-edit.component.scss'],
   standalone: true,
-  imports: [RouterLink, MatButtonModule, MatIconModule],
+  imports: [RouterLink, MatButtonModule, MatIconModule, MatToolbarModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NoteEditComponent {
@@ -47,7 +51,6 @@ export class NoteEditComponent {
     private route: ActivatedRoute,
     private router: Router,
     private notesService: NotesService,
-    private titleService: TitleService,
   ) {
     this.route.params.subscribe(async params => {
       if (this.editor) {
@@ -60,7 +63,6 @@ export class NoteEditComponent {
         return;
       }
       this.note.set(fetchedNote);
-      this.titleService.updateTitle(fetchedNote.title);
       let noteValue: {
         time: number,
         blocks: [],
@@ -120,6 +122,36 @@ export class NoteEditComponent {
     }).catch((error) => {
       this._snackBar.open('Error al guardar la nota', 'Cerrar', { duration: 1000 });
       console.error('Error al guardar la nota', error);
+    });
+  };
+
+  openDialogEditTitleNote(): void {
+    const dialogRef = this.dialog.open(EditTitleNoteDialogComponent, {
+      data: { title: this.note()!.title }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        this.notesService.updateNote(this.note()!.id, {
+          id: this.note()!.id,
+          title: result,
+          content: this.note()!.content
+        });
+        this.note.set({ ...this.note()!, title: result });
+        this._snackBar.open('Título de la nota editado', 'Cerrar', { duration: 2000 });
+      };
+    });
+  };
+
+  openDialogDeleteNote(): void {
+    const dialogRef = this.dialog.open(DelNoteDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.notesService.deleteNote(this.note()!.id);
+        this._snackBar.open('Nota eliminada', 'Cerrar', { duration: 2000 });
+        this.router.navigate(['/notes']);
+      };
     });
   };
 };

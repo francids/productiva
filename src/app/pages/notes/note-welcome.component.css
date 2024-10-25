@@ -1,5 +1,6 @@
-section {
+main {
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -11,6 +12,7 @@ section {
   position: fixed;
   bottom: 1rem;
   right: 1rem;
+  z-index: 1000;
 }
 
 article.list-notes {

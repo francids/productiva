@@ -5,18 +5,9 @@ import { RouterOutlet } from '@angular/router';
   selector: 'notes-page',
   standalone: true,
   imports: [RouterOutlet],
-  template: `
-  <main>
-    <router-outlet></router-outlet>
-  </main>
-  `,
+  template: `<router-outlet></router-outlet>`,
   styles: [`
   :host {
-    display: flex;
-    flex-grow: 1;
-  }
-  main {
-    margin: 1rem;
     display: flex;
     flex-grow: 1;
   }

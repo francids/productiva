@@ -86,11 +86,11 @@ export class NoteWelcomeComponent {
       title: title,
       content: ''
     });
-    this.router.navigate(['/notes', newNoteId]);
+    this.router.navigate(['/notes/edit', newNoteId]);
   };
 
   navigateToNoteDetail(noteId: string): void {
-    this.router.navigate(['/notes', noteId]);
+    this.router.navigate(['/notes/edit', noteId]);
   };
 
   openDialogCreateNote(): void {

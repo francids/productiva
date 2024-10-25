@@ -13,7 +13,7 @@ export const notesRoutes: Routes = [
         component: NoteWelcomeComponent
       },
       {
-        path: ":id",
+        path: "edit/:id",
         component: NoteEditComponent
       },
     ]

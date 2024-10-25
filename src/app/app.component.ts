@@ -1,13 +1,23 @@
+// Angular
 import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterOutlet, RouterLinkActive, Router } from '@angular/router';
+import { RouterLink, RouterOutlet, RouterLinkActive, Router, NavigationEnd } from '@angular/router';
+
+// RxJS
+import { filter } from 'rxjs/operators';
+
+// Material
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import 'zone.js/plugins/zone-patch-rxjs';
+
+// Services
 import { TitleService } from './services/title.service';
+
+// Zone.js
+import 'zone.js/plugins/zone-patch-rxjs';
 
 @Component({
   selector: 'app-root',
@@ -18,11 +28,18 @@ import { TitleService } from './services/title.service';
 })
 export class AppComponent implements OnInit {
   title: string = 'Productiva Mente';
+  currentRoute: string = '';
 
   constructor(
     public router: Router,
     private titleService: TitleService,
-  ) { }
+  ) {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      this.currentRoute = event.urlAfterRedirects;
+    });
+  }
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -30,5 +47,9 @@ export class AppComponent implements OnInit {
         this.title = title;
       });
     }, 0);
+  }
+
+  isEditPage(): boolean {
+    return this.currentRoute.includes('/notes/edit');
   }
 };
