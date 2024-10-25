@@ -8,7 +8,7 @@ import { RouterLink } from '@angular/router';
   selector: 'home-page',
   standalone: true,
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  styleUrl: './home.component.scss',
   imports: [MatCardModule, MatRippleModule, RouterLink]
 })
 export class HomeComponent {

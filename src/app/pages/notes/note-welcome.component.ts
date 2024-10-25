@@ -31,7 +31,7 @@ import { DelNoteDialogComponent } from '../../components/notes/del-note-dialog.c
   selector: 'note-welcome',
   standalone: true,
   templateUrl: './note-welcome.component.html',
-  styleUrl: './note-welcome.component.css',
+  styleUrl: './note-welcome.component.scss',
   imports: [RouterLink, MatCardModule, MatButtonModule, MatRippleModule, MatMenuModule, MatIconModule, CdkDrag],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -29,7 +29,7 @@ import { DelNoteDialogComponent } from '../../components/notes/del-note-dialog.c
 @Component({
   selector: 'note-edit',
   templateUrl: './note-edit.component.html',
-  styleUrls: ['./note-edit.component.scss'],
+  styleUrl: './note-edit.component.scss',
   standalone: true,
   imports: [RouterLink, MatButtonModule, MatIconModule, MatToolbarModule],
   changeDetection: ChangeDetectionStrategy.OnPush,

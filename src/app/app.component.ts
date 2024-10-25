@@ -24,7 +24,7 @@ import 'zone.js/plugins/zone-patch-rxjs';
   standalone: true,
   imports: [RouterLink, RouterOutlet, RouterLinkActive, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatDividerModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
   title: string = 'Productiva Mente';
