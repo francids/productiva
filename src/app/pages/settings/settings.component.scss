@@ -5,8 +5,21 @@
 }
 
 main {
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
-  width: 60%;
-  // flex-grow: 1;
+}
+
+.no-visible {
+  opacity: 0;
+}
+
+mat-divider {
+  margin: 1rem 0;
+}
+
+.settings-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

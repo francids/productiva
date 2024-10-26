@@ -1,6 +1,12 @@
+// Angular
 import { Component, OnInit } from "@angular/core";
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
+// Modules
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDividerModule } from "@angular/material/divider";
+import { MatCardModule } from "@angular/material/card";
+
+// Services
 import { TitleService } from '../../services/title.service';
 import { ThemeService } from "../../services/theme.service";
 
@@ -9,7 +15,7 @@ import { ThemeService } from "../../services/theme.service";
   standalone: true,
   templateUrl: "./settings.component.html",
   styleUrl: "./settings.component.scss",
-  imports: [MatSlideToggleModule]
+  imports: [MatSlideToggleModule, MatDividerModule, MatCardModule]
 })
 export class SettingsComponent implements OnInit {
   isDarkMode: boolean = false;

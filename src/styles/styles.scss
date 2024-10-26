@@ -20,3 +20,28 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.custom-container {
+  padding: 0 1rem;
+  width: 100%;
+
+  @media (min-width: 576px) {
+    width: 500px;
+  }
+
+  @media (min-width: 768px) {
+    width: 680px;
+  }
+
+  @media (min-width: 992px) {
+    width: 920px;
+  }
+
+  @media (min-width: 1200px) {
+    width: 1100px;
+  }
+
+  @media (min-width: 1400px) {
+    width: 1280px;
+  }
+}

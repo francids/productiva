@@ -1,8 +1,17 @@
-<main>
-  <h1 class="mat-title-medium">Apariencia</h1>
-  <p>
-    <mat-slide-toggle [checked]="isDarkMode" (change)="toggleDarkMode($event)">
-      Modo Oscuro
-    </mat-slide-toggle>
-  </p>
+<main class="custom-container">
+  <h2 class="mat-headline-medium">Apariencia</h2>
+  <mat-card appearance="outlined">
+    <mat-card-content>
+      <div class="settings-item">
+        <span>Modo Oscuro</span>
+        <mat-slide-toggle
+          [checked]="isDarkMode"
+          (change)="toggleDarkMode($event)"
+        >
+        </mat-slide-toggle>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-divider class="no-visible"></mat-divider>
 </main>
