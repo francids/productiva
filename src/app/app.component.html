@@ -2,7 +2,7 @@
   <mat-drawer #drawer class="sidenav" mode="over">
     <div class="top">
       <a routerLink="/" (click)="drawer.toggle()">
-        <img src="/logo.png" alt="Logo" class="logo" />
+        <app-logo width="100%" height="20px"></app-logo>
       </a>
       <button mat-icon-button (click)="drawer.toggle()">
         <mat-icon>close</mat-icon>
@@ -16,9 +16,7 @@
         (click)="drawer.toggle()"
         [activated]="router.url === '/'"
       >
-        <mat-icon matListItemIcon fontSet="material-icons-outlined">
-          home
-        </mat-icon>
+        <mat-icon matListItemIcon> home </mat-icon>
         <div matListItemTitle>Inicio</div>
       </a>
       <a
@@ -62,7 +60,11 @@
       <button mat-icon-button (click)="drawer.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
+      @if (title == "Productiva Mente") {
+      <app-logo width="100%" height="18px"></app-logo>
+      } @else {
       <span>{{ title }}</span>
+      }
     </mat-toolbar>
     }
     <div class="router-outlet-container">

@@ -6,7 +6,7 @@ import { provideServiceWorker } from '@angular/service-worker';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { BrowserModule } from '@angular/platform-browser';
 import { RxdbService } from './services/rxdb.service';
-import { provideAnimations } from '@angular/platform-browser/animations'
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export function initializeDatabase(rxdbService: RxdbService) {
   return () => rxdbService.init();

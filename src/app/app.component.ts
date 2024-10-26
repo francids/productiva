@@ -5,13 +5,14 @@ import { RouterLink, RouterOutlet, RouterLinkActive, Router, NavigationEnd } fro
 // RxJS
 import { filter } from 'rxjs/operators';
 
-// Material
+// Modules
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { LogoComponent } from "./logo/logo.component";
 
 // Services
 import { TitleService } from './services/title.service';
@@ -22,7 +23,7 @@ import 'zone.js/plugins/zone-patch-rxjs';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterLink, RouterOutlet, RouterLinkActive, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatDividerModule],
+  imports: [RouterLink, RouterOutlet, RouterLinkActive, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatDividerModule, LogoComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
