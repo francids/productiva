@@ -3,6 +3,7 @@ mat-toolbar {
   position: sticky;
   top: 0;
   z-index: 1000;
+  user-select: none;
 }
 
 .router-outlet-container {
@@ -25,6 +26,13 @@ mat-divider {
 .sidenav {
   padding: 10px;
   overflow: hidden;
+  user-select: none;
+}
+
+@media (max-width: 600px) {
+  .sidenav {
+    width: 80%;
+  }
 }
 
 .sidenav .top {

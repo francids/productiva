@@ -5,9 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/materia
 @Component({
   selector: 'del-note-dialog',
   template: `
-  <mat-dialog-content>
-    <p>Eliminar nota</p>
-  </mat-dialog-content>
+  <h2 mat-dialog-title>Eliminar nota</h2>
   <mat-dialog-actions>
     <button mat-button mat-dialog-close>
       Cancelar

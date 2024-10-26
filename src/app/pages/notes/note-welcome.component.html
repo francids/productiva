@@ -4,12 +4,20 @@
   </button>
 
   @if (notes().length === 0) {
-  <p class="mat-body-1">Aún no tienes notas. Crea una nueva para empezar.</p>
-  }
-
+  <article>
+    <p class="mat-body-medium">
+      No tienes notas creadas, crea una nueva nota para empezar.
+    </p>
+  </article>
+  } @else {
   <article class="list-notes">
     @for (note of notes(); track note.id) {
-    <mat-card appearance="outlined" class="note" cdkDrag>
+    <mat-card
+      appearance="outlined"
+      class="note"
+      cdkDrag
+      cdkDragBoundary=".list-notes"
+    >
       <mat-card
         appearance="raised"
         class="card-note"
@@ -33,4 +41,5 @@
     </mat-menu>
     }
   </article>
+  }
 </main>

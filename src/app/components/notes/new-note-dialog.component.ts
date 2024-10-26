@@ -9,8 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 @Component({
   selector: 'new-note-dialog',
   template: `
+  <h2 mat-dialog-title>Crear nota</h2>
   <mat-dialog-content>
-    <p>Crear nota</p>
     <form [formGroup]="titleForm" (ngSubmit)="titleForm.valid && onSaveClick()">
       <mat-form-field>
         <mat-label>Título de la nota</mat-label>

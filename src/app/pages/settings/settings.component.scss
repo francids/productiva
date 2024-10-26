@@ -8,6 +8,7 @@ main {
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
+  user-select: none;
 }
 
 .no-visible {
