@@ -1,7 +1,7 @@
 <main>
   <h1 class="mat-title-medium">Apariencia</h1>
   <p>
-    <mat-slide-toggle (change)="toggleDarkMode($event)">
+    <mat-slide-toggle [checked]="isDarkMode" (change)="toggleDarkMode($event)">
       Modo Oscuro
     </mat-slide-toggle>
   </p>

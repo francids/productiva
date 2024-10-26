@@ -7,9 +7,14 @@ import { provideIonicAngular } from '@ionic/angular/standalone';
 import { BrowserModule } from '@angular/platform-browser';
 import { RxdbService } from './services/rxdb.service';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { ThemeService } from './services/theme.service';
 
 export function initializeDatabase(rxdbService: RxdbService) {
   return () => rxdbService.init();
+}
+
+export function initializeTheme(themeService: ThemeService) {
+  return () => themeService.loadUserPreference();
 }
 
 export const appConfig: ApplicationConfig = {
@@ -25,6 +30,12 @@ export const appConfig: ApplicationConfig = {
       provide: APP_INITIALIZER,
       useFactory: initializeDatabase,
       deps: [RxdbService],
+      multi: true,
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeTheme,
+      deps: [ThemeService],
       multi: true,
     },
     provideAnimations(),

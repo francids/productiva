@@ -1,6 +1,8 @@
-import { Component, Renderer2 } from "@angular/core";
-import { TitleService } from '../../services/title.service';
+import { Component, OnInit } from "@angular/core";
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
+import { TitleService } from '../../services/title.service';
+import { ThemeService } from "../../services/theme.service";
 
 @Component({
   selector: "settings-page",
@@ -9,19 +11,21 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
   styleUrl: "./settings.component.scss",
   imports: [MatSlideToggleModule]
 })
-export class SettingsComponent {
+export class SettingsComponent implements OnInit {
+  isDarkMode: boolean = false;
+
   constructor(
     private titleService: TitleService,
-    private renderer: Renderer2,
+    private themeService: ThemeService,
   ) {
     this.titleService.updateTitle('Configuración');
   }
 
+  ngOnInit(): void {
+    this.isDarkMode = this.themeService.isDarkModeEnabled();
+  }
+
   toggleDarkMode(event: any): void {
-    if (event.checked) {
-      this.renderer.addClass(document.body, 'darkmode');
-    } else {
-      this.renderer.removeClass(document.body, 'darkmode');
-    }
+    this.themeService.toggleDarkMode(event.checked);
   }
 }
