@@ -1,15 +1,13 @@
 import { Component } from '@angular/core';
 import { TitleService } from '../../services/title.service';
-import { MatCardModule } from '@angular/material/card';
-import { MatRippleModule } from '@angular/material/core'
-import { RouterLink } from '@angular/router';
+import { HomeBoxComponent } from "../../components/home-box/home-box.component";
 
 @Component({
   selector: 'home-page',
   standalone: true,
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
-  imports: [MatCardModule, MatRippleModule, RouterLink]
+  imports: [HomeBoxComponent],
 })
 export class HomeComponent {
   constructor(

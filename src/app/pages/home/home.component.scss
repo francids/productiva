@@ -12,18 +12,6 @@ main {
   user-select: none;
 }
 
-.box {
-  display: flex;
-  flex-grow: 1;
-  align-items: end;
-  justify-content: end;
-  padding: 2rem;
-}
-
-.box p {
-  margin: 0;
-}
-
 @media (max-width: 768px) {
   main {
     flex-direction: column;

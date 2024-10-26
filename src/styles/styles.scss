@@ -1,5 +1,6 @@
 @use "@angular/material" as mat;
 @use "./m3-theme" as theme;
+@use "../app/components/home-box/home-box.component" as home-box;
 
 @include mat.core();
 
@@ -8,12 +9,20 @@ body {
   height: 100%;
   margin-top: var(--ion-safe-area-top);
 
-  @include mat.typography-hierarchy(theme.$light-theme);
   @include mat.all-component-themes(theme.$light-theme);
+
+  // Typography levels
+  @include mat.typography-hierarchy(theme.$light-theme);
+
+  // Components
+  @include home-box.theme(theme.$light-theme);
 }
 
 .darkmode {
   @include mat.all-component-colors(theme.$dark-theme);
+
+  // Components
+  @include home-box.color(theme.$dark-theme);
 }
 
 body {
