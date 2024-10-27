@@ -5,6 +5,7 @@
       <div class="settings-item">
         <span>Modo Oscuro</span>
         <mat-slide-toggle
+          [hideIcon]="true"
           [checked]="isDarkMode"
           (change)="toggleDarkMode($event)"
         >
