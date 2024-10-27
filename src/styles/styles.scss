@@ -8,6 +8,7 @@ html,
 body {
   height: 100%;
   margin-top: var(--ion-safe-area-top);
+  color-scheme: light;
 
   @include mat.all-component-themes(theme.$light-theme);
 
@@ -19,6 +20,8 @@ body {
 }
 
 .darkmode {
+  color-scheme: dark;
+
   @include mat.all-component-colors(theme.$dark-theme);
 
   // Components
