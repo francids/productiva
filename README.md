@@ -14,6 +14,8 @@
 
 ![Home screen (light)](<screenshots/Home%20screen%20(light).png>)
 ![Home screen (dark)](<screenshots/Home%20screen%20(dark).png>)
+![Notes screen (light)](<screenshots/Notes%20screen%20(light).png>)
+![Notes screen (dark)](<screenshots/Notes%20screen%20(dark).png>)
 
 ## Tecnologías
 
