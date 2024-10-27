@@ -60,8 +60,17 @@ article.list-notes .note {
 
 article.list-notes .note .card-note {
   cursor: pointer;
+  width: 300px;
   min-width: 300px;
   max-width: 300px;
   min-height: 60px;
   height: 60px;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+article.list-notes .note .card-note mat-card-content {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
