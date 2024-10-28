@@ -1,6 +1,8 @@
 {
   "name": "productiva-mente",
   "version": "0.0.0",
+  "main": "main.js",
+  "type": "module",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,7 +11,19 @@
     "test": "ng test",
     "prepare": "husky",
     "android:build": "ng build --configuration production && cap sync",
-    "android:open": "cap open android"
+    "android:open": "cap open android",
+    "electron": "ng build --base-href ./ && electron ."
+  },
+  "build": {
+    "appId": "com.example.productiva-mente",
+    "files": [
+      "dist/",
+      "main.js",
+      "preload.js"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
   },
   "private": true,
   "dependencies": {
@@ -47,9 +61,12 @@
     "@angular-devkit/build-angular": "^18.2.3",
     "@angular/cli": "^18.2.6",
     "@angular/compiler-cli": "^18.2.0",
+    "@electron/remote": "^2.1.2",
     "@ionic/angular-toolkit": "latest",
     "@types/jasmine": "~5.1.0",
     "@types/pouchdb-adapter-idb": "^6.1.7",
+    "electron": "^33.0.2",
+    "electron-builder": "^25.1.8",
     "husky": "^9.1.6",
     "jasmine-core": "~5.2.0",
     "karma": "~6.4.0",
