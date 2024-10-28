@@ -12,10 +12,17 @@
 
 ## Capturas de Pantalla
 
-![Home screen (light)](<screenshots/Home%20screen%20(light).png>)
-![Home screen (dark)](<screenshots/Home%20screen%20(dark).png>)
-![Notes screen (light)](<screenshots/Notes%20screen%20(light).png>)
-![Notes screen (dark)](<screenshots/Notes%20screen%20(dark).png>)
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/francids/productiva-mente/main/screenshots/Home%20screen%20(light).png">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/francids/productiva-mente/main/screenshots/Home%20screen%20(dark).png">
+  <img alt="Home screen" src="https://raw.githubusercontent.com/francids/productiva-mente/main/screenshots/Home%20screen%20(light).png">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/francids/productiva-mente/main/screenshots/Notes%20screen%20(light).png">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/francids/productiva-mente/main/screenshots/Notes%20screen%20(dark).png">
+  <img alt="Tasks screen" src="https://raw.githubusercontent.com/francids/productiva-mente/main/screenshots/Notes%20screen%20(light).png">
+</picture>
 
 ## Tecnologías
 
