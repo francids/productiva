@@ -10,6 +10,8 @@ import Table from '@editorjs/table';
 import { OutputData } from '@editorjs/editorjs';
 // @ts-ignore
 import DragDrop from "editorjs-drag-drop";
+// @ts-ignore
+import Paragraph from '@editorjs/paragraph';
 
 // Services
 import { NotesService } from '../../services/notes.service';
@@ -84,6 +86,12 @@ export class NoteEditComponent {
         holder: this.editorElement?.nativeElement,
         placeholder: 'Escribe algo interesante...',
         tools: {
+          paragraph: {
+            class: Paragraph as BlockToolConstructable,
+            config: {
+              preserveBlank: true,
+            }
+          },
           list: {
             class: NestedList as unknown as BlockToolConstructable,
             config: {
