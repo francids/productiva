@@ -117,6 +117,9 @@ importers:
       '@types/pouchdb-adapter-idb':
         specifier: ^6.1.7
         version: 6.1.7
+      editorjs-drag-drop:
+        specifier: ^1.1.16
+        version: 1.1.16
       electron:
         specifier: ^33.0.2
         version: 33.0.2
@@ -3164,6 +3167,9 @@ packages:
 
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
+
+  editorjs-drag-drop@1.1.16:
+    resolution: {integrity: sha512-yOyKZqqZepkdbDQbAw1bZr3mQewkT4a9QgufWW3Aoy1qcTka8uHR01T/dGHqrpyYrF56ykyidPyp0LX79LEHHQ==}
 
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
@@ -9544,6 +9550,8 @@ snapshots:
   dotenv@16.4.5: {}
 
   eastasianwidth@0.2.0: {}
+
+  editorjs-drag-drop@1.1.16: {}
 
   ee-first@1.1.1: {}
 

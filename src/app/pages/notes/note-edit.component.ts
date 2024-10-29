@@ -8,6 +8,8 @@ import Header from '@editorjs/header';
 import NestedList from '@editorjs/nested-list';
 import Table from '@editorjs/table';
 import { OutputData } from '@editorjs/editorjs';
+// @ts-ignore
+import DragDrop from "editorjs-drag-drop";
 
 // Services
 import { NotesService } from '../../services/notes.service';
@@ -111,6 +113,7 @@ export class NoteEditComponent {
           this.saveNote();
         },
         onReady: () => {
+          new DragDrop(this.editor);
           this.editorElement?.nativeElement.addEventListener(
             "keydown",
             (event: KeyboardEvent) => {
