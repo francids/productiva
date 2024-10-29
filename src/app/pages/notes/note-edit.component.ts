@@ -76,29 +76,29 @@ export class NoteEditComponent {
       this.editor = new EditorJS({
         autofocus: true,
         inlineToolbar: false,
+        minHeight: 100,
         data: noteValue,
-        minHeight: 300,
+        defaultBlock: 'paragraph',
         holder: this.editorElement?.nativeElement,
         placeholder: 'Escribe algo interesante...',
         tools: {
           list: {
             class: NestedList as unknown as BlockToolConstructable,
-            inlineToolbar: true,
             config: {
               defaultStyle: 'unordered'
             }
           },
           header: {
             class: Header as unknown as BlockToolConstructable,
+            shortcut: 'CMD+SHIFT+H',
             config: {
               placeholder: 'Introduce un encabezado...',
-              levels: [2, 3, 4],
-              defaultLevel: 2,
+              levels: [1, 2, 3],
+              defaultLevel: 1,
             }
           },
           table: {
             class: Table as unknown as BlockToolConstructable,
-            inlineToolbar: true,
             config: {
               rows: 2,
               cols: 3,
@@ -107,7 +107,20 @@ export class NoteEditComponent {
             }
           }
         },
-        onChange: () => this.saveNote(),
+        onChange: (api, event) => {
+          this.saveNote();
+        },
+        onReady: () => {
+          this.editorElement?.nativeElement.addEventListener(
+            "keydown",
+            (event: KeyboardEvent) => {
+              if (event.ctrlKey && event.key === 's') {
+                event.preventDefault();
+                this.saveNote();
+              }
+            }
+          );
+        }
       });
     });
   };

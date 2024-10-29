@@ -27,6 +27,7 @@
             "styles": [
               "src/styles/styles.scss",
               "src/styles/m3-theme.scss",
+              "src/styles/editor.scss",
               {
                 "input": "node_modules/@ionic/angular/css/core.css"
               },

@@ -1,5 +1,7 @@
 @use "@angular/material" as mat;
 @use "./m3-theme" as theme;
+
+@use "./editor.scss" as editor;
 @use "../app/components/home-box/home-box.component" as home-box;
 
 @include mat.core();
@@ -16,6 +18,7 @@ body {
   @include mat.typography-hierarchy(theme.$light-theme);
 
   // Components
+  @include editor.theme(theme.$light-theme);
   @include home-box.theme(theme.$light-theme);
 }
 
@@ -25,6 +28,7 @@ body {
   @include mat.all-component-colors(theme.$dark-theme);
 
   // Components
+  @include editor.theme(theme.$dark-theme);
   @include home-box.color(theme.$dark-theme);
 }
 
