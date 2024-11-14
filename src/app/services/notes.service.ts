@@ -23,13 +23,23 @@ export class NotesService {
     this.databaseService.db!["notes"].upsert(note);
   }
 
-  updateNote(noteId: string, newNote: Note): void {
-    this.databaseService.db!["notes"].findOne().where("id").eq(noteId).update({
-      $set: {
-        title: newNote.title,
-        content: newNote.content
+  async updateNote(noteId: string, newNote: Note): Promise<void> {
+    try {
+      const noteDoc = await this.databaseService.db!["notes"].findOne().where("id").eq(noteId).exec();
+
+      if (!noteDoc) {
+        throw new Error(`Nota con ID ${noteId} no encontrada.`);
       }
-    })
+      await noteDoc.incrementalUpdate({
+        $set: {
+          title: newNote.title,
+          content: newNote.content
+        }
+      });
+      console.log("Nota actualizada con éxito.");
+    } catch (error) {
+      console.error("Error al actualizar la nota:", error);
+    }
   }
 
   deleteNote(noteId: string) {

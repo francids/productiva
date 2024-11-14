@@ -85,8 +85,8 @@ export class NoteEditComponent implements AfterViewInit {
       .create();
   }
 
-  saveNote(noteContent: string): void {
-    this.notesService.updateNote(this.note().id, {
+  async saveNote(noteContent: string): Promise<void> {
+    await this.notesService.updateNote(this.note().id, {
       id: this.note().id,
       title: this.note().title,
       content: noteContent
