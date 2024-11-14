@@ -4,7 +4,7 @@
       <mat-icon>arrow_back</mat-icon>
     </button>
     <span class="spacer"></span>
-    <span>{{ this.note()?.title }}</span>
+    <span>{{ this.note().title }}</span>
     <span class="spacer"></span>
     <button mat-icon-button (click)="openDialogEditTitleNote()">
       <mat-icon fontSet="material-icons-outlined">edit</mat-icon>
@@ -14,6 +14,6 @@
     </button>
   </mat-toolbar>
   <section>
-    <div #editor></div>
+    <div #editorRef></div>
   </section>
 </main>

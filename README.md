@@ -31,4 +31,4 @@
 - [Angular](https://angular.dev/): Utilizado como el framework principal para construir la aplicación.
 - [Material](https://material.angular.io/): Implementado para proporcionar componentes de diseño que mejoran la usabilidad y la estética de la aplicación.
 - [RxDB](https://rxdb.info/): Empleado para gestionar la base de datos local de manera reactiva, facilitando la sincronización de datos.
-- [Editor.js](https://editorjs.io/): Integrado como el editor de contenido enriquecido, permitiendo a los usuarios crear y formatear notas de manera intuitiva.
+- [Milkdown](https://milkdown.dev/): Integrado como el editor de contenido enriquecido, permitiendo a los usuarios crear y formatear notas de manera intuitiva.

@@ -9,79 +9,12 @@
   $border: mat.get-theme-color($theme, surface);
   $text: mat.get-theme-color($theme, on-surface);
 
-  .ce-toolbar__plus,
-  .ce-toolbar__settings-btn {
+  .milkdown-editor {
     color: #{$text};
-    background-color: #{$primary};
-  }
-
-  .ce-popover-item__title,
-  .ce-popover-item__icon {
-    background-color: transparent;
-  }
-
-  .cdx-search-field.ce-popover__search {
-    border-color: #{$border};
-    background-color: #{$primary};
-  }
-
-  .cdx-search-field__input {
-    color: #{$text};
-    background-color: #{$primary};
-  }
-
-  .cdx-block,
-  .ce-block {
-    color: #{$text};
-  }
-
-  .ce-inline-toolbar,
-  .ce-conversion-tool__icon,
-  .tc-popover__item-icon {
-    color: #{$text};
-    background-color: #{$primary};
-    border-color: #{$border};
-  }
-
-  .ce-popover,
-  .ce-popover__container,
-  .ce-conversion-toolbar,
-  .ce-inline-toolbar,
-  .tc-popover {
-    background-color: #{$primary};
-    border-color: #{$border};
-  }
-
-  .ce-inline-tool:hover,
-  .ce-inline-toolbar__dropdown:hover,
-  .ce-toolbar__plus:hover,
-  .ce-toolbar__settings-btn:hover,
-  .ce-conversion-tool:hover,
-  .ce-popover-item:hover {
-    background-color: #{$selected};
-  }
-
-  .ce-popover-item-separator__line {
-    background-color: #{$border};
-    opacity: 0.5;
-  }
-
-  *::selection,
-  .ce-block.ce-block--selected .ce-block__content {
-    background-color: #{$selected};
-  }
-
-  .ce-popover__items {
-    scrollbar-color: #{$border} #{$main};
-  }
-
-  .tc-wrap,
-  .tc-wrap * {
-    --color-border: #{$border};
-    --color-text-secondary: #{$text};
-    --color-background: #{$selected};
-    --toggler-dots-color: #{$selected};
-    --toggler-dots-color-hovered: #{$text};
+    background-color: #{$main};
+    outline: none;
+    min-height: 75vh;
+    padding-bottom: 2rem;
   }
 }
 
