@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+main {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+}
+
+.fab-button {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 1000;
+}
