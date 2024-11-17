@@ -1,5 +1,5 @@
 // Angular
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
 // Services
@@ -35,7 +35,7 @@ import { DelNoteDialogComponent } from '../../components/notes/del-note-dialog.c
   imports: [MatCardModule, MatButtonModule, MatRippleModule, MatMenuModule, MatIconModule, CdkDrag],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NoteWelcomeComponent {
+export class NoteWelcomeComponent implements AfterViewInit {
   notes = signal<{
     id: string,
     title: string,
@@ -65,9 +65,12 @@ export class NoteWelcomeComponent {
     private notesService: NotesService,
     private titleService: TitleService,
   ) {
-    this.titleService.updateTitle('Notas');
     this.loadNotes();
   };
+
+  ngAfterViewInit() {
+    Promise.resolve().then(() => this.titleService.updateTitle("Notas"));
+  }
 
   async loadNotes(): Promise<void> {
     this.notesService.notes$.subscribe((notes: Note[]) => {

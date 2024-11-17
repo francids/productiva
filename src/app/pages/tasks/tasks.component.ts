@@ -24,10 +24,8 @@ import { Task } from '../../models/task.model';
 })
 export class TasksComponent implements AfterViewInit {
   constructor(
-    private titleService: TitleService
-  ) {
-    this.titleService.updateTitle('Tareas');
-  }
+    private titleService: TitleService,
+  ) { }
 
   tasks: Task[] = [
     {
@@ -74,6 +72,7 @@ export class TasksComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit() {
+    Promise.resolve().then(() => this.titleService.updateTitle("Tareas"));
     this.dataSource.sort = this.sort;
   }
 };
