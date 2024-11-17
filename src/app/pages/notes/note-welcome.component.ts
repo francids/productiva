@@ -32,7 +32,7 @@ import { DelNoteDialogComponent } from '../../components/notes/del-note-dialog.c
   standalone: true,
   templateUrl: './note-welcome.component.html',
   styleUrl: './note-welcome.component.scss',
-  imports: [RouterLink, MatCardModule, MatButtonModule, MatRippleModule, MatMenuModule, MatIconModule, CdkDrag],
+  imports: [MatCardModule, MatButtonModule, MatRippleModule, MatMenuModule, MatIconModule, CdkDrag],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NoteWelcomeComponent {
@@ -70,7 +70,7 @@ export class NoteWelcomeComponent {
   };
 
   async loadNotes(): Promise<void> {
-    this.notesService.notes$?.subscribe((notes: Note[]) => {
+    this.notesService.notes$.subscribe((notes: Note[]) => {
       this.notes.set(notes.map(note => ({
         id: note.id,
         title: note.title,
@@ -79,9 +79,9 @@ export class NoteWelcomeComponent {
     });
   };
 
-  createNewNote(title: string): void {
+  async createNewNote(title: string): Promise<void> {
     const newNoteId = uuidv4();
-    this.notesService.saveNote({
+    await this.notesService.saveNote({
       id: newNoteId,
       title: title,
       content: ''
@@ -101,10 +101,10 @@ export class NoteWelcomeComponent {
       }
     );
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(async result => {
       if (result !== undefined) {
         this.newNoteTitle.set(result);
-        this.createNewNote(this.newNoteTitle());
+        await this.createNewNote(this.newNoteTitle());
       }
     });
   };

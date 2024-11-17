@@ -5,12 +5,12 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { BrowserModule } from '@angular/platform-browser';
-import { RxdbService } from './services/rxdb.service';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { ThemeService } from './services/theme.service';
+import { DexieService } from './services/db.service';
 
-export function initializeDatabase(rxdbService: RxdbService) {
-  return () => rxdbService.init();
+export function initializeDatabase(dexieService: DexieService) {
+  return () => dexieService.init();
 }
 
 export function initializeTheme(themeService: ThemeService) {
@@ -29,7 +29,7 @@ export const appConfig: ApplicationConfig = {
     {
       provide: APP_INITIALIZER,
       useFactory: initializeDatabase,
-      deps: [RxdbService],
+      deps: [DexieService],
       multi: true,
     },
     {

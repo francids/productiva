@@ -1,48 +1,40 @@
 import { Injectable } from "@angular/core";
-import { RxdbService } from "./rxdb.service";
-import { Observable } from "rxjs";
+import { DexieService } from "./db.service";
+import { BehaviorSubject, Observable, from } from "rxjs";
 import { Note } from "../models/note.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotesService {
-  public notes$: Observable<Note[]> | undefined;
+  private notesSubject = new BehaviorSubject<Note[]>([]);
+  public notes$ = this.notesSubject.asObservable();
 
-  constructor(private databaseService: RxdbService) {
-    this.notes$ = this.databaseService.db!["notes"].find().$;
+  constructor(private dexieService: DexieService) {
+    this.loadNotes();
   }
 
-  async getNoteById(noteId: string): Promise<Note> {
-    return await this.databaseService.db!["notes"].findOne({
-      selector: { id: noteId }
-    }).exec();
+  private async loadNotes(): Promise<void> {
+    const notes = await this.dexieService.db.notes.toArray();
+    this.notesSubject.next(notes);
   }
 
-  saveNote(note: Note): void {
-    this.databaseService.db!["notes"].upsert(note);
+  async getNoteById(noteId: string): Promise<Note | undefined> {
+    return await this.dexieService.db.notes.get(noteId);
+  }
+
+  async saveNote(note: Note): Promise<void> {
+    await this.dexieService.db.notes.put(note);
+    this.loadNotes();
   }
 
   async updateNote(noteId: string, newNote: Note): Promise<void> {
-    try {
-      const noteDoc = await this.databaseService.db!["notes"].findOne().where("id").eq(noteId).exec();
-
-      if (!noteDoc) {
-        throw new Error(`Nota con ID ${noteId} no encontrada.`);
-      }
-      await noteDoc.incrementalUpdate({
-        $set: {
-          title: newNote.title,
-          content: newNote.content
-        }
-      });
-      console.log("Nota actualizada con éxito.");
-    } catch (error) {
-      console.error("Error al actualizar la nota:", error);
-    }
+    await this.dexieService.db.notes.update(noteId, newNote);
+    this.loadNotes();
   }
 
-  deleteNote(noteId: string) {
-    this.databaseService.db!["notes"].find().where('id').eq(noteId).remove();
+  async deleteNote(noteId: string): Promise<void> {
+    await this.dexieService.db.notes.delete(noteId);
+    this.loadNotes();
   }
 }
