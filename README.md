@@ -24,6 +24,12 @@
   <img alt="Tasks screen" src="https://raw.githubusercontent.com/francids/productiva-mente/main/screenshots/Notes%20screen%20(light).png">
 </picture>
 
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/francids/productiva-mente/main/screenshots/Tasks%20screen%20(light).png">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/francids/productiva-mente/main/screenshots/Tasks%20screen%20(dark).png">
+  <img alt="Tasks screen" src="https://raw.githubusercontent.com/francids/productiva-mente/main/screenshots/Tasks%20screen%20(light).png">
+</picture>
+
 ## Tecnologías
 
 **Productiva Mente** está desarrollada utilizando las siguientes tecnologías:
