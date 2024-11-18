@@ -10,6 +10,7 @@ import { listener, listenerCtx } from '@milkdown/kit/plugin/listener';
 
 // Services
 import { NotesService } from '../../services/notes.service';
+import { TitleService } from '../../services/title.service';
 
 // Material Components
 import { MatDialog } from '@angular/material/dialog';
@@ -46,6 +47,7 @@ export class NoteEditComponent implements AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private notesService: NotesService,
+    private titleService: TitleService,
   ) { };
 
   ngAfterViewInit(): void {
@@ -57,6 +59,7 @@ export class NoteEditComponent implements AfterViewInit {
         return;
       }
       this.note.set(fetchedNote);
+      Promise.resolve().then(() => this.titleService.updateTitle(fetchedNote.title));
       this.initEditor();
     });
   };
@@ -106,6 +109,7 @@ export class NoteEditComponent implements AfterViewInit {
           content: this.note().content
         });
         this.note.set({ ...this.note(), title: result });
+        this.titleService.updateTitle(result);
         this._snackBar.open('Título de la nota editado', 'Cerrar', { duration: 2000 });
       };
     });
