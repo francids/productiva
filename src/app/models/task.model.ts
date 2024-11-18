@@ -2,5 +2,5 @@ export interface Task {
   id: string,
   title: string,
   description: string,
-  completed: boolean,
+  status: 0 | 1 | 2,
 };

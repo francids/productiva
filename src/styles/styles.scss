@@ -28,7 +28,7 @@ body {
   @include mat.all-component-colors(theme.$dark-theme);
 
   // Components
-  @include editor.theme(theme.$dark-theme);
+  @include editor.color(theme.$dark-theme);
   @include home-box.color(theme.$dark-theme);
 }
 
