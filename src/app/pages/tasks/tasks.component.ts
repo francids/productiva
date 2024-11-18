@@ -25,13 +25,14 @@ import { Task } from '../../models/task.model';
 import { NewTaskDialogComponent } from '../../components/tasks/new-task-dialog.component';
 import { EditTaskDialogComponent } from '../../components/tasks/edit-task-dialog.component';
 import { DelTaskDialogComponent } from '../../components/tasks/del-task-dialog.component';
+import { TaskStatusSelectComponent } from "../../components/tasks/task-status-select.component";
 
 @Component({
   selector: 'tasks-page',
   standalone: true,
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.scss',
-  imports: [MatTableModule, MatSelectModule, FormsModule, MatButtonModule, MatIconModule, MatSortModule],
+  imports: [MatTableModule, MatSelectModule, FormsModule, MatButtonModule, MatIconModule, MatSortModule, TaskStatusSelectComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksComponent implements AfterViewInit {
@@ -39,7 +40,9 @@ export class TasksComponent implements AfterViewInit {
   readonly dialog = inject(MatDialog);
   private _snackBar = inject(MatSnackBar);
 
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatSort) set matSort(sort: MatSort) {
+    this.dataSource.sort = sort;
+  }
 
   constructor(
     private tasksService: TasksService,
@@ -57,7 +60,6 @@ export class TasksComponent implements AfterViewInit {
     Promise.resolve().then(() => {
       this.titleService.updateTitle("Tareas");
     });
-    this.dataSource.sort = this.sort;
   }
 
   private async createTask(title: string, description: string): Promise<void> {
@@ -70,7 +72,7 @@ export class TasksComponent implements AfterViewInit {
     });
   }
 
-  async updateTaskStatus(task: Task, status: 0 | 1 | 2): Promise<void> {
+  async updateTaskStatus(task: Task, status: Task["status"]): Promise<void> {
     task.status = status;
     await this.updateTask(task);
   }

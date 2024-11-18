@@ -3,6 +3,8 @@
 
 @use "./editor.scss" as editor;
 @use "../app/components/home-box/home-box.component" as home-box;
+@use "../app/components/tasks/task-status-select.component" as
+  task-status-select;
 
 @include mat.core();
 
@@ -20,6 +22,7 @@ body {
   // Components
   @include editor.theme(theme.$light-theme);
   @include home-box.theme(theme.$light-theme);
+  @include task-status-select.theme(theme.$light-theme);
 }
 
 .darkmode {
@@ -30,6 +33,7 @@ body {
   // Components
   @include editor.color(theme.$dark-theme);
   @include home-box.color(theme.$dark-theme);
+  @include task-status-select.color(theme.$dark-theme);
 }
 
 body {
