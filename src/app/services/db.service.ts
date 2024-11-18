@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import Dexie from 'dexie';
 import { Note } from '../models/note.model';
+import { Task } from '../models/task.model';
 
 export class ProductivaDB extends Dexie {
   notes!: Dexie.Table<Note, string>;
+  tasks!: Dexie.Table<Task, string>;
 
   constructor() {
     super('productiva-db');
     this.version(1).stores({
-      notes: 'id, title, content'
+      notes: 'id, title, content',
+      tasks: 'id, title, description, status',
     });
   }
 }

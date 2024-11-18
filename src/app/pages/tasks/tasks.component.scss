@@ -17,3 +17,13 @@ main {
   right: 1rem;
   z-index: 1000;
 }
+
+.no-tasks {
+  display: flex;
+  flex-grow: 0;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+}

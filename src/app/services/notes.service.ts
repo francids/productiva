@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { DexieService } from "./db.service";
-import { BehaviorSubject, Observable, from } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import { Note } from "../models/note.model";
 
 @Injectable({

@@ -1,6 +1,6 @@
 // Angular
 import { AfterViewInit, ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 // Services
 import { NotesService } from '../../services/notes.service';
@@ -36,11 +36,7 @@ import { DelNoteDialogComponent } from '../../components/notes/del-note-dialog.c
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NoteWelcomeComponent implements AfterViewInit {
-  notes = signal<{
-    id: string,
-    title: string,
-    content: string,
-  }[]>([]);
+  notes = signal<Note[]>([]);
   readonly dialog = inject(MatDialog);
   readonly newNoteTitle = signal('');
   private _snackBar = inject(MatSnackBar);
@@ -56,7 +52,7 @@ export class NoteWelcomeComponent implements AfterViewInit {
     if (this.mouseDownTimeout) {
       clearTimeout(this.mouseDownTimeout);
       this.mouseDownTimeout = null;
-      this.navigateToNoteDetail(noteId);
+      this.router.navigate(['/notes/edit', noteId]);
     };
   };
 
@@ -72,13 +68,9 @@ export class NoteWelcomeComponent implements AfterViewInit {
     Promise.resolve().then(() => this.titleService.updateTitle("Notas"));
   }
 
-  async loadNotes(): Promise<void> {
+  private loadNotes(): void {
     this.notesService.notes$.subscribe((notes: Note[]) => {
-      this.notes.set(notes.map(note => ({
-        id: note.id,
-        title: note.title,
-        content: note.content,
-      })));
+      this.notes.set(notes);
     });
   };
 
@@ -92,10 +84,6 @@ export class NoteWelcomeComponent implements AfterViewInit {
     this.router.navigate(['/notes/edit', newNoteId]);
   };
 
-  navigateToNoteDetail(noteId: string): void {
-    this.router.navigate(['/notes/edit', noteId]);
-  };
-
   openDialogCreateNote(): void {
     const dialogRef = this.dialog.open(
       NewNoteDialogComponent,
@@ -105,7 +93,7 @@ export class NoteWelcomeComponent implements AfterViewInit {
     );
 
     dialogRef.afterClosed().subscribe(async result => {
-      if (result !== undefined) {
+      if (result) {
         this.newNoteTitle.set(result);
         await this.createNewNote(this.newNoteTitle());
       }
@@ -118,7 +106,7 @@ export class NoteWelcomeComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
+      if (result) {
         this.notesService.updateNote(note.id, {
           id: note.id,
           title: result,
@@ -136,7 +124,7 @@ export class NoteWelcomeComponent implements AfterViewInit {
     const dialogRef = this.dialog.open(DelNoteDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
+      if (result) {
         this.notesService.deleteNote(note.id);
         this._snackBar.open('Nota eliminada', 'Cerrar', { duration: 2000 });
       };
