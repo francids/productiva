@@ -6,9 +6,9 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 
 @Component({
-  selector: 'new-task-dialog',
+  selector: "edit-task-dialog",
   template: `
-  <h2 mat-dialog-title>Crear tarea</h2>
+  <h2 mat-dialog-title>Editar tarea</h2>
   <mat-dialog-content>
     <form [formGroup]="taskForm" (ngSubmit)="taskForm.valid && onSaveClick()">
       <mat-form-field>
@@ -30,7 +30,7 @@ import { MatInputModule } from "@angular/material/input";
   <mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Cancelar</button>
     <button mat-button (click)="onSaveClick()" [disabled]="taskForm.invalid">
-      Crear tarea
+      Guardar tarea
     </button>
   </mat-dialog-actions>
   `,
@@ -44,21 +44,16 @@ import { MatInputModule } from "@angular/material/input";
   standalone: true,
   imports: [MatDialogModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule],
 })
-export class NewTaskDialogComponent {
-  readonly dialogRef = inject(MatDialogRef<NewTaskDialogComponent>);
+export class EditTaskDialogComponent {
+  readonly dialogRef = inject(MatDialogRef<EditTaskDialogComponent>);
   readonly data = inject<{ title: string, description: string }>(MAT_DIALOG_DATA);
   taskForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
     this.taskForm = this.fb.group({
-      title: [
-        this.data.title, [Validators.required],
-      ],
-      description: [
-        this.data.description,
-        [Validators.required],
-      ],
-    })
+      title: [this.data.title, [Validators.required]],
+      description: [this.data.description, [Validators.required]],
+    });
   };
 
   onNoClick(): void {
@@ -67,7 +62,8 @@ export class NewTaskDialogComponent {
 
   onSaveClick(): void {
     if (this.taskForm.valid) {
-      this.dialogRef.close(this.taskForm.value);
+      const newTask = this.taskForm.value;
+      this.dialogRef.close(newTask);
     };
   };
 };

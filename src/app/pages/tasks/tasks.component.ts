@@ -23,6 +23,7 @@ import { Task } from '../../models/task.model';
 
 // Dialogs
 import { NewTaskDialogComponent } from '../../components/tasks/new-task-dialog.component';
+import { EditTaskDialogComponent } from '../../components/tasks/edit-task-dialog.component';
 import { DelTaskDialogComponent } from '../../components/tasks/del-task-dialog.component';
 
 @Component({
@@ -69,6 +70,15 @@ export class TasksComponent implements AfterViewInit {
     });
   }
 
+  async updateTaskStatus(task: Task, status: 0 | 1 | 2): Promise<void> {
+    task.status = status;
+    await this.updateTask(task);
+  }
+
+  private async updateTask(task: Task): Promise<void> {
+    await this.tasksService.updateTask(task);
+  }
+
   openDialogCreateTask() {
     const dialogRef = this.dialog.open(
       NewTaskDialogComponent,
@@ -83,6 +93,26 @@ export class TasksComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe(async result => {
       if (result) {
         await this.createTask(result.title, result.description);
+      }
+    });
+  }
+
+  openDialogEditTask(task: Task) {
+    const dialogRef = this.dialog.open(
+      EditTaskDialogComponent,
+      {
+        data: {
+          title: task.title,
+          description: task.description,
+        },
+      },
+    );
+
+    dialogRef.afterClosed().subscribe(async result => {
+      if (result) {
+        task.title = result.title;
+        task.description = result.description;
+        await this.updateTask(task);
       }
     });
   }

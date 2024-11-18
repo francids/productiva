@@ -24,6 +24,11 @@ export class TasksService {
     this.loadTasks();
   }
 
+  async updateTask(task: Task): Promise<void> {
+    await this.dexieService.db.tasks.update(task.id, task);
+    this.loadTasks();
+  }
+
   async deleteTask(taskId: string): Promise<void> {
     await this.dexieService.db.tasks.delete(taskId);
     this.loadTasks();
