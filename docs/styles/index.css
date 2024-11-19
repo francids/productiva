@@ -14,11 +14,17 @@ body {
   background-color: var(--surface);
   color: var(--main);
   display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
+
+.principal {
+  display: flex;
   flex-direction: column;
   gap: 0;
   justify-content: center;
   align-items: center;
-  user-select: none;
 }
 
 .logo {
