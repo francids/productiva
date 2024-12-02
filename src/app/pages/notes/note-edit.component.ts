@@ -11,6 +11,7 @@ import { listener, listenerCtx } from '@milkdown/kit/plugin/listener';
 // Services
 import { NotesService } from '../../services/notes.service';
 import { TitleService } from '../../services/title.service';
+import { ExportService } from '../../services/export.service';
 
 // Material Components
 import { MatDialog } from '@angular/material/dialog';
@@ -48,6 +49,7 @@ export class NoteEditComponent implements AfterViewInit {
     private router: Router,
     private notesService: NotesService,
     private titleService: TitleService,
+    private exportService: ExportService,
   ) { };
 
   ngAfterViewInit(): void {
@@ -95,6 +97,10 @@ export class NoteEditComponent implements AfterViewInit {
       content: noteContent
     });
   };
+
+  async exportNote(): Promise<void> {
+    await this.exportService.generateNoteFile(this.note().id);
+  }
 
   openDialogEditTitleNote(): void {
     const dialogRef = this.dialog.open(EditTitleNoteDialogComponent, {
