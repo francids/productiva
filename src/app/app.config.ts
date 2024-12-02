@@ -3,7 +3,6 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideServiceWorker } from '@angular/service-worker';
-import { provideIonicAngular } from '@ionic/angular/standalone';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { ThemeService } from './services/theme.service';
@@ -39,6 +38,5 @@ export const appConfig: ApplicationConfig = {
       multi: true,
     },
     provideAnimations(),
-    provideIonicAngular({}),
   ],
 };

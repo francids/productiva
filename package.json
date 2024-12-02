@@ -10,20 +10,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "prepare": "husky",
-    "android:build": "ng build --configuration production && cap sync",
-    "android:open": "cap open android",
     "electron": "ng build --base-href ./ && electron ."
-  },
-  "build": {
-    "appId": "com.example.productiva-mente",
-    "files": [
-      "dist/",
-      "main.js",
-      "preload.js"
-    ],
-    "directories": {
-      "buildResources": "assets"
-    }
   },
   "private": true,
   "dependencies": {
@@ -38,14 +25,8 @@
     "@angular/platform-browser-dynamic": "^18.2.11",
     "@angular/router": "^18.2.11",
     "@angular/service-worker": "^18.2.11",
-    "@capacitor-community/safe-area": "6.0.0-alpha.7",
-    "@capacitor/android": "^6.1.2",
-    "@capacitor/cli": "^6.1.2",
-    "@capacitor/core": "^6.1.2",
-    "@ionic/angular": "8.3.2",
     "@milkdown/kit": "^7.5.5",
     "@milkdown/theme-nord": "^7.5.0",
-    "@types/uuid": "^10.0.0",
     "dexie": "^4.0.9",
     "rxjs": "~7.8.1",
     "sass": "^1.80.6",
@@ -58,7 +39,7 @@
     "@angular/cli": "^18.2.11",
     "@angular/compiler-cli": "^18.2.11",
     "@electron/remote": "^2.1.2",
-    "@ionic/angular-toolkit": "latest",
+    "@types/uuid": "^10.0.0",
     "@types/jasmine": "~5.1.4",
     "electron": "^33.2.0",
     "electron-builder": "^25.1.8",
