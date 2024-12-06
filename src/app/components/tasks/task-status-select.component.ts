@@ -15,8 +15,7 @@ import { Task } from "../../models/task.model";
     <mat-option [value]="2">Completado</mat-option>
   </mat-select>
   `,
-  standalone: true,
-  imports: [MatSelectModule],
+  imports: [MatSelectModule]
 })
 export class TaskStatusSelectComponent {
   @Input({ required: true }) task!: Task;

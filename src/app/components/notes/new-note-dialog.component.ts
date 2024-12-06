@@ -28,8 +28,7 @@ import { MatInputModule } from '@angular/material/input';
     </button>
   </mat-dialog-actions>
   `,
-  standalone: true,
-  imports: [MatDialogModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule],
+  imports: [MatDialogModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule]
 })
 export class NewNoteDialogComponent {
   readonly dialogRef = inject(MatDialogRef<NewNoteDialogComponent>);

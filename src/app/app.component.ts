@@ -22,7 +22,6 @@ import 'zone.js/plugins/zone-patch-rxjs';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [RouterLink, RouterOutlet, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatDividerModule, LogoComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

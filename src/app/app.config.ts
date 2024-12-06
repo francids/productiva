@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection, isDevMode, importProvidersFrom, APP_INITIALIZER } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection, isDevMode, importProvidersFrom, inject, provideAppInitializer } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -25,18 +25,14 @@ export const appConfig: ApplicationConfig = {
       registrationStrategy: 'registerWhenStable:30000'
     }),
     importProvidersFrom(BrowserModule),
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeDatabase,
-      deps: [DexieService],
-      multi: true,
-    },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeTheme,
-      deps: [ThemeService],
-      multi: true,
-    },
+    provideAppInitializer(() => {
+      const initializerFn = (initializeDatabase)(inject(DexieService));
+      return initializerFn();
+    }),
+    provideAppInitializer(() => {
+      const initializerFn = (initializeTheme)(inject(ThemeService));
+      return initializerFn();
+    }),
     provideAnimations(),
   ],
 };

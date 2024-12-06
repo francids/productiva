@@ -29,11 +29,10 @@ import { DelNoteDialogComponent } from '../../components/notes/del-note-dialog.c
 
 @Component({
   selector: 'note-welcome',
-  standalone: true,
   templateUrl: './note-welcome.component.html',
   styleUrl: './note-welcome.component.scss',
   imports: [MatCardModule, MatButtonModule, MatRippleModule, MatMenuModule, MatIconModule, CdkDrag],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NoteWelcomeComponent implements AfterViewInit {
   notes = signal<Note[]>([]);

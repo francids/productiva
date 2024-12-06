@@ -3,7 +3,6 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'notes-page',
-  standalone: true,
   imports: [RouterOutlet],
   template: `<router-outlet></router-outlet>`,
   styles: [`
@@ -11,6 +10,6 @@ import { RouterOutlet } from '@angular/router';
     display: flex;
     flex-grow: 1;
   }
-  `],
+  `]
 })
 export class NotesComponent { };

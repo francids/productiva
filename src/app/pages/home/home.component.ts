@@ -4,10 +4,9 @@ import { HomeBoxComponent } from "../../components/home-box/home-box.component";
 
 @Component({
   selector: 'home-page',
-  standalone: true,
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
-  imports: [HomeBoxComponent],
+  imports: [HomeBoxComponent]
 })
 export class HomeComponent implements AfterViewInit {
   constructor(

@@ -12,7 +12,6 @@ import { ThemeService } from "../../services/theme.service";
 
 @Component({
   selector: "settings-page",
-  standalone: true,
   templateUrl: "./settings.component.html",
   styleUrl: "./settings.component.scss",
   imports: [MatSlideToggleModule, MatDividerModule, MatCardModule]

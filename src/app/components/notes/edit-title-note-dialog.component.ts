@@ -28,8 +28,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
     </button>
   </mat-dialog-actions>
   `,
-  standalone: true,
-  imports: [MatDialogModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule],
+  imports: [MatDialogModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule]
 })
 export class EditTitleNoteDialogComponent {
   readonly dialogRef = inject(MatDialogRef<EditTitleNoteDialogComponent>);

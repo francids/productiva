@@ -41,8 +41,7 @@ import { MatInputModule } from "@angular/material/input";
     align-items: flex-start;
   }
   `],
-  standalone: true,
-  imports: [MatDialogModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule],
+  imports: [MatDialogModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule]
 })
 export class NewTaskDialogComponent {
   readonly dialogRef = inject(MatDialogRef<NewTaskDialogComponent>);

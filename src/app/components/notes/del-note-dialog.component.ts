@@ -15,8 +15,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/materia
     </button>
   </mat-dialog-actions>
 `,
-  standalone: true,
-  imports: [MatDialogModule, MatButtonModule],
+  imports: [MatDialogModule, MatButtonModule]
 })
 export class DelNoteDialogComponent {
   readonly dialogRef = inject(MatDialogRef<DelNoteDialogComponent>);

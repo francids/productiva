@@ -5,7 +5,6 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home-box',
-  standalone: true,
   templateUrl: './home-box.component.html',
   styleUrl: './home-box.component.scss',
   imports: [MatCardModule, MatRippleModule, RouterLink]

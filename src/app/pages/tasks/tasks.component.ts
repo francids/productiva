@@ -29,11 +29,10 @@ import { TaskStatusSelectComponent } from "../../components/tasks/task-status-se
 
 @Component({
   selector: 'tasks-page',
-  standalone: true,
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.scss',
   imports: [MatTableModule, MatSelectModule, FormsModule, MatButtonModule, MatIconModule, MatSortModule, TaskStatusSelectComponent],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TasksComponent implements AfterViewInit {
   tasks = signal<Task[]>([]);

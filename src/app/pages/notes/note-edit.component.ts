@@ -31,9 +31,8 @@ import { DelNoteDialogComponent } from '../../components/notes/del-note-dialog.c
   selector: 'note-edit',
   templateUrl: './note-edit.component.html',
   styleUrl: './note-edit.component.scss',
-  standalone: true,
   imports: [RouterLink, MatButtonModule, MatIconModule, MatToolbarModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NoteEditComponent implements AfterViewInit {
   noteId: string | undefined;
