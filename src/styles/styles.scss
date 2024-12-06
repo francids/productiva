@@ -6,7 +6,8 @@
 @use "../app/components/tasks/task-status-select.component" as
   task-status-select;
 
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 
 html,
 body {
