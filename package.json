@@ -1,7 +1,7 @@
 {
   "name": "productiva-mente",
   "version": "0.0.0",
-  "main": "main.js",
+  "main": "desktop/main.js",
   "type": "module",
   "scripts": {
     "ng": "ng",

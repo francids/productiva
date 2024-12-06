@@ -12,13 +12,12 @@ function createWindow() {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
-      enableRemoteModule: true
     },
   });
 
   mainWindow.setMenu(null);
 
-  mainWindow.loadURL(`file://${__dirname}/dist/productiva-mente/browser/index.html`);
+  mainWindow.loadURL(`file://${__dirname}/../dist/productiva-mente/browser/index.html`);
 }
 
 app.on('ready', createWindow);
