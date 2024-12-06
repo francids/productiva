@@ -27,27 +27,16 @@ article {
   align-items: center;
   align-content: center;
   justify-content: center;
-  width: 100%;
+  width: 90%;
   height: 100%;
   gap: 2rem;
   margin: 1rem;
-  padding-left: 4rem;
-  padding-right: 4rem;
   user-select: none;
-}
-
-@media (max-width: 1024px) {
-  article.list-notes {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
 }
 
 @media (max-width: 768px) {
   article.list-notes {
     gap: 1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
   }
 }
 
