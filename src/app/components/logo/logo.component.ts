@@ -1,12 +1,11 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ThemeService } from '../services/theme.service';
+import { ThemeService } from '../../services/theme.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-logo',
+  selector: "app-logo",
   standalone: true,
-  templateUrl: './logo.component.html',
-  styleUrl: "./logo.component.scss",
+  templateUrl: "./logo.component.html",
 })
 export class LogoComponent implements OnInit, OnDestroy {
   @Input() width: string = '500px';

@@ -12,7 +12,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import { LogoComponent } from "./logo/logo.component";
+
+// Components
+import { LogoComponent } from "./components/logo/logo.component";
 
 // Services
 import { TitleService } from './services/title.service';
