@@ -1,14 +1,13 @@
 # Productiva Mente
 
-**Productiva Mente** es una aplicación para la gestión de tareas y notas de texto con formato enriquecido, diseñada para funcionar de manera local y sin depender de estar en línea.
+**Productiva Mente** es una aplicación web para la gestión de tareas y notas, diseñada para funcionar completamente de forma local en tu navegador.
 
-## Características
+## Características Principales
 
-- **Totalmente Gratuita y de Código Abierto**: Disfruta de todas las funcionalidades sin costo alguno y contribuye al desarrollo del proyecto.
-- **Funcionalidad Offline**: Permite trabajar en tus tareas y notas sin depender de una conexión a Internet.
-- **Organización Eficiente**: Herramientas intuitivas para una gestión óptima de tus tareas y notas.
-- **Sin Publicidad**: Navega y utiliza la aplicación sin interrupciones ni distracciones.
-- **Seguridad y Privacidad**: Tus datos son completamente tuyos. No almacenamos información en la nube, garantizando así tu privacidad.
+- **Gratuita y de Código Abierto**: Usa y contribuye a este proyecto sin costo alguno.
+- **Funciona sin Internet**: Una vez cargada la aplicación, puedes gestionar tus datos sin conexión.
+- **Privacidad Garantizada**: Tus datos se almacenan localmente en tu navegador, asegurando tu privacidad.
+- **Sin Publicidad**: Disfruta de una experiencia sin interrupciones.
 
 ## Capturas de Pantalla
 
@@ -30,11 +29,9 @@
   <img alt="Tasks screen" src="https://raw.githubusercontent.com/francids/productiva-mente/main/screenshots/Tasks%20screen%20(light).png">
 </picture>
 
-## Tecnologías
+## Tecnologías Utilizadas
 
-**Productiva Mente** está desarrollada utilizando las siguientes tecnologías:
-
-- [Angular](https://angular.dev/): Utilizado como el framework principal para construir la aplicación.
-- [Material](https://material.angular.io/): Implementado para proporcionar componentes de diseño que mejoran la usabilidad y la estética de la aplicación.
-- [Dexie](https://dexie.org/): Empleado para gestionar la base de datos local de manera eficiente y sencilla.
-- [Milkdown](https://milkdown.dev/): Integrado como el editor de contenido enriquecido, permitiendo a los usuarios crear y formatear notas de manera intuitiva.
+- [Angular](https://angular.dev/): Framework principal para la construcción de la aplicación.
+- [Material](https://material.angular.io/): Componentes de diseño para una interfaz de usuario moderna y accesible.
+- [Dexie](https://dexie.org/): Base de datos local para almacenamiento eficiente.
+- [Milkdown](https://milkdown.dev/): Editor de texto enriquecido para la creación de notas.
