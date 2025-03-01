@@ -9,6 +9,10 @@
 - **Privacidad Garantizada**: Tus datos se almacenan localmente en tu navegador, asegurando tu privacidad.
 - **Sin Publicidad**: Disfruta de una experiencia sin interrupciones.
 
+## Acceso a la Aplicación
+
+La aplicación está disponible en: [https://productiva-mente.onrender.com/](https://productiva-mente.onrender.com/)
+
 ## Capturas de Pantalla
 
 <picture>
