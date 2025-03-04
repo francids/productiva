@@ -1,11 +1,10 @@
 # Productiva Mente
 
-**Productiva Mente** es una aplicación web para la gestión de tareas y notas, diseñada para funcionar completamente de forma local en tu navegador.
+**Productiva Mente** es una aplicación web para la gestión de tareas y notas diseñada con la línea de diseño de Material.
 
 ## Características Principales
 
 - **Gratuita y de Código Abierto**: Usa y contribuye a este proyecto sin costo alguno.
-- **Funciona sin Internet**: Una vez cargada la aplicación, puedes gestionar tus datos sin conexión.
 - **Privacidad Garantizada**: Tus datos se almacenan localmente en tu navegador, asegurando tu privacidad.
 - **Sin Publicidad**: Disfruta de una experiencia sin interrupciones.
 
