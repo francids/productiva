@@ -25,6 +25,25 @@ const Configuration: UserConfig = {
         "ci",
         "docs",
         "build",
+        "release",
+      ],
+    ],
+    "scope-empty": [
+      RuleConfigSeverity.Error,
+      "never",
+    ],
+    "scope-enum": [
+      RuleConfigSeverity.Error,
+      "always",
+      [
+        "frontend",
+        "backend",
+        "docs",
+        "infra",
+        "ci",
+        "deps",
+        "config",
+        "test"
       ],
     ],
     "subject-case": [

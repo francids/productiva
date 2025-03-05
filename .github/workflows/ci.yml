@@ -9,9 +9,20 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Extract commit info
+        id: commit_info
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          COMMIT_TYPE=$(echo "$COMMIT_MSG" | grep -oP "^([a-z]+)(?=\([a-z]+\):)" || echo "")
+          COMMIT_SCOPE=$(echo "$COMMIT_MSG" | grep -oP "(?<=\()([a-z]+)(?=\):)" || echo "")
+          echo "commit_type=$COMMIT_TYPE" >> $GITHUB_OUTPUT
+          echo "commit_scope=$COMMIT_SCOPE" >> $GITHUB_OUTPUT
+          echo "Commit type: $COMMIT_TYPE, scope: $COMMIT_SCOPE"
+
       - name: Deploy
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && (steps.commit_info.outputs.commit_type == 'release' && steps.commit_info.outputs.commit_scope == 'docs')
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
+          echo "Deploying docs release..."
           curl "$deploy_url"
