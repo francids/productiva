@@ -1,6 +1,6 @@
 version: 2
 updates:
-  - package-ecosystem: "npm"
+  - package-ecosystem: "pnpm"
     directory: "/"
     schedule:
       interval: "weekly"
@@ -8,3 +8,10 @@ updates:
       prefix: "deps"
       prefix-development: "chore"
       include: "scope"
+    groups:
+      devDependencies:
+        patterns:
+          - "devDependencies"
+      dependencies:
+        patterns:
+          - "dependencies"
