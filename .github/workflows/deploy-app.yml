@@ -15,7 +15,7 @@ jobs:
       - name: Deploy
         if: github.ref == 'refs/heads/main'
         env:
-          deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+          deploy_url: ${{ secrets.NETLIFY_DEPLOY_HOOK_URL }}
         run: |
-          echo "Deploying docs release..."
-          curl "$deploy_url"
+          echo "Deploying app release..."
+          curl -X POST "$deploy_url"
