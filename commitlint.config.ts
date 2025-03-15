@@ -29,11 +29,11 @@ const Configuration: UserConfig = {
       ],
     ],
     "scope-empty": [
-      RuleConfigSeverity.Error,
+      RuleConfigSeverity.Warning,
       "never",
     ],
     "scope-enum": [
-      RuleConfigSeverity.Error,
+      RuleConfigSeverity.Warning,
       "always",
       [
         "frontend",
