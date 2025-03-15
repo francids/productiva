@@ -10,7 +10,7 @@
 
 ## Acceso a la Aplicación
 
-La aplicación está disponible en: [https://productiva-mente.onrender.com/](https://productiva-mente.onrender.com/)
+La aplicación está disponible en: [https://productiva-mente.netlify.app](https://productiva-mente.netlify.app)
 
 ## Capturas de Pantalla
 
