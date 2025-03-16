@@ -1,6 +1,7 @@
 # Productiva Mente
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/765e73e4-2d31-4ea1-958c-fea0d7118eaa/deploy-status)](https://app.netlify.com/sites/productiva-mente/deploys)
+[![Frontend Netlify Status](https://api.netlify.com/api/v1/badges/765e73e4-2d31-4ea1-958c-fea0d7118eaa/deploy-status)](https://app.netlify.com/sites/productiva-mente/deploys)
+[![docs-pages-build-deployment](https://github.com/francids/productiva-mente/actions/workflows/pages/pages-build-deployment/badge.svg?branch=docs%2Fproduction)](https://github.com/francids/productiva-mente/actions/workflows/pages/pages-build-deployment)
 
 **Productiva Mente** es una aplicación web para la gestión de tareas y notas diseñada con la línea de diseño de Material.
 
