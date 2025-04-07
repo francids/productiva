@@ -9,9 +9,6 @@ updates:
       prefix-development: "chore"
       include: "scope"
     groups:
-      devDependencies:
+      all-dependencies:
         patterns:
-          - "devDependencies"
-      dependencies:
-        patterns:
-          - "dependencies"
+          - "*"
