@@ -10,5 +10,5 @@ RUN pnpm build
 # Etapa de producción
 FROM nginx:1.27.4-alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /app/dist/productiva-mente/* /usr/share/nginx/html/
+COPY --from=builder /app/dist/browser/* /usr/share/nginx/html/
 EXPOSE 80
