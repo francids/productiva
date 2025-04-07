@@ -50,6 +50,27 @@
         <div matListItemTitle>Configuración</div>
       </a>
     </mat-nav-list>
+    <mat-divider></mat-divider>
+    <mat-nav-list role="list">
+      <a
+        mat-list-item
+        routerLink="/about"
+        (click)="drawer.toggle()"
+        [activated]="router.url === '/about'"
+      >
+        <mat-icon matListItemIcon> info </mat-icon>
+        <div matListItemTitle>Acerca de</div>
+      </a>
+      <a
+        mat-list-item
+        href="https://github.com/francids/productiva-mente"
+        target="_blank"
+        (click)="drawer.toggle()"
+      >
+        <mat-icon matListItemIcon> code </mat-icon>
+        <div matListItemTitle>Código fuente</div>
+      </a>
+    </mat-nav-list>
   </mat-drawer>
 
   <mat-drawer-content>
