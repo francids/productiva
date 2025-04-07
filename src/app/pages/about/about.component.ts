@@ -7,7 +7,7 @@ import { environment } from "../../../environments/environments";
 @Component({
   selector: "about-page",
   templateUrl: "./about.component.html",
-  styleUrl: "./about.component.scss",
+  styleUrls: ["./about.component.scss"],
   imports: [MatButtonModule, MatIconModule],
 })
 export class AboutComponent implements AfterViewInit {
