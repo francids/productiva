@@ -7,6 +7,7 @@ import { Editor, editorViewOptionsCtx, rootCtx, defaultValueCtx } from '@milkdow
 import { commonmark } from '@milkdown/kit/preset/commonmark';
 import { nord } from '@milkdown/theme-nord';
 import { listener, listenerCtx } from '@milkdown/kit/plugin/listener';
+import { clipboard } from "@milkdown/kit/plugin/clipboard";
 
 // Services
 import { NotesService } from '../../services/notes.service';
@@ -73,10 +74,9 @@ export class NoteEditComponent implements AfterViewInit {
         ctx.update(editorViewOptionsCtx, (prev) => ({
           ...prev,
           attributes: { class: "milkdown-editor", spellcheck: 'false' },
-        }))
+        }));
       })
       .config(nord)
-      .use(commonmark)
       .config((ctx) => {
         const listener = ctx.get(listenerCtx);
         listener.markdownUpdated((ctx, markdown, prevMarkdown) => {
@@ -85,7 +85,9 @@ export class NoteEditComponent implements AfterViewInit {
           }
         });
       })
+      .use(commonmark)
       .use(listener)
+      .use(clipboard)
       .create();
   }
 
