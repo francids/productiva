@@ -8,6 +8,7 @@ import { commonmark } from '@milkdown/kit/preset/commonmark';
 import { nord } from '@milkdown/theme-nord';
 import { listener, listenerCtx } from '@milkdown/kit/plugin/listener';
 import { clipboard } from "@milkdown/kit/plugin/clipboard";
+import { history } from "@milkdown/kit/plugin/history";
 
 // Services
 import { NotesService } from '../../services/notes.service';
@@ -88,6 +89,7 @@ export class NoteEditComponent implements AfterViewInit {
       .use(commonmark)
       .use(listener)
       .use(clipboard)
+      .use(history)
       .create();
   }
 
