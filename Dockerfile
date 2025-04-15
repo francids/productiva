@@ -5,7 +5,7 @@ COPY package.json pnpm-lock.yaml ./
 RUN npm install -g pnpm
 RUN pnpm install
 COPY . .
-RUN pnpm build
+RUN pnpm build --configuration production
 
 # Etapa de producción
 FROM nginx:1.27.4-alpine
