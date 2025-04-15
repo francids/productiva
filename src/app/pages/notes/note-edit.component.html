@@ -17,6 +17,9 @@
     </button>
   </mat-toolbar>
   <section>
-    <div #editorRef></div>
+    <app-editor
+      [content]="note().content"
+      (contentChange)="saveNote($event)"
+    ></app-editor>
   </section>
 </main>

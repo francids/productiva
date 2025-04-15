@@ -24,11 +24,7 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles/styles.scss",
-              "src/styles/m3-theme.scss",
-              "src/styles/editor.scss"
-            ]
+            "styles": ["src/styles/styles.scss"]
           },
           "configurations": {
             "production": {

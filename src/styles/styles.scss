@@ -1,7 +1,7 @@
 @use "@angular/material" as mat;
 @use "./m3-theme" as theme;
 
-@use "./editor.scss" as editor;
+@use "./editor.component.scss" as editor;
 @use "../app/components/home-box/home-box.component" as home-box;
 @use "../app/components/tasks/task-status-select.component" as
   task-status-select;
@@ -32,7 +32,7 @@ body {
   @include mat.all-component-colors(theme.$dark-theme);
 
   // Components
-  @include editor.color(theme.$dark-theme);
+  @include editor.theme(theme.$dark-theme);
   @include home-box.color(theme.$dark-theme);
   @include task-status-select.color(theme.$dark-theme);
 }
