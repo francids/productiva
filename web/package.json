@@ -1,0 +1,49 @@
+{
+  "name": "productiva-mente-web",
+  "version": "1.2.0",
+  "packageManager": "pnpm@10.8.1",
+  "type": "module",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^19.2.7",
+    "@angular/cdk": "^19.2.10",
+    "@angular/common": "^19.2.7",
+    "@angular/compiler": "^19.2.7",
+    "@angular/core": "^19.2.7",
+    "@angular/forms": "^19.2.7",
+    "@angular/material": "^19.2.10",
+    "@angular/platform-browser": "^19.2.7",
+    "@angular/platform-browser-dynamic": "^19.2.7",
+    "@angular/router": "^19.2.7",
+    "@angular/service-worker": "^19.2.7",
+    "@milkdown/kit": "^7.9.0",
+    "@milkdown/theme-nord": "^7.9.0",
+    "dexie": "^4.0.11",
+    "rxjs": "~7.8.2",
+    "sass": "^1.86.3",
+    "tslib": "^2.8.1",
+    "uuid": "^11.1.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^19.2.8",
+    "@angular/cli": "^19.2.8",
+    "@angular/compiler-cli": "^19.2.7",
+    "@types/jasmine": "~5.1.7",
+    "@types/uuid": "^10.0.0",
+    "jasmine-core": "~5.6.0",
+    "karma": "~6.4.4",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.1",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "typescript": "~5.8.3"
+  }
+}

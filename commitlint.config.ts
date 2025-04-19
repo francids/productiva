@@ -36,7 +36,9 @@ const Configuration: UserConfig = {
       RuleConfigSeverity.Warning,
       "always",
       [
-        "frontend",
+        "web",
+        "mobile",
+        "desktop",
         "backend",
         "docs",
         "infra",
