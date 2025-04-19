@@ -12,12 +12,15 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { MatDialog } from '@angular/material/dialog';
 
 // Components
 import { LogoComponent } from "./components/logo/logo.component";
+import { WelcomeDialogComponent } from './components/welcome/welcome-dialog.component';
 
 // Services
 import { TitleService } from './services/title.service';
+import { FirstVisitService } from './services/first-visit.service';
 
 // Zone.js
 import 'zone.js/plugins/zone-patch-rxjs';
@@ -35,6 +38,8 @@ export class AppComponent implements OnInit {
   constructor(
     public router: Router,
     private titleService: TitleService,
+    private dialog: MatDialog,
+    private firstVisitService: FirstVisitService
   ) {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -49,9 +54,26 @@ export class AppComponent implements OnInit {
         this.title = title;
       });
     }, 0);
+
+    this.checkFirstVisit();
+  }
+
+  checkFirstVisit(): void {
+    if (this.firstVisitService.isFirstVisit()) {
+      setTimeout(() => {
+        const dialogRef = this.dialog.open(WelcomeDialogComponent, {
+          width: '450px',
+          disableClose: true
+        });
+
+        dialogRef.afterClosed().subscribe(() => {
+          this.firstVisitService.setVisited();
+        });
+      }, 1000);
+    }
   }
 
   isEditPage(): boolean {
     return this.currentRoute.includes('/notes/edit');
   }
-};
+}
