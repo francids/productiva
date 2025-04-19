@@ -3,7 +3,19 @@
   <mat-card appearance="outlined">
     <mat-card-content>
       <div class="settings-item">
-        <span>Modo Oscuro</span>
+        <span>Seguir sistema</span>
+        <mat-slide-toggle
+          [hideIcon]="true"
+          [checked]="isAutoMode"
+          (change)="toggleAutoMode($event)"
+        >
+        </mat-slide-toggle>
+      </div>
+
+      <mat-divider *ngIf="!isAutoMode" class="settings-divider"></mat-divider>
+
+      <div class="settings-item" *ngIf="!isAutoMode">
+        <span>Tema oscuro</span>
         <mat-slide-toggle
           [hideIcon]="true"
           [checked]="isDarkMode"

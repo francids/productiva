@@ -1,5 +1,6 @@
 // Angular
 import { Component, OnInit } from "@angular/core";
+import { NgIf } from "@angular/common";
 
 // Modules
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -14,10 +15,11 @@ import { ThemeService } from "../../services/theme.service";
   selector: "settings-page",
   templateUrl: "./settings.component.html",
   styleUrl: "./settings.component.scss",
-  imports: [MatSlideToggleModule, MatDividerModule, MatCardModule]
+  imports: [MatSlideToggleModule, MatDividerModule, MatCardModule, NgIf]
 })
 export class SettingsComponent implements OnInit {
   isDarkMode: boolean = false;
+  isAutoMode: boolean = false;
 
   constructor(
     private titleService: TitleService,
@@ -28,9 +30,18 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.isDarkMode = this.themeService.isDarkModeEnabled();
+    this.isAutoMode = this.themeService.isAutoModeEnabled();
   }
 
   toggleDarkMode(event: any): void {
     this.themeService.toggleDarkMode(event.checked);
+  }
+
+  toggleAutoMode(event: any): void {
+    this.isAutoMode = event.checked;
+    this.themeService.toggleAutoMode(event.checked);
+    if (!event.checked) {
+      this.isDarkMode = this.themeService.isDarkModeEnabled();
+    }
   }
 }
