@@ -1,8 +1,6 @@
 {
-  "name": "productiva-mente",
-  "short_name": "productiva-mente",
-  "theme_color": "#201a1b",
-  "background_color": "#fff8f8",
+  "name": "Productiva Mente",
+  "short_name": "Productiva Mente",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
