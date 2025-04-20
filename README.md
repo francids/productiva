@@ -1,3 +1,5 @@
+![Productiva Mente Icon](./resources/Icon.svg)
+
 # Productiva Mente
 
 ![Productiva Mente Web Version](https://img.shields.io/badge/Productiva%20Mente%20Web-v1.2.0-6cfe8f)
@@ -19,19 +21,19 @@ The web app is available at: [https://productiva-mente.netlify.app](https://prod
 ## Screenshots
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/francids/productiva-mente/main/screenshots/Home%20screen%20(light).png">
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/francids/productiva-mente/main/screenshots/Home%20screen%20(dark).png">
-  <img alt="Home screen" src="https://raw.githubusercontent.com/francids/productiva-mente/main/screenshots/Home%20screen%20(light).png">
+  <source media="(prefers-color-scheme: light)" srcset="./resources/screenshots/Home%20screen%20(light).png">
+  <source media="(prefers-color-scheme: dark)" srcset="./resources/screenshots/Home%20screen%20(dark).png">
+  <img alt="Home screen" src="./resources/screenshots/Home%20screen%20(light).png">
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/francids/productiva-mente/main/screenshots/Notes%20screen%20(light).png">
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/francids/productiva-mente/main/screenshots/Notes%20screen%20(dark).png">
-  <img alt="Tasks screen" src="https://raw.githubusercontent.com/francids/productiva-mente/main/screenshots/Notes%20screen%20(light).png">
+  <source media="(prefers-color-scheme: light)" srcset="./resources/screenshots/Notes%20screen%20(light).png">
+  <source media="(prefers-color-scheme: dark)" srcset="./resources/screenshots/Notes%20screen%20(dark).png">
+  <img alt="Notes screen" src="./resources/screenshots/Notes%20screen%20(light).png">
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/francids/productiva-mente/main/screenshots/Tasks%20screen%20(light).png">
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/francids/productiva-mente/main/screenshots/Tasks%20screen%20(dark).png">
-  <img alt="Tasks screen" src="https://raw.githubusercontent.com/francids/productiva-mente/main/screenshots/Tasks%20screen%20(light).png">
+  <source media="(prefers-color-scheme: light)" srcset="./resources/screenshots/Tasks%20screen%20(light).png">
+  <source media="(prefers-color-scheme: dark)" srcset="./resources/screenshots/Tasks%20screen%20(dark).png">
+  <img alt="Tasks screen" src="./resources/screenshots/Tasks%20screen%20(light).png">
 </picture>
