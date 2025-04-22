@@ -4,7 +4,7 @@ import { BehaviorSubject } from "rxjs";
 import { Note } from "../models/note.model";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class NotesService {
   private notesSubject = new BehaviorSubject<Note[]>([]);
@@ -25,16 +25,16 @@ export class NotesService {
 
   async saveNote(note: Note): Promise<void> {
     await this.dexieService.db.notes.put(note);
-    this.loadNotes();
+    await this.loadNotes();
   }
 
   async updateNote(noteId: string, newNote: Note): Promise<void> {
     await this.dexieService.db.notes.update(noteId, newNote);
-    this.loadNotes();
+    await this.loadNotes();
   }
 
   async deleteNote(noteId: string): Promise<void> {
     await this.dexieService.db.notes.delete(noteId);
-    this.loadNotes();
+    await this.loadNotes();
   }
 }

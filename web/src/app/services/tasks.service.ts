@@ -4,7 +4,7 @@ import { Task } from "../models/task.model";
 import { DexieService } from "./db.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class TasksService {
   private tasksSubject = new BehaviorSubject<Task[]>([]);
@@ -21,16 +21,16 @@ export class TasksService {
 
   async createTask(task: Task): Promise<void> {
     await this.dexieService.db.tasks.put(task);
-    this.loadTasks();
+    await this.loadTasks();
   }
 
   async updateTask(task: Task): Promise<void> {
     await this.dexieService.db.tasks.update(task.id, task);
-    this.loadTasks();
+    await this.loadTasks();
   }
 
   async deleteTask(taskId: string): Promise<void> {
     await this.dexieService.db.tasks.delete(taskId);
-    this.loadTasks();
+    await this.loadTasks();
   }
 }
