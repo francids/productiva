@@ -1,39 +1,36 @@
 // Angular
-import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterOutlet, RouterLinkActive, Router, NavigationEnd } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { RouterLink, RouterOutlet, Router, NavigationEnd } from "@angular/router";
 
 // RxJS
-import { filter } from 'rxjs/operators';
+import { filter } from "rxjs/operators";
 
 // Modules
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatDialog } from '@angular/material/dialog';
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatIconModule } from "@angular/material/icon";
+import { MatDividerModule } from "@angular/material/divider";
+import { MatButtonModule } from "@angular/material/button";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatListModule } from "@angular/material/list";
+import { MatDialog } from "@angular/material/dialog";
 
 // Components
 import { LogoComponent } from "./components/logo/logo.component";
-import { WelcomeDialogComponent } from './components/welcome/welcome-dialog.component';
+import { WelcomeDialogComponent } from "./components/welcome/welcome-dialog.component";
 
 // Services
-import { TitleService } from './services/title.service';
-import { FirstVisitService } from './services/first-visit.service';
-
-// Zone.js
-import 'zone.js/plugins/zone-patch-rxjs';
+import { TitleService } from "./services/title.service";
+import { FirstVisitService } from "./services/first-visit.service";
 
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   imports: [RouterLink, RouterOutlet, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatDividerModule, LogoComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"]
 })
 export class AppComponent implements OnInit {
-  title: string = 'Productiva Mente';
-  currentRoute: string = '';
+  title: string = "Productiva Mente";
+  currentRoute: string = "";
 
   constructor(
     public router: Router,
@@ -62,7 +59,7 @@ export class AppComponent implements OnInit {
     if (this.firstVisitService.isFirstVisit()) {
       setTimeout(() => {
         const dialogRef = this.dialog.open(WelcomeDialogComponent, {
-          width: '450px',
+          width: "450px",
           disableClose: true
         });
 
@@ -74,6 +71,6 @@ export class AppComponent implements OnInit {
   }
 
   isEditPage(): boolean {
-    return this.currentRoute.includes('/notes/edit');
+    return this.currentRoute.includes("/notes/edit");
   }
 }
