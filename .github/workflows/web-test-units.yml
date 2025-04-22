@@ -1,0 +1,34 @@
+name: Tests in Web App
+
+on:
+  pull_request:
+    branches: ["web/prod"]
+    paths:
+      - "web/**"
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./web
+    strategy:
+      matrix:
+        node-version: [22]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run tests
+        run: pnpm test --no-watch --no-progress --browsers=ChromeHeadless
