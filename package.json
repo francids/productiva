@@ -1,5 +1,9 @@
 {
   "name": "productiva-mente",
+  "author": {
+    "name": "Francisco Mesa",
+    "url": "https://francids.com/"
+  },
   "packageManager": "pnpm@10.8.1",
   "scripts": {
     "prepare": "husky"
