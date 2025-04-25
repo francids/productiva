@@ -1,4 +1,31 @@
 [[redirects]]
+from = "/"
+to = "/en"
+status = 302
+conditions = { Language = ["en"] }
+
+[[redirects]]
+from = "/"
+to = "/es"
+status = 302
+conditions = { Language = ["es"] }
+
+[[redirects]]
+from = "/"
+to = "/en"
+status = 302
+
+[[redirects]]
+from = "/en/*"
+to = "/en/index.html"
+status = 200
+
+[[redirects]]
+from = "/es/*"
+to = "/es/index.html"
+status = 200
+
+[[redirects]]
 from = "/*"
 to = "/index.html"
 status = 200

@@ -25,7 +25,7 @@ export class SettingsComponent implements OnInit {
     private titleService: TitleService,
     private themeService: ThemeService,
   ) {
-    this.titleService.updateTitle('Configuración');
+    this.titleService.updateTitle($localize`:@@settings:Configuración`);
   }
 
   ngOnInit(): void {

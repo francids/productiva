@@ -85,7 +85,7 @@ export class NoteEditComponent implements AfterViewInit {
         });
         this.note.set({ ...this.note(), title: result });
         this.titleService.updateTitle(result);
-        this._snackBar.open("Título de la nota editado", "Cerrar", { duration: 2000 });
+        this._snackBar.open($localize`:@@notes.note-title-edited:Título de la nota editado`, $localize`:@@common.ok:Cerrar`, { duration: 2000 });
       };
     });
   };
@@ -96,7 +96,7 @@ export class NoteEditComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.notesService.deleteNote(this.note().id);
-        this._snackBar.open("Nota eliminada", "Cerrar", { duration: 2000 });
+        this._snackBar.open($localize`:@@notes.note-deleted:Nota eliminada`, $localize`:@@common.ok:Cerrar`, { duration: 2000 });
         this.router.navigate(["/notes"]);
       };
     });

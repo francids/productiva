@@ -6,24 +6,24 @@ import { MatIconModule } from "@angular/material/icon";
 @Component({
   selector: 'welcome-dialog',
   template: `
-  <h2 mat-dialog-title>¡Bienvenido a Productiva Mente!</h2>
+  <h2 mat-dialog-title i18n="@@dialogs.welcome.title">¡Bienvenido a Productiva Mente!</h2>
   <mat-dialog-content>
-    <p class="mat-body-medium">
+    <p class="mat-body-medium" i18n="@@dialogs.welcome.description">
       Productiva Mente es una aplicación web para la gestión de tareas y notas.
     </p>
     <p class="mat-body-medium">
-      <strong>Características principales:</strong>
+      <strong i18n="@@dialogs.welcome.features">Características principales:</strong>
     </p>
     <ul>
-      <li>Gestión de notas con editor Markdown</li>
-      <li>Organización de tareas con prioridades</li>
-      <li>Almacenamiento local para garantizar tu privacidad</li>
-      <li>Modo oscuro</li>
-      <li>Funcionamiento sin conexión</li>
+      <li i18n="@@dialogs.welcome.feature1">Gestión de notas con editor Markdown</li>
+      <li i18n="@@dialogs.welcome.feature2">Organización de tareas con prioridades</li>
+      <li i18n="@@dialogs.welcome.feature3">Almacenamiento local para garantizar tu privacidad</li>
+      <li i18n="@@dialogs.welcome.feature4">Modo oscuro</li>
+      <li i18n="@@dialogs.welcome.feature5">Funcionamiento sin conexión</li>
     </ul>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-button (click)="onNoClick()" color="primary">
+    <button mat-button (click)="onNoClick()" color="primary" i18n="@@dialogs.welcome.close">
       Comenzar
       <mat-icon>シ</mat-icon>
     </button>

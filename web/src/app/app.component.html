@@ -17,7 +17,7 @@
         [activated]="router.url === '/'"
       >
         <mat-icon matListItemIcon> home </mat-icon>
-        <div matListItemTitle>Inicio</div>
+        <div matListItemTitle i18n="@@home">Inicio</div>
       </a>
       <a
         mat-list-item
@@ -26,7 +26,7 @@
         [activated]="router.url === '/notes'"
       >
         <mat-icon matListItemIcon>notes</mat-icon>
-        <div matListItemTitle>Notas</div>
+        <div matListItemTitle i18n="@@notes">Notas</div>
       </a>
       <a
         mat-list-item
@@ -35,7 +35,7 @@
         [activated]="router.url === '/tasks'"
       >
         <mat-icon matListItemIcon>task_alt</mat-icon>
-        <div matListItemTitle>Tareas</div>
+        <div matListItemTitle i18n="@@tasks">Tareas</div>
       </a>
     </mat-nav-list>
     <mat-divider></mat-divider>
@@ -47,7 +47,7 @@
         [activated]="router.url === '/settings'"
       >
         <mat-icon matListItemIcon> settings </mat-icon>
-        <div matListItemTitle>Configuración</div>
+        <div matListItemTitle i18n="@@settings">Configuración</div>
       </a>
     </mat-nav-list>
     <mat-divider></mat-divider>
@@ -59,7 +59,7 @@
         [activated]="router.url === '/about'"
       >
         <mat-icon matListItemIcon> info </mat-icon>
-        <div matListItemTitle>Acerca de</div>
+        <div matListItemTitle i18n="@@about">Acerca de</div>
       </a>
       <a
         mat-list-item
@@ -68,7 +68,7 @@
         (click)="drawer.toggle()"
       >
         <mat-icon matListItemIcon> code </mat-icon>
-        <div matListItemTitle>Código fuente</div>
+        <div matListItemTitle i18n="@@sourceCode">Código fuente</div>
       </a>
     </mat-nav-list>
   </mat-drawer>

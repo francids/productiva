@@ -31,14 +31,18 @@ export class EditorComponent implements AfterViewInit, OnChanges {
 
   private editor: Editor | undefined;
   private placeholders = [
-    "Escribe aquí tu nota...",
-    "¿Qué tienes en mente hoy?",
-    "Comienza a escribir...",
-    "Plasma tus ideas aquí...",
-    "Toma una nota rápida...",
-    "Documenta tus pensamientos...",
-    "Nueva idea brillante...",
-    "Anota tus reflexiones...",
+    $localize`:@@editor.placeholder1:Escribe aquí tu nota...`,
+    $localize`:@@editor.placeholder2:¿Qué tienes en mente hoy?`,
+    $localize`:@@editor.placeholder3:Comienza a escribir...`,
+    $localize`:@@editor.placeholder4:Plasma tus ideas aquí...`,
+    $localize`:@@editor.placeholder5:Toma una nota rápida...`,
+    $localize`:@@editor.placeholder6:Escribe algo interesante...`,
+    $localize`:@@editor.placeholder7:Reflexiona sobre tu día...`,
+    $localize`:@@editor.placeholder8:¡No olvides tus ideas!`,
+    $localize`:@@editor.placeholder9:Escribe tus pensamientos...`,
+    $localize`:@@editor.placeholder10:Captura tu creatividad...`,
+    $localize`:@@editor.placeholder11:Escribe algo genial...`,
+    $localize`:@@editor.placeholder12:Deja volar tu imaginación...`,
   ];
 
   private getRandomPlaceholder(): string {
