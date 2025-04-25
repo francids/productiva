@@ -1,4 +1,3 @@
-# Etapa de construcción
 FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
@@ -7,8 +6,7 @@ RUN pnpm install
 COPY . .
 RUN pnpm build --configuration production
 
-# Etapa de producción
-FROM nginx:1.27.4-alpine
+FROM nginx:1.27.5-alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /app/dist/browser/* /usr/share/nginx/html/
+COPY --from=builder /app/dist/browser/ /usr/share/nginx/html/
 EXPOSE 80

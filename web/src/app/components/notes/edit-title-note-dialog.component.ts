@@ -9,23 +9,21 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 @Component({
   selector: "edit-title-note-dialog",
   template: `
-  <h2 mat-dialog-title>Editar título</h2>
+  <h2 mat-dialog-title i18n="@@dialogs.edit-note-title">Editar título</h2>
   <mat-dialog-content>
     <form [formGroup]="titleForm" (ngSubmit)="titleForm.valid && onSaveClick()">
       <mat-form-field>
-        <mat-label>Título de la nota</mat-label>
+        <mat-label i18n="@@dialogs.note-title">Título de la nota</mat-label>
         <input matInput formControlName="title" />
         @if (titleForm.get('title')!.hasError('required')) {
-          <mat-error>El título es obligatorio.</mat-error>
+          <mat-error i18n="@@dialogs.error.title-required">El título es obligatorio.</mat-error>
         }
       </mat-form-field>
     </form>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Cancelar</button>
-    <button mat-button (click)="onSaveClick()" [disabled]="titleForm.invalid">
-      Cambiar título
-    </button>
+    <button mat-button (click)="onNoClick()" i18n="@@dialogs.cancel">Cancelar</button>
+    <button mat-button (click)="onSaveClick()" [disabled]="titleForm.invalid" i18n="@@dialogs.save">Guardar</button>
   </mat-dialog-actions>
   `,
   imports: [MatDialogModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule]

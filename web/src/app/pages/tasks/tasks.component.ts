@@ -57,7 +57,7 @@ export class TasksComponent implements AfterViewInit {
       this.dataSource.data = tasks;
     });
     Promise.resolve().then(() => {
-      this.titleService.updateTitle("Tareas");
+      this.titleService.updateTitle($localize`:@@tasks:Tareas`);
     });
   }
 
@@ -129,7 +129,9 @@ export class TasksComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe(async result => {
       if (result) {
         await this.tasksService.deleteTask(taskId);
-        this._snackBar.open("Tarea eliminada", "Cerrar", {
+        this._snackBar.open(
+          $localize`:@@tasks.task_deleted:Tarea eliminada`,
+          $localize`:@@common.ok:Cerrar`, {
           duration: 2000,
         });
       }

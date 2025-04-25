@@ -64,7 +64,7 @@ export class NoteWelcomeComponent implements AfterViewInit {
   };
 
   ngAfterViewInit() {
-    Promise.resolve().then(() => this.titleService.updateTitle("Notas"));
+    Promise.resolve().then(() => this.titleService.updateTitle($localize`:@@notes:Notas`));
   }
 
   private loadNotes(): void {
@@ -114,7 +114,7 @@ export class NoteWelcomeComponent implements AfterViewInit {
         this.notes.set(this.notes().map(n => {
           return n.id === note.id ? { ...n, title: result } : n;
         }));
-        this._snackBar.open('Título de la nota editado', 'Cerrar', { duration: 2000 });
+        this._snackBar.open($localize`@@notes.note_title_edited:Título de la nota editado`, $localize`:@@common.ok:Cerrar`, { duration: 2000 });
       };
     });
   };
@@ -125,7 +125,7 @@ export class NoteWelcomeComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.notesService.deleteNote(note.id);
-        this._snackBar.open('Nota eliminada', 'Cerrar', { duration: 2000 });
+        this._snackBar.open($localize`@@notes.note_deleted:Nota eliminada`, $localize`:@@common.ok:Cerrar`, { duration: 2000 });
       };
     });
   };

@@ -5,13 +5,11 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/materia
 @Component({
   selector: 'del-task-dialog',
   template: `
-  <h2 mat-dialog-title>Eliminar tarea</h2>
+  <h2 mat-dialog-title i18n="@@dialogs.delete-task">Eliminar tarea</h2>
   <mat-dialog-actions>
-    <button mat-button mat-dialog-close>
-      Cancelar
-    </button>
-    <button mat-button [mat-dialog-close]="true">
-      Eliminar tarea
+    <button mat-button mat-dialog-close i18n="@@dialogs.cancel">Cancelar</button>
+    <button mat-button [mat-dialog-close]="true" i18n="@@dialogs.delete">
+      Eliminar
     </button>
   </mat-dialog-actions>
 `,

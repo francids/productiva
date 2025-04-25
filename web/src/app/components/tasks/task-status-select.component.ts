@@ -10,9 +10,9 @@ import { Task } from "../../models/task.model";
   [class.in-progress]="task.status === 1"
   [class.completed]="task.status === 2"
   class="task-status-select">
-    <mat-option [value]="0">No iniciado</mat-option>
-    <mat-option [value]="1">En progreso</mat-option>
-    <mat-option [value]="2">Completado</mat-option>
+    <mat-option [value]="0" i18n="@@tasks.not-started">No iniciado</mat-option>
+    <mat-option [value]="1" i18n="@@tasks.in-progress">En progreso</mat-option>
+    <mat-option [value]="2" i18n="@@tasks.completed">Completado</mat-option>
   </mat-select>
   `,
   imports: [MatSelectModule]

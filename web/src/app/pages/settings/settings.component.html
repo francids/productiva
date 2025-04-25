@@ -1,9 +1,9 @@
 <main class="custom-container">
-  <h2 class="mat-headline-medium">Apariencia</h2>
+  <h2 class="mat-headline-medium" i18n="@@settings.appearance">Apariencia</h2>
   <mat-card appearance="outlined">
     <mat-card-content>
       <div class="settings-item">
-        <span>Seguir sistema</span>
+        <span i18n="@@settings.appearance.followSystem">Seguir sistema</span>
         <mat-slide-toggle
           [hideIcon]="true"
           [checked]="isAutoMode"
@@ -15,7 +15,7 @@
       <mat-divider *ngIf="!isAutoMode" class="settings-divider"></mat-divider>
 
       <div class="settings-item" *ngIf="!isAutoMode">
-        <span>Tema oscuro</span>
+        <span i18n="@@settings.appearance.darkTheme">Tema oscuro</span>
         <mat-slide-toggle
           [hideIcon]="true"
           [checked]="isDarkMode"
