@@ -130,7 +130,7 @@ export class TasksComponent implements AfterViewInit {
       if (result) {
         await this.tasksService.deleteTask(taskId);
         this._snackBar.open(
-          $localize`:@@tasks.task_deleted:Tarea eliminada`,
+          $localize`:@@tasks.task-deleted:Tarea eliminada`,
           $localize`:@@common.ok:Cerrar`, {
           duration: 2000,
         });

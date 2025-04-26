@@ -51,15 +51,14 @@
     "about.features-text": " Productiva Mente es gratuita y de código abierto, permitiéndote usar y contribuir al proyecto sin costo alguno. Garantiza tu privacidad almacenando todos los datos localmente en tu navegador. Ofrece una experiencia sin interrupciones al no incluir publicidad, y cuenta con un editor Markdown para notas, gestión de tareas con prioridades, interfaz responsive, modo oscuro y funcionamiento offline. ",
     "about.version": "Versión: {$INTERPOLATION}",
     "about.copyright": " © {$INTERPOLATION} Productiva Mente ",
-    "about_productiva": "Acerca de Productiva Mente",
+    "about-productiva": "Acerca de Productiva Mente",
+    "notes.edit-title": "Editar título",
+    "notes.delete-note": "Eliminar nota",
+    "notes.export-note": "Exportar nota",
     "notes.note-title-edited": "Título de la nota editado",
     "common.ok": "Cerrar",
     "notes.note-deleted": "Nota eliminada",
     "notes.no-notes": " No tienes notas creadas, crea una nueva nota para empezar. ",
-    "notes.edit-title": " Editar título ",
-    "notes.delete-note": " Eliminar nota ",
-    "6713783879417854317": "@@notes.note_title_edited:Título de la nota editado",
-    "8739942004993088034": "@@notes.note_deleted:Nota eliminada",
     "settings.appearance": "Apariencia",
     "settings.appearance.followSystem": "Seguir sistema",
     "settings.appearance.darkTheme": "Tema oscuro",
@@ -68,6 +67,6 @@
     "tasks.description": " Descripción ",
     "tasks.status": " Estado ",
     "tasks.actions": "Acciones",
-    "tasks.task_deleted": "Tarea eliminada"
+    "tasks.task-deleted": "Tarea eliminada"
   }
 }
