@@ -17,7 +17,7 @@ export class AboutComponent implements AfterViewInit {
   constructor(private titleService: TitleService) { }
 
   ngAfterViewInit() {
-    Promise.resolve().then(() => this.titleService.updateTitle($localize`:@@about_productiva:Acerca de Productiva Mente`));
+    Promise.resolve().then(() => this.titleService.updateTitle($localize`:@@about-productiva:Acerca de Productiva Mente`));
   }
 
   openGithub() {

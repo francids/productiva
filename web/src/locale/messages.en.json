@@ -51,15 +51,14 @@
     "about.features-text": " Productiva Mente is free and open source, allowing you to use and contribute to the project at no cost. It guarantees your privacy by storing all data locally in your browser. It offers an uninterrupted experience by not including advertisements, and features a Markdown editor for notes, task management with priorities, responsive interface, dark mode, and offline functionality. ",
     "about.version": "Version: {$INTERPOLATION}",
     "about.copyright": " © {$INTERPOLATION} Productiva Mente ",
-    "about_productiva": "About Productiva Mente",
+    "about-productiva": "About Productiva Mente",
+    "notes.edit-title": "Edit title",
+    "notes.delete-note": "Delete note",
+    "notes.export-note": "Export note",
     "notes.note-title-edited": "Note title edited",
     "common.ok": "Close",
     "notes.note-deleted": "Note deleted",
     "notes.no-notes": " You don't have any notes created, create a new note to get started. ",
-    "notes.edit-title": " Edit title ",
-    "notes.delete-note": " Delete note ",
-    "6713783879417854317": "@@notes.note_title_edited:Note title edited",
-    "8739942004993088034": "@@notes.note_deleted:Note deleted",
     "settings.appearance": "Appearance",
     "settings.appearance.followSystem": "Follow system",
     "settings.appearance.darkTheme": "Dark theme",
@@ -68,6 +67,6 @@
     "tasks.description": " Description ",
     "tasks.status": " Status ",
     "tasks.actions": "Actions",
-    "tasks.task_deleted": "Task deleted"
+    "tasks.task-deleted": "Task deleted"
   }
 }

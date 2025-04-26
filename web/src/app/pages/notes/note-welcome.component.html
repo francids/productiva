@@ -32,19 +32,11 @@
       </button>
     </mat-card>
     <mat-menu #menu="matMenu" xPosition="before">
-      <button
-        mat-menu-item
-        (click)="openDialogEditTitleNote(note)"
-        i18n="@@notes.edit-title"
-      >
-        Editar título
+      <button mat-menu-item (click)="openDialogEditTitleNote(note)">
+        <span i18n="@@notes.edit-title">Editar título</span>
       </button>
-      <button
-        mat-menu-item
-        (click)="openDialogDeleteNote(note)"
-        i18n="@@notes.delete-note"
-      >
-        Eliminar nota
+      <button mat-menu-item (click)="openDialogDeleteNote(note)">
+        <span i18n="@@notes.delete-note">Eliminar nota</span>
       </button>
     </mat-menu>
     }
