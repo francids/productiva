@@ -4,11 +4,10 @@
       <mat-icon>arrow_back</mat-icon>
     </button>
     <span class="spacer"></span>
-    <span>{{ this.note().title }}</span>
-    <span class="spacer"></span>
-    <button mat-icon-button (click)="openDialogEditTitleNote()">
-      <mat-icon fontSet="material-icons-outlined">edit</mat-icon>
+    <button mat-button (click)="openDialogEditTitleNote()">
+      {{ this.note().title }}
     </button>
+    <span class="spacer"></span>
     <button mat-icon-button (click)="openDialogDeleteNote()">
       <mat-icon fontSet="material-icons-outlined">delete</mat-icon>
     </button>
