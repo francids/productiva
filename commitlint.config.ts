@@ -26,6 +26,10 @@ const Configuration: UserConfig = {
         "docs",
         "build",
         "release",
+        "ui",
+        "wip",
+        "config",
+        "deps",
       ],
     ],
     "scope-empty": [
