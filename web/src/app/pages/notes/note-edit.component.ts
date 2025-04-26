@@ -13,6 +13,8 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from "@angular/material/divider";
 
 // Models
 import { Note } from "../../models/note.model";
@@ -28,7 +30,7 @@ import { EditorComponent } from "../../components/notes/editor.component";
   selector: "note-edit",
   templateUrl: "./note-edit.component.html",
   styleUrl: "./note-edit.component.scss",
-  imports: [RouterLink, MatButtonModule, MatIconModule, MatToolbarModule, EditorComponent],
+  imports: [RouterLink, MatButtonModule, MatIconModule, MatToolbarModule, EditorComponent, MatMenuModule, MatDividerModule],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NoteEditComponent implements AfterViewInit {

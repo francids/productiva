@@ -8,12 +8,24 @@
       {{ this.note().title }}
     </button>
     <span class="spacer"></span>
-    <button mat-icon-button (click)="openDialogDeleteNote()">
-      <mat-icon fontSet="material-icons-outlined">delete</mat-icon>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
     </button>
-    <button mat-icon-button (click)="exportNote()">
-      <mat-icon fontSet="material-icons-outlined">download</mat-icon>
-    </button>
+    <mat-menu #menu="matMenu" xPosition="before">
+      <button mat-menu-item (click)="openDialogEditTitleNote()">
+        <mat-icon fontSet="material-icons-outlined">edit</mat-icon>
+        <span i18n="@@notes.edit-title">Editar título</span>
+      </button>
+      <button mat-menu-item (click)="openDialogDeleteNote()">
+        <mat-icon fontSet="material-icons-outlined">delete</mat-icon>
+        <span i18n="@@notes.delete-note">Eliminar nota</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="exportNote()">
+        <mat-icon fontSet="material-icons-outlined">download</mat-icon>
+        <span i18n="@@notes.export-note">Exportar nota</span>
+      </button>
+    </mat-menu>
   </mat-toolbar>
   <section>
     <app-editor
