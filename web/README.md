@@ -1,6 +1,6 @@
 # Productiva Mente Web
 
-![Productiva Mente Web Version](https://img.shields.io/badge/Productiva%20Mente%20Web-v1.3.0-6cfe8f)
+![Productiva Mente Web Version](https://img.shields.io/badge/Productiva%20Mente%20Web-v1.3.1-6cfe8f)
 [![Frontend Netlify Status](https://api.netlify.com/api/v1/badges/765e73e4-2d31-4ea1-958c-fea0d7118eaa/deploy-status)](https://app.netlify.com/sites/productiva-mente/deploys)
 
 ## Application Access
