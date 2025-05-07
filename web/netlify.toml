@@ -1,4 +1,10 @@
 [[redirects]]
+from = "https://productiva-mente.netlify.app/*"
+to = "https://productiva.francids.com/:splat"
+status = 301
+force = true
+
+[[redirects]]
 from = "/"
 to = "/en"
 status = 302
