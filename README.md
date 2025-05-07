@@ -16,7 +16,7 @@
 
 ## Application Access
 
-The web app is available at: [https://productiva-mente.netlify.app](https://productiva-mente.netlify.app)
+The web app is available at: [https://productiva.francids.com/](https://productiva.francids.com/)
 
 ## Screenshots
 
