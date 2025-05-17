@@ -5,9 +5,8 @@ updates:
     schedule:
       interval: "weekly"
     commit-message:
-      prefix: "deps"
-      prefix-development: "chore"
-      include: "scope"
+      prefix: "deps(web)"
+      prefix-development: "chore(web)"
     groups:
       all-dependencies:
         patterns:
