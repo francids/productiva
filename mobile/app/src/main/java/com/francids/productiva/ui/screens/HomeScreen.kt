@@ -1,8 +1,12 @@
 package com.francids.productiva.ui.screens
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -31,6 +35,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
@@ -44,6 +49,16 @@ fun HomeScreen() {
     var fabMenuExpanded by rememberSaveable {
         mutableStateOf(false)
     }
+    val listState = rememberLazyListState()
+    val fabVisible by remember {
+        derivedStateOf {
+            listState.firstVisibleItemIndex == 0
+        }
+    }
+    val items = listOf(
+        Icons.AutoMirrored.Rounded.Notes to "Note",
+        Icons.Rounded.TaskAlt to "Task",
+    )
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -51,67 +66,73 @@ fun HomeScreen() {
         Scaffold(
             topBar = { MyTopAppBar() },
         ) { innerPadding ->
-            Box(
-                Modifier
+            LazyColumn(
+                state = listState,
+                modifier = Modifier
                     .fillMaxSize()
-                    .padding(innerPadding)
+                    .padding(
+                        top = innerPadding.calculateTopPadding(),
+                        start = 16.dp,
+                        end = 16.dp,
+                    ),
             ) {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                ) {
-                    item {
-                        Text(
-                            text = remember { LoremIpsum().values.first().take(2000) },
-                        )
-                    }
+                item {
+                    Text(
+                        text = remember { LoremIpsum().values.first().take(2000) },
+                    )
                 }
+            }
+        }
 
-                val listState = rememberLazyListState()
-                val fabVisible by remember {
-                    derivedStateOf { listState.firstVisibleItemIndex == 0 }
-                }
+        AnimatedVisibility(
+            visible = fabMenuExpanded,
+            enter = fadeIn(),
+            exit = fadeOut(),
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black.copy(alpha = 0.25f))
+                .clickable { fabMenuExpanded = false }
+                .zIndex(1f),
+        ) {}
 
-                val items = listOf(
-                    Icons.AutoMirrored.Rounded.Notes to "Note",
-                    Icons.Rounded.TaskAlt to "Task",
+        FloatingActionButtonMenu(
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(
+                    bottom = 16.dp,
+                    end = 8.dp,
+                    start = 8.dp,
                 )
-
-                FloatingActionButtonMenu(
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .offset(x = (-16).dp, y = (-16).dp)
-                        .zIndex(5f),
-                    expanded = fabMenuExpanded,
-                    button = {
-                        ToggleFloatingActionButton(
-                            modifier = Modifier.animateFloatingActionButton(
-                                visible = fabVisible || fabMenuExpanded,
-                                alignment = Alignment.BottomEnd,
-                            ),
-                            checked = fabMenuExpanded,
-                            onCheckedChange = { fabMenuExpanded = !fabMenuExpanded }) {
-                            val imageVector by remember {
-                                derivedStateOf {
-                                    if (checkedProgress > 0.5f) Icons.Filled.Close
-                                    else Icons.Filled.Add
-                                }
-                            }
-                            Icon(
-                                painter = rememberVectorPainter(imageVector),
-                                contentDescription = null,
-                                modifier = Modifier.animateIcon({ checkedProgress })
-                            )
+                .zIndex(2f),
+            expanded = fabMenuExpanded,
+            button = {
+                ToggleFloatingActionButton(
+                    modifier = Modifier.animateFloatingActionButton(
+                        visible = fabVisible || fabMenuExpanded,
+                        alignment = Alignment.BottomEnd,
+                    ),
+                    checked = fabMenuExpanded,
+                    onCheckedChange = { fabMenuExpanded = !fabMenuExpanded },
+                ) {
+                    val imageVector by remember {
+                        derivedStateOf {
+                            if (checkedProgress > 0.5f) Icons.Filled.Close
+                            else Icons.Filled.Add
                         }
-                    },
-                    content = {
-                        items.forEachIndexed { i, item ->
-                            FloatingActionButtonMenuItem(
-                                onClick = { fabMenuExpanded = false },
-                                icon = { Icon(item.first, contentDescription = null) },
-                                text = { Text(text = item.second) },
-                            )
-                        }
-                    },
+                    }
+                    Icon(
+                        painter = rememberVectorPainter(imageVector),
+                        contentDescription = null,
+                        modifier = Modifier.animateIcon({ checkedProgress })
+                    )
+                }
+            },
+        ) {
+            items.forEachIndexed { i, item ->
+                FloatingActionButtonMenuItem(
+                    onClick = { fabMenuExpanded = false },
+                    icon = { Icon(item.first, contentDescription = null) },
+                    text = { Text(text = item.second) },
                 )
             }
         }
