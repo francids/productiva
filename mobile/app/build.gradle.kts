@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.francids.productiva_mente"
+    namespace = "com.francids.productiva"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.francids.productiva_mente"
+        applicationId = "com.francids.productiva"
         minSdk = 31
         targetSdk = 35
         versionCode = 1

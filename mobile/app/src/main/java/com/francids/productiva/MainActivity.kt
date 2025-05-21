@@ -1,4 +1,4 @@
-package com.francids.productiva_mente
+package com.francids.productiva
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -25,7 +25,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.francids.productiva_mente.ui.theme.ProductivaMenteTheme
+import com.francids.productiva.ui.theme.ProductivaMenteTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

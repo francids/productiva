@@ -1,4 +1,4 @@
-package com.francids.productiva_mente.ui.theme
+package com.francids.productiva.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

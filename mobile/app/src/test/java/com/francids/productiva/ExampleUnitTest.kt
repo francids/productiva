@@ -1,4 +1,4 @@
-package com.francids.productiva_mente
+package com.francids.productiva
 
 import org.junit.Test
 
