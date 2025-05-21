@@ -30,6 +30,7 @@ const Configuration: UserConfig = {
         "wip",
         "config",
         "deps",
+        "resources",
       ],
     ],
     "scope-empty": [
