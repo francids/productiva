@@ -1,6 +1,6 @@
 <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
   <style>
-    @media (prefers-color-scheme: light) {
+    @media (prefers-color-scheme: dark) {
     .background {
     fill: #101111;
     }
@@ -8,7 +8,7 @@
     fill: #F9FAFA;
     }
     }
-    @media (prefers-color-scheme: dark) {
+    @media (prefers-color-scheme: light) {
     .background {
     fill: #F9FAFA;
     }
