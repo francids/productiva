@@ -59,7 +59,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
-import com.francids.productiva.viewmodel.HomeViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(

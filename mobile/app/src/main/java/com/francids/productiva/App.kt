@@ -7,8 +7,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.francids.productiva.ui.screens.HomeScreen
 import com.francids.productiva.ui.screens.NoteScreen
-import com.francids.productiva.viewmodel.HomeViewModel
-import com.francids.productiva.viewmodel.NoteViewModel
+import com.francids.productiva.ui.screens.HomeViewModel
+import com.francids.productiva.ui.screens.NoteViewModel
 
 @Composable
 fun MyApp() {

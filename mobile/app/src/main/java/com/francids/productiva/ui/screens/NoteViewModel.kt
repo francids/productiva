@@ -1,4 +1,4 @@
-package com.francids.productiva.viewmodel
+package com.francids.productiva.ui.screens
 
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
