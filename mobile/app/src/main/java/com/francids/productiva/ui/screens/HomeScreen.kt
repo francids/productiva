@@ -37,12 +37,12 @@ import androidx.compose.material3.PrimaryScrollableTabRow
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.ToggleFloatingActionButton
 import androidx.compose.material3.ToggleFloatingActionButtonDefaults.animateIcon
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.animateFloatingActionButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -59,6 +59,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
+import com.francids.productiva.ui.components.NoteCard
 import kotlinx.coroutines.launch
 
 @OptIn(
@@ -85,6 +86,8 @@ fun HomeScreen(
     )
     val pagerState = rememberPagerState(pageCount = { tabs.size })
     val coroutineScope = rememberCoroutineScope()
+
+    val notes by viewModel.notes.collectAsState()
 
     Box(
         modifier = Modifier
@@ -132,20 +135,22 @@ fun HomeScreen(
                                         contentDescription = null,
                                     )
                                     Spacer(Modifier.width(8.dp))
-                                    Text(tab.second)
+                                    Text(
+                                        text = tab.second,
+                                        style = MaterialTheme.typography.labelLarge,
+                                        color = MaterialTheme.colorScheme.onSurface,
+                                    )
                                 }
                             },
-                            modifier = Modifier.clip(RoundedCornerShape(percent = 25)),
+                            modifier = Modifier
+                                .padding(4.dp)
+                                .clip(RoundedCornerShape(percent = 25)),
                         )
                     }
                 }
 
                 HorizontalDivider(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            bottom = 8.dp,
-                        ),
+                    modifier = Modifier.fillMaxWidth(),
                     thickness = 1.dp,
                     color = MaterialTheme.colorScheme.primaryContainer.copy(
                         alpha = 0.5f,
@@ -168,29 +173,18 @@ fun HomeScreen(
                                     ),
                                 contentPadding = PaddingValues(
                                     top = 16.dp,
-                                    bottom = 16.dp,
+                                    bottom = 32.dp,
                                 ),
                             ) {
-                                item {
-                                    Text(
-                                        text = "This is the Notes tab content.",
-                                        style = MaterialTheme.typography.bodyLarge,
-                                    )
-                                }
-                                item {
-                                    Text(
-                                        text = "Here you can manage your notes.",
-                                        style = MaterialTheme.typography.bodyMedium,
-                                    )
-                                }
-                                item {
-                                    TextButton(
+                                items(notes.size) { index ->
+                                    NoteCard(
+                                        notes[index],
+                                        isFirstNote = index == 0,
+                                        isLastNote = index == notes.size - 1,
                                         onClick = {
-                                            navController.navigate("notes/123")
+                                            navController.navigate("notes/${notes[index].id}")
                                         },
-                                    ) {
-                                        Text("Go to Note 1")
-                                    }
+                                    )
                                 }
                             }
                         }
