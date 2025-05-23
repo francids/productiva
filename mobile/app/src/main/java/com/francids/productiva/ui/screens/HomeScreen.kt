@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -26,12 +27,16 @@ import androidx.compose.material.icons.automirrored.rounded.Notes
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.rounded.CheckCircleOutline
+import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FloatingActionButtonMenu
 import androidx.compose.material3.FloatingActionButtonMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.IconButtonDefaults.smallContainerSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.PrimaryScrollableTabRow
@@ -111,6 +116,21 @@ fun HomeScreen(
                             text = "Productiva シ",
                             style = MaterialTheme.typography.titleLarge,
                         )
+                    },
+                    actions = {
+                        IconButton(
+                            onClick = { },
+                            modifier = Modifier.size(
+                                smallContainerSize(
+                                    IconButtonDefaults.IconButtonWidthOption.Narrow,
+                                ),
+                            ),
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.MoreVert,
+                                contentDescription = null,
+                            )
+                        }
                     },
                 )
             },
@@ -241,16 +261,13 @@ fun HomeScreen(
                 sheetState = taskSheetState,
             ) {
                 TaskSheet(
-                    homeViewModel = viewModel,
-                    taskId = selectedTaskId,
-                    onDismiss = {
+                    homeViewModel = viewModel, taskId = selectedTaskId, onDismiss = {
                         scope.launch { taskSheetState.hide() }.invokeOnCompletion {
                             if (!taskSheetState.isVisible) {
                                 showTaskSheet = false
                             }
                         }
-                    }
-                )
+                    })
             }
         }
 
