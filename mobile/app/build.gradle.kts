@@ -52,7 +52,10 @@ dependencies {
     implementation("androidx.compose.material3:material3-android:1.4.0-alpha15")
     implementation(libs.androidx.material.icons.extended)
     implementation("androidx.navigation:navigation-compose:2.9.0")
-    testImplementation(libs.junit)
+    // testImplementation(libs.junit) // Removed JUnit 4
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

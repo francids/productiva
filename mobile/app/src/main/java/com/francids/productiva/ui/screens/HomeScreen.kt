@@ -60,6 +60,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.francids.productiva.ui.components.NoteCard
+import com.francids.productiva.ui.components.TaskCard
 import kotlinx.coroutines.launch
 
 @OptIn(
@@ -88,6 +89,7 @@ fun HomeScreen(
     val coroutineScope = rememberCoroutineScope()
 
     val notes by viewModel.notes.collectAsState()
+    val tasks by viewModel.tasks.collectAsState()
 
     Box(
         modifier = Modifier
@@ -202,16 +204,12 @@ fun HomeScreen(
                                     bottom = 16.dp,
                                 ),
                             ) {
-                                item {
-                                    Text(
-                                        text = "This is the Tasks tab content.",
-                                        style = MaterialTheme.typography.bodyLarge,
-                                    )
-                                }
-                                item {
-                                    Text(
-                                        text = "Here you can manage your tasks.",
-                                        style = MaterialTheme.typography.bodyMedium,
+                                items(tasks.size) { index ->
+                                    val task = tasks[index]
+                                    TaskCard(
+                                        task = task,
+                                        onClick = { navController.navigate("task_screen?taskId=${task.id}") },
+                                        onCheckedChange = { homeViewModel.toggleTaskCompleted(task.id) }
                                     )
                                 }
                             }
@@ -267,7 +265,15 @@ fun HomeScreen(
         ) {
             tabs.forEachIndexed { i, item ->
                 FloatingActionButtonMenuItem(
-                    onClick = { fabMenuExpanded = false },
+                    onClick = {
+                        if (item.third == "Task") {
+                            navController.navigate("task_screen")
+                        } else if (item.third == "Note") {
+                            // Future: Potentially navigate to a new note screen or handle differently
+                            // navController.navigate("new_note_screen")
+                        }
+                        fabMenuExpanded = false
+                    },
                     icon = { Icon(item.first, contentDescription = null) },
                     text = { Text(text = item.third) },
                 )
