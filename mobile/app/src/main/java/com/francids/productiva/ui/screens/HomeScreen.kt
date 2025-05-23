@@ -33,6 +33,7 @@ import androidx.compose.material3.FloatingActionButtonMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.PrimaryScrollableTabRow
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
@@ -41,6 +42,7 @@ import androidx.compose.material3.ToggleFloatingActionButton
 import androidx.compose.material3.ToggleFloatingActionButtonDefaults.animateIcon
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.animateFloatingActionButton
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
@@ -90,6 +92,11 @@ fun HomeScreen(
 
     val notes by viewModel.notes.collectAsState()
     val tasks by viewModel.tasks.collectAsState()
+
+    val taskSheetState = rememberModalBottomSheetState()
+    val scope = rememberCoroutineScope()
+    var showTaskSheet by remember { mutableStateOf(false) }
+    var selectedTaskId by remember { mutableStateOf<String?>(null) }
 
     Box(
         modifier = Modifier
@@ -180,7 +187,7 @@ fun HomeScreen(
                             ) {
                                 items(notes.size) { index ->
                                     NoteCard(
-                                        notes[index],
+                                        note = notes[index],
                                         isFirstNote = index == 0,
                                         isLastNote = index == notes.size - 1,
                                         onClick = {
@@ -205,17 +212,45 @@ fun HomeScreen(
                                 ),
                             ) {
                                 items(tasks.size) { index ->
-                                    val task = tasks[index]
                                     TaskCard(
-                                        task = task,
-                                        onClick = { navController.navigate("task_screen?taskId=${task.id}") },
-                                        onCheckedChange = { viewModel.toggleTaskCompleted(task.id) }
+                                        task = tasks[index],
+                                        isFirstTask = index == 0,
+                                        isLastTask = index == tasks.size - 1,
+                                        onClick = {
+                                            showTaskSheet = true
+                                            selectedTaskId = tasks[index].id
+                                            scope.launch { taskSheetState.show() }
+                                        },
+                                        onCheckedChange = {
+                                            viewModel.toggleTaskCompleted(tasks[index].id)
+                                        },
                                     )
                                 }
                             }
                         }
                     }
                 }
+            }
+        }
+
+        if (showTaskSheet) {
+            ModalBottomSheet(
+                onDismissRequest = {
+                    showTaskSheet = false
+                },
+                sheetState = taskSheetState,
+            ) {
+                TaskSheet(
+                    homeViewModel = viewModel,
+                    taskId = selectedTaskId,
+                    onDismiss = {
+                        scope.launch { taskSheetState.hide() }.invokeOnCompletion {
+                            if (!taskSheetState.isVisible) {
+                                showTaskSheet = false
+                            }
+                        }
+                    }
+                )
             }
         }
 
@@ -266,12 +301,6 @@ fun HomeScreen(
             tabs.forEachIndexed { i, item ->
                 FloatingActionButtonMenuItem(
                     onClick = {
-                        if (item.third == "Task") {
-                            navController.navigate("task_screen")
-                        } else if (item.third == "Note") {
-                            // Future: Potentially navigate to a new note screen or handle differently
-                            // navController.navigate("new_note_screen")
-                        }
                         fabMenuExpanded = false
                     },
                     icon = { Icon(item.first, contentDescription = null) },
