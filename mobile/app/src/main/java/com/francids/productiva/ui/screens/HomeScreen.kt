@@ -33,6 +33,7 @@ import androidx.compose.material3.FloatingActionButtonMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.PrimaryScrollableTabRow
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
@@ -41,6 +42,7 @@ import androidx.compose.material3.ToggleFloatingActionButton
 import androidx.compose.material3.ToggleFloatingActionButtonDefaults.animateIcon
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.animateFloatingActionButton
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
@@ -60,6 +62,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.francids.productiva.ui.components.NoteCard
+import com.francids.productiva.ui.components.TaskCard
 import kotlinx.coroutines.launch
 
 @OptIn(
@@ -88,6 +91,12 @@ fun HomeScreen(
     val coroutineScope = rememberCoroutineScope()
 
     val notes by viewModel.notes.collectAsState()
+    val tasks by viewModel.tasks.collectAsState()
+
+    val taskSheetState = rememberModalBottomSheetState()
+    val scope = rememberCoroutineScope()
+    var showTaskSheet by remember { mutableStateOf(false) }
+    var selectedTaskId by remember { mutableStateOf<String?>(null) }
 
     Box(
         modifier = Modifier
@@ -178,7 +187,7 @@ fun HomeScreen(
                             ) {
                                 items(notes.size) { index ->
                                     NoteCard(
-                                        notes[index],
+                                        note = notes[index],
                                         isFirstNote = index == 0,
                                         isLastNote = index == notes.size - 1,
                                         onClick = {
@@ -202,22 +211,46 @@ fun HomeScreen(
                                     bottom = 16.dp,
                                 ),
                             ) {
-                                item {
-                                    Text(
-                                        text = "This is the Tasks tab content.",
-                                        style = MaterialTheme.typography.bodyLarge,
-                                    )
-                                }
-                                item {
-                                    Text(
-                                        text = "Here you can manage your tasks.",
-                                        style = MaterialTheme.typography.bodyMedium,
+                                items(tasks.size) { index ->
+                                    TaskCard(
+                                        task = tasks[index],
+                                        isFirstTask = index == 0,
+                                        isLastTask = index == tasks.size - 1,
+                                        onClick = {
+                                            showTaskSheet = true
+                                            selectedTaskId = tasks[index].id
+                                            scope.launch { taskSheetState.show() }
+                                        },
+                                        onCheckedChange = {
+                                            viewModel.toggleTaskCompleted(tasks[index].id)
+                                        },
                                     )
                                 }
                             }
                         }
                     }
                 }
+            }
+        }
+
+        if (showTaskSheet) {
+            ModalBottomSheet(
+                onDismissRequest = {
+                    showTaskSheet = false
+                },
+                sheetState = taskSheetState,
+            ) {
+                TaskSheet(
+                    homeViewModel = viewModel,
+                    taskId = selectedTaskId,
+                    onDismiss = {
+                        scope.launch { taskSheetState.hide() }.invokeOnCompletion {
+                            if (!taskSheetState.isVisible) {
+                                showTaskSheet = false
+                            }
+                        }
+                    }
+                )
             }
         }
 
@@ -267,7 +300,9 @@ fun HomeScreen(
         ) {
             tabs.forEachIndexed { i, item ->
                 FloatingActionButtonMenuItem(
-                    onClick = { fabMenuExpanded = false },
+                    onClick = {
+                        fabMenuExpanded = false
+                    },
                     icon = { Icon(item.first, contentDescription = null) },
                     text = { Text(text = item.third) },
                 )
