@@ -9,7 +9,7 @@ import kotlin.uuid.Uuid
 @OptIn(ExperimentalUuidApi::class)
 @Serializable
 data class Task(
-    val id: String = Uuid.randomUUID().toString(),
+    val id: String = Uuid.random().toString(),
     val title: String,
     val description: String = "",
     val isCompleted: Boolean = false,

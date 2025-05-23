@@ -209,7 +209,7 @@ fun HomeScreen(
                                     TaskCard(
                                         task = task,
                                         onClick = { navController.navigate("task_screen?taskId=${task.id}") },
-                                        onCheckedChange = { homeViewModel.toggleTaskCompleted(task.id) }
+                                        onCheckedChange = { viewModel.toggleTaskCompleted(task.id) }
                                     )
                                 }
                             }
