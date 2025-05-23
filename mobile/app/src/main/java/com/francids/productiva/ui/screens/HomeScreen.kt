@@ -1,10 +1,5 @@
 package com.francids.productiva.ui.screens
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -60,9 +55,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
@@ -89,8 +82,8 @@ fun HomeScreen(
         }
     }
     var tabs = listOf(
-        Triple(Icons.AutoMirrored.Rounded.Notes, "Notes", "Note"),
-        Triple(Icons.Rounded.CheckCircleOutline, "Tasks", "Task"),
+        Triple(Icons.AutoMirrored.Rounded.Notes, "Notes", "New note"),
+        Triple(Icons.Rounded.CheckCircleOutline, "Tasks", "New task"),
     )
     val pagerState = rememberPagerState(pageCount = { tabs.size })
     val coroutineScope = rememberCoroutineScope()
@@ -163,17 +156,21 @@ fun HomeScreen(
                                         imageVector = tab.first,
                                         contentDescription = null,
                                     )
-                                    Spacer(Modifier.width(8.dp))
+                                    Spacer(
+                                        modifier = Modifier.width(8.dp),
+                                    )
                                     Text(
                                         text = tab.second,
                                         style = MaterialTheme.typography.labelLarge,
-                                        color = MaterialTheme.colorScheme.onSurface,
                                     )
                                 }
                             },
-                            modifier = Modifier
-                                .padding(4.dp)
-                                .clip(RoundedCornerShape(percent = 25)),
+                            modifier = Modifier.clip(
+                                RoundedCornerShape(
+                                    topEndPercent = 25,
+                                    topStartPercent = 25,
+                                )
+                            ),
                         )
                     }
                 }
@@ -271,21 +268,6 @@ fun HomeScreen(
             }
         }
 
-        AnimatedVisibility(
-            visible = fabMenuExpanded,
-            enter = fadeIn(),
-            exit = fadeOut(),
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black.copy(alpha = 0.4f))
-                .pointerInput(Unit) {
-                    detectTapGestures {
-                        fabMenuExpanded = false
-                    }
-                }
-                .zIndex(1f),
-        ) {}
-
         FloatingActionButtonMenu(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
@@ -321,7 +303,12 @@ fun HomeScreen(
                         fabMenuExpanded = false
                     },
                     icon = { Icon(item.first, contentDescription = null) },
-                    text = { Text(text = item.third) },
+                    text = {
+                        Text(
+                            text = item.third,
+                            style = MaterialTheme.typography.labelLarge,
+                        )
+                    },
                 )
             }
         }
