@@ -1,5 +1,7 @@
 package com.francids.productiva
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
@@ -30,7 +32,8 @@ fun MyApp() {
         ) {
             val homeViewModel: HomeViewModel = viewModel()
             HomeScreen(
-                navController = navController, viewModel = homeViewModel
+                navController = navController,
+                viewModel = homeViewModel,
             )
         }
 
@@ -42,6 +45,30 @@ fun MyApp() {
                     nullable = false
                 },
             ),
+            enterTransition = {
+                slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Start,
+                    animationSpec = tween(350),
+                )
+            },
+            exitTransition = {
+                slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.End,
+                    animationSpec = tween(350),
+                )
+            },
+            popEnterTransition = {
+                slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Start,
+                    animationSpec = tween(350),
+                )
+            },
+            popExitTransition = {
+                slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.End,
+                    animationSpec = tween(350),
+                )
+            },
         ) { backStackEntry ->
             val noteViewModel: NoteViewModel = viewModel()
             val noteId = backStackEntry.arguments?.getString(Routes.ARG_NOTE_ID)
