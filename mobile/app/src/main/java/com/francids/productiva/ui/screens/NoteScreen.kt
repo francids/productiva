@@ -3,14 +3,19 @@ package com.francids.productiva.ui.screens
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.IconButtonDefaults.smallContainerSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
@@ -24,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -58,24 +64,51 @@ fun NoteScreen(
         topBar = {
             MediumTopAppBar(
                 title = {
+                    val isCollapsed = scrollBehavior.state.collapsedFraction > 0.1f
                     Text(
-                        text = if (itemId != null) "Note $itemId" else "New Note",
-                        style = MaterialTheme.typography.titleMedium,
+                        text = if (itemId != null) "Note" else "New Note",
+                        style = MaterialTheme.typography.titleLarge,
+                        maxLines = if (isCollapsed) 1 else Int.MAX_VALUE,
+                        overflow = if (isCollapsed) TextOverflow.Ellipsis else TextOverflow.Clip,
                     )
                 },
                 navigationIcon = {
-                    IconButton(
+                    FilledTonalIconButton(
                         onClick = {
                             navController.popBackStack()
                         },
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                            contentDescription = null,
-                        )
-                    }
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                            .size(
+                                smallContainerSize(
+                                    IconButtonDefaults.IconButtonWidthOption.Uniform,
+                                )
+                            ),
+                        content = {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                                contentDescription = null,
+                            )
+                        },
+                    )
                 },
                 scrollBehavior = scrollBehavior,
+                actions = {
+                    IconButton(
+                        onClick = { },
+                        modifier = Modifier.size(
+                            smallContainerSize(
+                                IconButtonDefaults.IconButtonWidthOption.Narrow,
+                            ),
+                        ),
+                        content = {
+                            Icon(
+                                imageVector = Icons.Rounded.MoreVert,
+                                contentDescription = null,
+                            )
+                        },
+                    )
+                },
             )
         },
     ) { innerPadding ->
