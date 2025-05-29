@@ -1,33 +1,27 @@
 package com.francids.productiva.ui.screens
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.Notes
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.rounded.CheckCircleOutline
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Circle
 import androidx.compose.material.icons.rounded.MoreVert
+import androidx.compose.material.icons.rounded.Pentagon
+import androidx.compose.material.icons.rounded.Square
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FloatingActionButtonMenu
 import androidx.compose.material3.FloatingActionButtonMenuItem
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -54,7 +48,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -82,8 +76,9 @@ fun HomeScreen(
         }
     }
     var tabs = listOf(
-        Triple(Icons.AutoMirrored.Rounded.Notes, "Notes", "New note"),
-        Triple(Icons.Rounded.CheckCircleOutline, "Tasks", "New task"),
+        Triple(Icons.Rounded.Circle, "Notes", "Note"),
+        Triple(Icons.Rounded.Pentagon, "Tasks", "Task"),
+        Triple(Icons.Rounded.Square, "Lists", "List")
     )
     val pagerState = rememberPagerState(pageCount = { tabs.size })
     val coroutineScope = rememberCoroutineScope()
@@ -127,7 +122,8 @@ fun HomeScreen(
                     },
                 )
             },
-        ) { innerPadding ->
+
+            ) { innerPadding ->
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -136,51 +132,25 @@ fun HomeScreen(
                 PrimaryScrollableTabRow(
                     selectedTabIndex = pagerState.currentPage,
                     modifier = Modifier.fillMaxWidth(),
-                    edgePadding = 0.dp,
-                    divider = { },
-                ) {
-                    tabs.forEachIndexed { index, tab ->
-                        Tab(
-                            selected = pagerState.currentPage == index,
-                            onClick = {
-                                coroutineScope.launch {
-                                    pagerState.animateScrollToPage(index)
-                                }
-                            },
-                            text = {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.Center
-                                ) {
-                                    Icon(
-                                        imageVector = tab.first,
-                                        contentDescription = null,
-                                    )
-                                    Spacer(
-                                        modifier = Modifier.width(8.dp),
-                                    )
+                    tabs = {
+                        tabs.forEachIndexed { index, tab ->
+                            Tab(
+                                selected = pagerState.currentPage == index,
+                                onClick = {
+                                    coroutineScope.launch {
+                                        pagerState.animateScrollToPage(index)
+                                    }
+                                },
+                                text = {
                                     Text(
                                         text = tab.second,
                                         style = MaterialTheme.typography.labelLarge,
+                                        modifier = Modifier.padding(8.dp),
                                     )
-                                }
-                            },
-                            modifier = Modifier.clip(
-                                RoundedCornerShape(
-                                    topEndPercent = 25,
-                                    topStartPercent = 25,
-                                )
-                            ),
-                        )
-                    }
-                }
-
-                HorizontalDivider(
-                    modifier = Modifier.fillMaxWidth(),
-                    thickness = 1.dp,
-                    color = MaterialTheme.colorScheme.primaryContainer.copy(
-                        alpha = 0.5f,
-                    ),
+                                },
+                            )
+                        }
+                    },
                 )
 
                 HorizontalPager(
@@ -245,6 +215,21 @@ fun HomeScreen(
                                 }
                             }
                         }
+
+                        2 -> {
+                            LazyColumn(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(
+                                        start = 16.dp,
+                                        end = 16.dp,
+                                    ),
+                                contentPadding = PaddingValues(
+                                    top = 16.dp,
+                                    bottom = 16.dp,
+                                ),
+                            ) {}
+                        }
                     }
                 }
             }
@@ -283,16 +268,12 @@ fun HomeScreen(
                     checked = fabMenuExpanded,
                     onCheckedChange = { fabMenuExpanded = !fabMenuExpanded },
                 ) {
-                    val imageVector by remember {
-                        derivedStateOf {
-                            if (checkedProgress > 0.5f) Icons.Filled.Close
-                            else Icons.Filled.Add
-                        }
-                    }
                     Icon(
-                        painter = rememberVectorPainter(imageVector),
+                        painter = rememberVectorPainter(Icons.Rounded.Add),
                         contentDescription = null,
-                        modifier = Modifier.animateIcon({ checkedProgress })
+                        modifier = Modifier
+                            .animateIcon({ checkedProgress })
+                            .rotate(checkedProgress * 45f)
                     )
                 }
             },
@@ -302,7 +283,13 @@ fun HomeScreen(
                     onClick = {
                         fabMenuExpanded = false
                     },
-                    icon = { Icon(item.first, contentDescription = null) },
+                    icon = {
+                        Icon(
+                            item.first,
+                            contentDescription = null,
+                            modifier = Modifier.size(MaterialTheme.typography.labelLarge.fontSize.value.dp),
+                        )
+                    },
                     text = {
                         Text(
                             text = item.third,
