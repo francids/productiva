@@ -1,9 +1,12 @@
 package com.francids.productiva.ui.screens
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
@@ -15,26 +18,32 @@ import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.IconButtonDefaults.smallContainerSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
+@OptIn(
+    ExperimentalMaterial3Api::class,
+    ExperimentalMaterial3ExpressiveApi::class,
+    ExperimentalLayoutApi::class
+)
 @Composable
 fun NoteScreen(
     navController: NavController,
@@ -42,117 +51,141 @@ fun NoteScreen(
     viewModel: NoteViewModel = viewModel(),
 ) {
     val noteContent by viewModel.noteContent.collectAsState()
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
-    var placeholders: List<String> = listOf(
-        "Write your note here...",
-        "What do you have in mind today?",
-        "Start writing...",
-        "Put your ideas here...",
-        "Take a quick note...",
-        "Write your thoughts...",
-        "Reflect on your day...",
-        "Capture your creativity...",
-        "Write something great...",
-        "Let your imagination fly...",
-        "Start your journey...",
-        "Let your imagination soar..."
-    )
-    val currentPlaceholder = remember { placeholders.asSequence().shuffled().first() }
+    val focusRequester = remember { FocusRequester() }
+
+    val placeholders = remember {
+        listOf(
+            "Write your note here...",
+            "What do you have in mind today?",
+            "Start writing...",
+            "Put your ideas here...",
+            "Take a quick note...",
+            "Write your thoughts...",
+            "Reflect on your day...",
+            "Capture your creativity...",
+            "Write something great...",
+            "Let your imagination fly...",
+            "Start your journey...",
+            "Let your imagination soar..."
+        ).shuffled().first()
+    }
 
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        containerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
         topBar = {
-            MediumTopAppBar(
-                title = {
-                    val isCollapsed = scrollBehavior.state.collapsedFraction > 0.1f
-                    Text(
-                        text = if (itemId != null) "Note" else "New Note",
-                        style = MaterialTheme.typography.titleLarge,
-                        maxLines = if (isCollapsed) 1 else Int.MAX_VALUE,
-                        overflow = if (isCollapsed) TextOverflow.Ellipsis else TextOverflow.Clip,
-                    )
-                },
-                navigationIcon = {
-                    FilledTonalIconButton(
-                        onClick = {
-                            navController.popBackStack()
-                        },
-                        modifier = Modifier
-                            .padding(horizontal = 8.dp)
-                            .size(
-                                smallContainerSize(
-                                    IconButtonDefaults.IconButtonWidthOption.Uniform,
-                                )
-                            ),
-                        content = {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                                contentDescription = null,
-                            )
-                        },
-                    )
-                },
-                scrollBehavior = scrollBehavior,
-                actions = {
-                    IconButton(
-                        onClick = { },
-                        modifier = Modifier.size(
-                            smallContainerSize(
-                                IconButtonDefaults.IconButtonWidthOption.Narrow,
-                            ),
-                        ),
-                        content = {
-                            Icon(
-                                imageVector = Icons.Rounded.MoreVert,
-                                contentDescription = null,
-                            )
-                        },
-                    )
-                },
+            NoteTopAppBar(
+                title = if (itemId != null) "Note" else "New Note",
+                onNavigateBack = { navController.popBackStack() },
             )
         },
     ) { innerPadding ->
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(
-                    top = if (scrollBehavior.state.collapsedFraction > 0.5f) 16.dp else 8.dp,
-                    start = 16.dp,
-                    end = 16.dp,
-                ),
-            contentPadding = PaddingValues(
-                top = innerPadding.calculateTopPadding(),
-                bottom = 16.dp,
-            ),
+                .padding(top = innerPadding.calculateTopPadding())
         ) {
-            item {
-                BasicTextField(
-                    value = noteContent,
-                    onValueChange = { newValue ->
-                        viewModel.updateNoteContent(newValue)
-                    },
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .fillParentMaxHeight(),
-                    textStyle = MaterialTheme.typography.bodyLargeEmphasized.copy(
-                        color = MaterialTheme.colorScheme.onSurface,
-                    ),
-                    singleLine = false,
-                    cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
-                    decorationBox = { innerTextField ->
-                        if (noteContent.text.isEmpty()) {
-                            Text(
-                                text = currentPlaceholder,
-                                style = MaterialTheme.typography.bodyLargeEmphasized,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(
-                                    alpha = 0.5f,
-                                ),
-                            )
-                        }
-                        innerTextField()
-                    },
+            NoteContentField(
+                noteContent = noteContent,
+                placeholder = placeholders,
+                onContentChange = viewModel::updateNoteContent,
+                focusRequester = focusRequester,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(1f)
+                    .imePadding()
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+private fun NoteTopAppBar(
+    title: String,
+    onNavigateBack: () -> Unit,
+) {
+    MediumTopAppBar(
+        title = {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleLarge,
+                maxLines = Int.MAX_VALUE,
+                overflow = TextOverflow.Clip,
+            )
+        },
+        navigationIcon = {
+            FilledTonalIconButton(
+                onClick = onNavigateBack,
+                colors = IconButtonDefaults.filledTonalIconButtonColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                ),
+                modifier = Modifier.padding(horizontal = 8.dp),
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                    contentDescription = "Back",
                 )
             }
+        },
+        actions = {
+            IconButton(
+                onClick = { },
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.MoreVert,
+                    contentDescription = "More options",
+                )
+            }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color.Transparent,
+            scrolledContainerColor = Color.Transparent,
+            navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+            titleContentColor = MaterialTheme.colorScheme.onSurface,
+            actionIconContentColor = MaterialTheme.colorScheme.onSurface,
+        ),
+    )
+}
+
+
+@Composable
+private fun NoteContentField(
+    noteContent: TextFieldValue,
+    placeholder: String,
+    onContentChange: (TextFieldValue) -> Unit,
+    focusRequester: FocusRequester,
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(
+        modifier = modifier
+            .background(MaterialTheme.colorScheme.surface)
+            .fillMaxSize(),
+        contentPadding = PaddingValues(16.dp)
+    ) {
+        item {
+            BasicTextField(
+                value = noteContent,
+                onValueChange = onContentChange,
+                modifier = Modifier
+                    .fillParentMaxWidth()
+                    .fillParentMaxHeight()
+                    .focusRequester(focusRequester),
+                textStyle = MaterialTheme.typography.bodyLarge.copy(
+                    color = MaterialTheme.colorScheme.onSurface, lineHeight = 28.sp
+                ),
+                cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+                decorationBox = { innerTextField ->
+                    if (noteContent.text.isEmpty()) {
+                        Text(
+                            text = placeholder,
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
+                            lineHeight = 28.sp
+                        )
+                    }
+                    innerTextField()
+                },
+            )
         }
     }
 }
