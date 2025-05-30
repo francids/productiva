@@ -1,20 +1,24 @@
 package com.francids.productiva.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledTonalIconButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -32,6 +36,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -50,7 +55,6 @@ fun NoteScreen(
     itemId: String?,
     viewModel: NoteViewModel = viewModel(),
 ) {
-    val noteContent by viewModel.noteContent.collectAsState()
     val focusRequester = remember { FocusRequester() }
 
     val placeholders = remember {
@@ -85,7 +89,7 @@ fun NoteScreen(
                 .padding(top = innerPadding.calculateTopPadding())
         ) {
             NoteContentField(
-                noteContent = noteContent,
+                viewModel = viewModel,
                 placeholder = placeholders,
                 onContentChange = viewModel::updateNoteContent,
                 focusRequester = focusRequester,
@@ -118,6 +122,7 @@ private fun NoteTopAppBar(
                 onClick = onNavigateBack,
                 colors = IconButtonDefaults.filledTonalIconButtonColors(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                    contentColor = MaterialTheme.colorScheme.onSurface,
                 ),
                 modifier = Modifier.padding(horizontal = 8.dp),
             ) {
@@ -150,42 +155,53 @@ private fun NoteTopAppBar(
 
 @Composable
 private fun NoteContentField(
-    noteContent: TextFieldValue,
+    viewModel: NoteViewModel,
     placeholder: String,
     onContentChange: (TextFieldValue) -> Unit,
     focusRequester: FocusRequester,
     modifier: Modifier = Modifier
 ) {
-    LazyColumn(
+    val noteContent by viewModel.noteContent.collectAsState()
+
+    HorizontalDivider()
+    Column(
         modifier = modifier
             .background(MaterialTheme.colorScheme.surface)
-            .fillMaxSize(),
-        contentPadding = PaddingValues(16.dp)
+            .padding(horizontal = 16.dp)
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = { focusRequester.requestFocus() })
+            },
     ) {
-        item {
-            BasicTextField(
-                value = noteContent,
-                onValueChange = onContentChange,
-                modifier = Modifier
-                    .fillParentMaxWidth()
-                    .fillParentMaxHeight()
-                    .focusRequester(focusRequester),
-                textStyle = MaterialTheme.typography.bodyLarge.copy(
-                    color = MaterialTheme.colorScheme.onSurface, lineHeight = 28.sp
-                ),
-                cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
-                decorationBox = { innerTextField ->
-                    if (noteContent.text.isEmpty()) {
-                        Text(
-                            text = placeholder,
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
-                            lineHeight = 28.sp
-                        )
-                    }
-                    innerTextField()
-                },
-            )
-        }
+        Box(
+            modifier = Modifier.height(16.dp),
+        )
+
+        BasicTextField(
+            value = noteContent,
+            onValueChange = onContentChange,
+            modifier = Modifier.focusRequester(focusRequester),
+            textStyle = MaterialTheme.typography.bodyLarge.copy(
+                color = MaterialTheme.colorScheme.onSurface,
+                lineHeight = 28.sp,
+            ),
+            cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+            decorationBox = { innerTextField ->
+                if (noteContent.text.isEmpty()) {
+                    Text(
+                        text = placeholder,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
+                        lineHeight = 28.sp,
+                    )
+                }
+                innerTextField()
+            },
+        )
+
+        Box(
+            modifier = Modifier.height(64.dp),
+        )
     }
 }
