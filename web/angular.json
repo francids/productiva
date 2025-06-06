@@ -28,7 +28,10 @@
             "outputPath": "dist",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": ["zone.js", "@angular/localize/init"],
+            "polyfills": [
+              "zone.js",
+              "@angular/localize/init"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "localize": true,
@@ -38,7 +41,9 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles/styles.scss"]
+            "styles": [
+              "src/styles/styles.scss"
+            ]
           },
           "configurations": {
             "production": {
@@ -105,5 +110,9 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false,
+    "packageManager": "pnpm"
   }
 }
