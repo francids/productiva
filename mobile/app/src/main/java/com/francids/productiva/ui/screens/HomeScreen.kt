@@ -82,7 +82,7 @@ fun HomeScreen(
             listState.firstVisibleItemIndex == 0
         }
     }
-    var tabs = listOf(
+    val tabs = listOf(
         Triple(Icons.Rounded.Circle, "Notes", "Note"),
         Triple(Icons.Rounded.Pentagon, "Tasks", "Task"),
         Triple(Icons.Rounded.Square, "Lists", "List")
@@ -123,7 +123,7 @@ fun HomeScreen(
                         ) {
                             Icon(
                                 imageVector = Icons.Rounded.MoreVert,
-                                contentDescription = null,
+                                contentDescription = "More options",
                             )
                         }
                     },
@@ -310,7 +310,7 @@ fun HomeScreen(
                 }
             },
         ) {
-            tabs.forEachIndexed { i, item ->
+            tabs.forEachIndexed { _, item ->
                 FloatingActionButtonMenuItem(
                     onClick = {
                         fabMenuExpanded = false
