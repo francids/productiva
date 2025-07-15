@@ -1,4 +1,4 @@
-import { Component, input, OnDestroy, OnInit } from "@angular/core";
+import { Component, inject, input, OnDestroy, OnInit } from "@angular/core";
 import { ThemeService } from "../../services/theme.service";
 import { Subscription } from "rxjs";
 
@@ -8,12 +8,11 @@ import { Subscription } from "rxjs";
   templateUrl: "./logo.component.html",
 })
 export class LogoComponent implements OnInit, OnDestroy {
+  private readonly themeService = inject(ThemeService);
   width = input<string>("500px");
   height = input<string>("500px");
   color: string = "#002109";
   private darkModeSubscription: Subscription | undefined;
-
-  constructor(private themeService: ThemeService) {}
 
   ngOnInit() {
     this.updateColor(this.themeService.isDarkModeEnabled());

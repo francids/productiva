@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from "@angular/core";
+import { Component, AfterViewInit, inject } from "@angular/core";
 import { TitleService } from "../../services/title.service";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
@@ -11,13 +11,17 @@ import { environment } from "../../../environments/environments";
   imports: [MatButtonModule, MatIconModule],
 })
 export class AboutComponent implements AfterViewInit {
+  private titleService = inject(TitleService);
+
   currentYear = new Date().getFullYear();
   version = environment.version;
 
-  constructor(private titleService: TitleService) { }
-
   ngAfterViewInit() {
-    Promise.resolve().then(() => this.titleService.updateTitle($localize`:@@about-productiva:Acerca de Productiva Mente`));
+    Promise.resolve().then(() =>
+      this.titleService.updateTitle(
+        $localize`:@@about-productiva:Acerca de Productiva Mente`
+      )
+    );
   }
 
   openGithub() {

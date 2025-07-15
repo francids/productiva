@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { NotesService } from "./notes.service";
 import { Note } from "../models/note.model";
 
@@ -6,7 +6,7 @@ import { Note } from "../models/note.model";
   providedIn: "root",
 })
 export class ExportService {
-  constructor(private notesService: NotesService) { }
+  private notesService = inject(NotesService);
 
   async generateNoteFile(noteId: Note["id"]): Promise<void> {
     const note = await this.notesService.getNoteById(noteId);

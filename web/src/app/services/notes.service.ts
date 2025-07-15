@@ -1,16 +1,17 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { DexieService } from "./db.service";
 import { BehaviorSubject } from "rxjs";
 import { Note } from "../models/note.model";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class NotesService {
+  private dexieService = inject(DexieService);
   private notesSubject = new BehaviorSubject<Note[]>([]);
   public notes$ = this.notesSubject.asObservable();
 
-  constructor(private dexieService: DexieService) {
+  constructor() {
     this.loadNotes();
   }
 
