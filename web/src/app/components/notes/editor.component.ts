@@ -1,5 +1,16 @@
 // Angular
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, AfterViewInit } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  OnChanges,
+  SimpleChanges,
+  ViewChild,
+  AfterViewInit,
+  OnDestroy,
+  input,
+  output,
+} from "@angular/core";
 import { CommonModule } from "@angular/common";
 
 // Milkdown
@@ -22,9 +33,9 @@ import { prosePluginsCtx } from "@milkdown/kit/core";
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditorComponent implements AfterViewInit, OnChanges {
-  @Input() content: string = "";
-  @Output() contentChange = new EventEmitter<string>();
+export class EditorComponent implements AfterViewInit, OnChanges, OnDestroy {
+  content = input<string>("");
+  contentChange = output<string>();
 
   @ViewChild("editorRef")
   editorRef: ElementRef | undefined;
@@ -65,30 +76,30 @@ export class EditorComponent implements AfterViewInit, OnChanges {
     if (!this.editorRef) return;
 
     const isDocEmpty = (doc: Node) => {
-      return doc.childCount <= 1 && !doc.firstChild?.content.size
-    }
+      return doc.childCount <= 1 && !doc.firstChild?.content.size;
+    };
 
     const createPlaceholderDecoration = (
       state: EditorState,
       placeholderText: string
     ): Decoration | null => {
-      const { selection } = state
-      if (!selection.empty) return null
+      const { selection } = state;
+      if (!selection.empty) return null;
 
-      const $pos = selection.$anchor
-      const node = $pos.parent
-      if (node.content.size > 0) return null
+      const $pos = selection.$anchor;
+      const node = $pos.parent;
+      if (node.content.size > 0) return null;
 
-      const inTable = findParent((node) => node.type.name === "table")($pos)
-      if (inTable) return null
+      const inTable = findParent((node) => node.type.name === "table")($pos);
+      if (inTable) return null;
 
-      const before = $pos.before()
+      const before = $pos.before();
 
       return Decoration.node(before, before + node.nodeSize, {
         class: "editor-placeholder",
         "data-placeholder": placeholderText,
-      })
-    }
+      });
+    };
 
     const placeholderPlugin: MilkdownPlugin = (ctx) => {
       return async () => {
@@ -98,21 +109,24 @@ export class EditorComponent implements AfterViewInit, OnChanges {
             props: {
               decorations: (state) => {
                 if (!isDocEmpty(state.doc)) return DecorationSet.empty;
-                const deco = createPlaceholderDecoration(state, this.getRandomPlaceholder());
+                const deco = createPlaceholderDecoration(
+                  state,
+                  this.getRandomPlaceholder()
+                );
                 if (!deco) return DecorationSet.empty;
                 return DecorationSet.create(state.doc, [deco]);
-              }
+              },
             },
-          })
-        ]
+          }),
+        ];
         ctx.set(prosePluginsCtx, plugins);
-      }
-    }
+      };
+    };
 
     this.editor = await Editor.make()
       .config((ctx) => {
         ctx.set(rootCtx, this.editorRef!.nativeElement);
-        ctx.set(defaultValueCtx, this.content);
+        ctx.set(defaultValueCtx, this.content());
       })
       .config((ctx) => {
         const listener = ctx.get(listenerCtx);
@@ -132,7 +146,9 @@ export class EditorComponent implements AfterViewInit, OnChanges {
 
     setTimeout(() => {
       if (this.editorRef?.nativeElement) {
-        const editorElement = this.editorRef.nativeElement.querySelector("[contenteditable=\"true\"]");
+        const editorElement = this.editorRef.nativeElement.querySelector(
+          '[contenteditable="true"]'
+        );
         if (editorElement) {
           editorElement.focus();
         }
