@@ -1,6 +1,18 @@
 // Angular
-import { Component, OnInit } from "@angular/core";
-import { RouterLink, RouterOutlet, Router, NavigationEnd } from "@angular/router";
+import {
+  Component,
+  inject,
+  signal,
+  effect,
+  computed,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import {
+  RouterLink,
+  RouterOutlet,
+  Router,
+  NavigationEnd,
+} from "@angular/router";
 
 // RxJS
 import { filter } from "rxjs/operators";
@@ -24,53 +36,60 @@ import { FirstVisitService } from "./services/first-visit.service";
 
 @Component({
   selector: "app-root",
-  imports: [RouterLink, RouterOutlet, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatDividerModule, LogoComponent],
+  imports: [
+    RouterLink,
+    RouterOutlet,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatDividerModule,
+    LogoComponent,
+  ],
   templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"]
+  styleUrl: "./app.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements OnInit {
-  title: string = "Productiva Mente";
-  currentRoute: string = "";
+export class AppComponent {
+  private router = inject(Router);
+  private titleService = inject(TitleService);
+  private firstVisitService = inject(FirstVisitService);
+  private dialog = inject(MatDialog);
 
-  constructor(
-    public router: Router,
-    private titleService: TitleService,
-    private dialog: MatDialog,
-    private firstVisitService: FirstVisitService
-  ) {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: NavigationEnd) => {
-      this.currentRoute = event.urlAfterRedirects;
+  title = signal("Productiva Mente");
+  currentRoute = signal("");
+
+  isEditPage = computed(() => this.currentRoute().includes("/notes/edit"));
+
+  constructor() {
+    effect(() => {
+      this.router.events
+        .pipe(filter((event) => event instanceof NavigationEnd))
+        .subscribe((event: NavigationEnd) => {
+          this.currentRoute.set(event.urlAfterRedirects);
+        });
     });
-  }
 
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.titleService.title$.subscribe(title => {
-        this.title = title;
+    effect(() => {
+      this.titleService.title$.subscribe((title) => {
+        this.title.set(title);
       });
-    }, 0);
+    });
 
-    this.checkFirstVisit();
-  }
+    effect(() => {
+      if (this.firstVisitService.isFirstVisit()) {
+        setTimeout(() => {
+          const dialogRef = this.dialog.open(WelcomeDialogComponent, {
+            width: "450px",
+            disableClose: true,
+          });
 
-  checkFirstVisit(): void {
-    if (this.firstVisitService.isFirstVisit()) {
-      setTimeout(() => {
-        const dialogRef = this.dialog.open(WelcomeDialogComponent, {
-          width: "450px",
-          disableClose: true
-        });
-
-        dialogRef.afterClosed().subscribe(() => {
-          this.firstVisitService.setVisited();
-        });
-      }, 1000);
-    }
-  }
-
-  isEditPage(): boolean {
-    return this.currentRoute.includes("/notes/edit");
+          dialogRef.afterClosed().subscribe(() => {
+            this.firstVisitService.setVisited();
+          });
+        }, 1000);
+      }
+    });
   }
 }

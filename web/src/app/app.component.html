@@ -14,7 +14,7 @@
         mat-list-item
         routerLink="/"
         (click)="drawer.toggle()"
-        [activated]="router.url === '/'"
+        [activated]="currentRoute() === '/'"
       >
         <mat-icon matListItemIcon> home </mat-icon>
         <div matListItemTitle i18n="@@home">Inicio</div>
@@ -23,7 +23,7 @@
         mat-list-item
         routerLink="/notes"
         (click)="drawer.toggle()"
-        [activated]="router.url === '/notes'"
+        [activated]="currentRoute() === '/notes'"
       >
         <mat-icon matListItemIcon>notes</mat-icon>
         <div matListItemTitle i18n="@@notes">Notas</div>
@@ -32,7 +32,7 @@
         mat-list-item
         routerLink="/tasks"
         (click)="drawer.toggle()"
-        [activated]="router.url === '/tasks'"
+        [activated]="currentRoute() === '/tasks'"
       >
         <mat-icon matListItemIcon>task_alt</mat-icon>
         <div matListItemTitle i18n="@@tasks">Tareas</div>
@@ -44,7 +44,7 @@
         mat-list-item
         routerLink="/settings"
         (click)="drawer.toggle()"
-        [activated]="router.url === '/settings'"
+        [activated]="currentRoute() === '/settings'"
       >
         <mat-icon matListItemIcon> settings </mat-icon>
         <div matListItemTitle i18n="@@settings">Configuración</div>
@@ -56,7 +56,7 @@
         mat-list-item
         routerLink="/about"
         (click)="drawer.toggle()"
-        [activated]="router.url === '/about'"
+        [activated]="currentRoute() === '/about'"
       >
         <mat-icon matListItemIcon> info </mat-icon>
         <div matListItemTitle i18n="@@about">Acerca de</div>
@@ -79,10 +79,10 @@
       <button mat-icon-button (click)="drawer.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
-      @if (title == "Productiva Mente") {
+      @if (title() === "Productiva Mente") {
       <app-logo width="100%" height="18px"></app-logo>
       } @else {
-      <span>{{ title }}</span>
+      <span>{{ title() }}</span>
       }
     </mat-toolbar>
     }
