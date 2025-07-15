@@ -25,6 +25,7 @@ import androidx.compose.material.icons.rounded.Circle
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.Pentagon
 import androidx.compose.material.icons.rounded.Square
+import androidx.compose.material3.ContainedLoadingIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FloatingActionButtonMenu
@@ -43,6 +44,8 @@ import androidx.compose.material3.ToggleFloatingActionButton
 import androidx.compose.material3.ToggleFloatingActionButtonDefaults.animateIcon
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.animateFloatingActionButton
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -62,6 +65,9 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.francids.productiva.ui.components.NoteCard
 import com.francids.productiva.ui.components.TaskCard
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(
@@ -166,28 +172,50 @@ fun HomeScreen(
                 ) { page ->
                     when (page) {
                         0 -> {
-                            LazyColumn(
-                                state = listState,
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(
-                                        start = 16.dp,
-                                        end = 16.dp,
-                                    ),
-                                contentPadding = PaddingValues(
-                                    top = 16.dp,
-                                    bottom = 32.dp,
-                                ),
-                            ) {
-                                items(notes.size) { index ->
-                                    NoteCard(
-                                        note = notes[index],
-                                        isFirstNote = index == 0,
-                                        isLastNote = index == notes.size - 1,
-                                        onClick = {
-                                            navController.navigate("notes/${notes[index].id}")
-                                        },
+                            var isRefreshing by remember { mutableStateOf(false) }
+                            val pullToRefreshState = rememberPullToRefreshState()
+
+                            PullToRefreshBox(
+                                isRefreshing = isRefreshing,
+                                onRefresh = {
+                                    isRefreshing = true
+                                    CoroutineScope(Dispatchers.IO).launch {
+                                        delay(2000)
+                                        isRefreshing = false
+                                    }
+                                },
+                                state = pullToRefreshState,
+                                indicator = {
+                                    if (isRefreshing) @OptIn(ExperimentalMaterial3ExpressiveApi::class) ContainedLoadingIndicator(
+                                        modifier = Modifier
+                                            .align(Alignment.TopCenter)
+                                            .padding(top = 16.dp),
                                     )
+                                },
+                            ) {
+                                LazyColumn(
+                                    state = listState,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(
+                                            start = 16.dp,
+                                            end = 16.dp,
+                                        ),
+                                    contentPadding = PaddingValues(
+                                        top = 16.dp,
+                                        bottom = 32.dp,
+                                    ),
+                                ) {
+                                    items(notes.size) { index ->
+                                        NoteCard(
+                                            note = notes[index],
+                                            isFirstNote = index == 0,
+                                            isLastNote = index == notes.size - 1,
+                                            onClick = {
+                                                navController.navigate("notes/${notes[index].id}")
+                                            },
+                                        )
+                                    }
                                 }
                             }
                         }
