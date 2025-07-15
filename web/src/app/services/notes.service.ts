@@ -1,23 +1,25 @@
-import { inject, Injectable } from "@angular/core";
+import type { Note } from "../models/note.model";
+import { signal, effect, computed, inject, Injectable } from "@angular/core";
 import { DexieService } from "./db.service";
-import { BehaviorSubject } from "rxjs";
-import { Note } from "../models/note.model";
 
 @Injectable({
   providedIn: "root",
 })
 export class NotesService {
-  private dexieService = inject(DexieService);
-  private notesSubject = new BehaviorSubject<Note[]>([]);
-  public notes$ = this.notesSubject.asObservable();
+  private readonly dexieService = inject(DexieService);
+  private readonly _notes = signal<Note[]>([]);
+
+  readonly notes = computed(() => this._notes());
 
   constructor() {
-    this.loadNotes();
+    effect(() => {
+      this.loadNotes();
+    });
   }
 
   private async loadNotes(): Promise<void> {
     const notes = await this.dexieService.db.notes.toArray();
-    this.notesSubject.next(notes);
+    this._notes.set(notes);
   }
 
   async getNoteById(noteId: string): Promise<Note | undefined> {

@@ -10,7 +10,7 @@
     </p>
   </div>
   } @else {
-  <table mat-table [dataSource]="dataSource" matSort>
+  <table mat-table [dataSource]="dataSource()" matSort>
     <ng-container matColumnDef="title">
       <th
         mat-header-cell

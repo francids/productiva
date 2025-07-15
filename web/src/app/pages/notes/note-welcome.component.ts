@@ -1,5 +1,10 @@
 // Angular
-import { AfterViewInit, ChangeDetectionStrategy, Component, inject, signal } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from "@angular/core";
 import { Router } from "@angular/router";
 
 // Services
@@ -31,102 +36,101 @@ import { DelNoteDialogComponent } from "../../components/notes/del-note-dialog.c
   selector: "note-welcome",
   templateUrl: "./note-welcome.component.html",
   styleUrl: "./note-welcome.component.scss",
-  imports: [MatCardModule, MatButtonModule, MatRippleModule, MatMenuModule, MatIconModule, CdkDrag],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  imports: [
+    MatCardModule,
+    MatButtonModule,
+    MatRippleModule,
+    MatMenuModule,
+    MatIconModule,
+    CdkDrag,
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NoteWelcomeComponent implements AfterViewInit {
-  notes = signal<Note[]>([]);
+export class NoteWelcomeComponent {
+  private readonly router = inject(Router);
+  private readonly notesService = inject(NotesService);
+  private readonly titleService = inject(TitleService);
+
+  readonly notes = this.notesService.notes;
   readonly dialog = inject(MatDialog);
   readonly newNoteTitle = signal("");
   private _snackBar = inject(MatSnackBar);
   private mouseDownTimeout: any;
 
-  onMouseDown(event: MouseEvent, noteId: string) {
+  onMouseDown(_: MouseEvent, __: string) {
     this.mouseDownTimeout = setTimeout(() => {
       this.mouseDownTimeout = null;
     }, 150);
-  };
+  }
 
-  onMouseUp(event: MouseEvent, noteId: string) {
+  onMouseUp(_: MouseEvent, noteId: string) {
     if (this.mouseDownTimeout) {
       clearTimeout(this.mouseDownTimeout);
       this.mouseDownTimeout = null;
       this.router.navigate(["/notes/edit", noteId]);
-    };
-  };
-
-  constructor(
-    private router: Router,
-    private notesService: NotesService,
-    private titleService: TitleService,
-  ) {
-    this.loadNotes();
-  };
-
-  ngAfterViewInit() {
-    Promise.resolve().then(() => this.titleService.updateTitle($localize`:@@notes:Notas`));
+    }
   }
 
-  private loadNotes(): void {
-    this.notesService.notes$.subscribe((notes: Note[]) => {
-      this.notes.set(notes);
-    });
-  };
+  constructor() {
+    this.titleService.updateTitle($localize`:@@notes:Notas`);
+  }
 
   async createNewNote(title: string): Promise<void> {
     const newNoteId = uuidv4();
     await this.notesService.saveNote({
       id: newNoteId,
       title: title,
-      content: ""
+      content: "",
     });
     this.router.navigate(["/notes/edit", newNoteId]);
-  };
+  }
 
   openDialogCreateNote(): void {
-    const dialogRef = this.dialog.open(
-      NewNoteDialogComponent,
-      {
-        data: { title: this.newNoteTitle() },
-      }
-    );
+    const dialogRef = this.dialog.open(NewNoteDialogComponent, {
+      data: { title: this.newNoteTitle() },
+    });
 
-    dialogRef.afterClosed().subscribe(async result => {
+    dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
         this.newNoteTitle.set(result);
         await this.createNewNote(this.newNoteTitle());
       }
     });
-  };
+  }
 
   openDialogEditTitleNote(note: Note): void {
     const dialogRef = this.dialog.open(EditTitleNoteDialogComponent, {
-      data: { title: note.title }
+      data: { title: note.title },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.notesService.updateNote(note.id, {
           id: note.id,
           title: result,
-          content: note.content
+          content: note.content,
         });
-        this.notes.set(this.notes().map(n => {
-          return n.id === note.id ? { ...n, title: result } : n;
-        }));
-        this._snackBar.open($localize`:@@notes.note-title-edited:Título de la nota editado`, $localize`:@@common.ok:Cerrar`, { duration: 2000 });
-      };
+        this._snackBar.open(
+          $localize`:@@notes.note-title-edited:Título de la nota editado`,
+          $localize`:@@common.ok:Cerrar`,
+          { duration: 2000 }
+        );
+      }
     });
-  };
+  }
 
   openDialogDeleteNote(note: Note): void {
     const dialogRef = this.dialog.open(DelNoteDialogComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.notesService.deleteNote(note.id);
-        this._snackBar.open($localize`:@@notes.note-deleted:Nota eliminada`, $localize`:@@common.ok:Cerrar`, { duration: 2000 });
-      };
+        this._snackBar.open(
+          $localize`:@@notes.note-deleted:Nota eliminada`,
+          $localize`:@@common.ok:Cerrar`,
+          { duration: 2000 }
+        );
+      }
     });
-  };
+  }
 }

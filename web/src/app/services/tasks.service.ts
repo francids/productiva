@@ -1,6 +1,5 @@
-import { inject, Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
-import { Task } from "../models/task.model";
+import type { Task } from "../models/task.model";
+import { signal, effect, computed, inject, Injectable } from "@angular/core";
 import { DexieService } from "./db.service";
 
 @Injectable({
@@ -8,16 +7,19 @@ import { DexieService } from "./db.service";
 })
 export class TasksService {
   private readonly dexieService = inject(DexieService);
-  private tasksSubject = new BehaviorSubject<Task[]>([]);
-  public tasks$ = this.tasksSubject.asObservable();
+  private readonly _tasks = signal<Task[]>([]);
+
+  readonly tasks = computed(() => this._tasks());
 
   constructor() {
-    this.loadTasks();
+    effect(() => {
+      this.loadTasks();
+    });
   }
 
   private async loadTasks(): Promise<void> {
     const tasks = await this.dexieService.db.tasks.toArray();
-    this.tasksSubject.next(tasks);
+    this._tasks.set(tasks);
   }
 
   async createTask(task: Task): Promise<void> {
