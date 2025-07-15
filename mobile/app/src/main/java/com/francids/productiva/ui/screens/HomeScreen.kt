@@ -1,18 +1,8 @@
 package com.francids.productiva.ui.screens
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
@@ -53,7 +43,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.francids.productiva.ui.screens.tabs.ListsTabView
 import com.francids.productiva.ui.screens.tabs.NotesTabView
@@ -86,150 +75,116 @@ fun HomeScreen(
     val pagerState = rememberPagerState(pageCount = { tabs.size })
     val coroutineScope = rememberCoroutineScope()
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .fillMaxWidth(),
-    ) {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = "Productiva シ",
-                            style = MaterialTheme.typography.titleLarge,
-                        )
-                    },
-                    actions = {
-                        IconButton(
-                            onClick = { },
-                            modifier = Modifier.size(
-                                smallContainerSize(
-                                    IconButtonDefaults.IconButtonWidthOption.Narrow,
-                                ),
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "Productiva シ",
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                },
+                actions = {
+                    IconButton(
+                        onClick = { },
+                        modifier = Modifier.size(
+                            smallContainerSize(
+                                IconButtonDefaults.IconButtonWidthOption.Narrow,
                             ),
-                        ) {
-                            Icon(
-                                imageVector = Icons.Rounded.MoreVert,
-                                contentDescription = "More options",
-                            )
-                        }
-                    },
-                )
-            },
-
-            ) { innerPadding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = innerPadding.calculateTopPadding())
-            ) {
-                PrimaryScrollableTabRow(
-                    selectedTabIndex = pagerState.currentPage,
-                    modifier = Modifier.fillMaxWidth(),
-                    tabs = {
-                        tabs.forEachIndexed { index, tab ->
-                            Tab(
-                                selected = pagerState.currentPage == index,
-                                onClick = {
-                                    coroutineScope.launch {
-                                        pagerState.animateScrollToPage(index)
-                                    }
-                                },
-                                text = {
-                                    Text(
-                                        text = tab.second,
-                                        style = MaterialTheme.typography.labelLarge,
-                                        modifier = Modifier.padding(8.dp),
-                                    )
-                                },
-                            )
-                        }
-                    },
-                )
-
-                HorizontalPager(
-                    state = pagerState,
-                    modifier = Modifier.fillMaxWidth(),
-                ) { page ->
-                    when (page) {
-                        0 -> NotesTabView(navController)
-                        1 -> TasksTabView()
-                        2 -> ListsTabView()
+                        ),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.MoreVert,
+                            contentDescription = "More options",
+                        )
                     }
+                },
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButtonMenu(
+                expanded = fabMenuExpanded,
+                button = {
+                    ToggleFloatingActionButton(
+                        modifier = Modifier.animateFloatingActionButton(
+                            visible = fabVisible || fabMenuExpanded,
+                            alignment = Alignment.BottomEnd,
+                        ),
+                        checked = fabMenuExpanded,
+                        onCheckedChange = { fabMenuExpanded = !fabMenuExpanded },
+                    ) {
+                        Icon(
+                            painter = rememberVectorPainter(Icons.Rounded.Add),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .animateIcon({ checkedProgress })
+                                .rotate(checkedProgress * 45f)
+                        )
+                    }
+                },
+            ) {
+                tabs.forEachIndexed { _, item ->
+                    FloatingActionButtonMenuItem(
+                        onClick = {
+                            fabMenuExpanded = false
+                        },
+                        icon = {
+                            Icon(
+                                item.first,
+                                contentDescription = null,
+                                modifier = Modifier.size(MaterialTheme.typography.labelLarge.fontSize.value.dp),
+                            )
+                        },
+                        text = {
+                            Text(
+                                text = item.third,
+                                style = MaterialTheme.typography.labelLarge,
+                            )
+                        },
+                    )
                 }
             }
-        }
+        },
 
-        AnimatedVisibility(
-            visible = fabMenuExpanded,
-            enter = fadeIn(animationSpec = tween(300)),
-            exit = fadeOut(animationSpec = tween(300)),
+        ) { innerPadding ->
+        Column(
             modifier = Modifier
-                .fillMaxSize()
-                .zIndex(1f)
+                .fillMaxWidth()
+                .padding(top = innerPadding.calculateTopPadding())
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        MaterialTheme.colorScheme.surfaceContainer.copy(
-                            alpha = 0.8f,
+            PrimaryScrollableTabRow(
+                selectedTabIndex = pagerState.currentPage,
+                modifier = Modifier.fillMaxWidth(),
+                tabs = {
+                    tabs.forEachIndexed { index, tab ->
+                        Tab(
+                            selected = pagerState.currentPage == index,
+                            onClick = {
+                                coroutineScope.launch {
+                                    pagerState.animateScrollToPage(index)
+                                }
+                            },
+                            text = {
+                                Text(
+                                    text = tab.second,
+                                    style = MaterialTheme.typography.labelLarge,
+                                    modifier = Modifier.padding(8.dp),
+                                )
+                            },
                         )
-                    )
-                    .clickable(
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = null
-                    ) {
-                        fabMenuExpanded = false
-                    },
+                    }
+                },
             )
-        }
 
-        FloatingActionButtonMenu(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .safeDrawingPadding()
-                .zIndex(2f),
-            expanded = fabMenuExpanded,
-            button = {
-                ToggleFloatingActionButton(
-                    modifier = Modifier.animateFloatingActionButton(
-                        visible = fabVisible || fabMenuExpanded,
-                        alignment = Alignment.BottomEnd,
-                    ),
-                    checked = fabMenuExpanded,
-                    onCheckedChange = { fabMenuExpanded = !fabMenuExpanded },
-                ) {
-                    Icon(
-                        painter = rememberVectorPainter(Icons.Rounded.Add),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .animateIcon({ checkedProgress })
-                            .rotate(checkedProgress * 45f)
-                    )
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier.fillMaxWidth(),
+            ) { page ->
+                when (page) {
+                    0 -> NotesTabView(navController)
+                    1 -> TasksTabView()
+                    2 -> ListsTabView()
                 }
-            },
-        ) {
-            tabs.forEachIndexed { _, item ->
-                FloatingActionButtonMenuItem(
-                    onClick = {
-                        fabMenuExpanded = false
-                    },
-                    icon = {
-                        Icon(
-                            item.first,
-                            contentDescription = null,
-                            modifier = Modifier.size(MaterialTheme.typography.labelLarge.fontSize.value.dp),
-                        )
-                    },
-                    text = {
-                        Text(
-                            text = item.third,
-                            style = MaterialTheme.typography.labelLarge,
-                        )
-                    },
-                )
             }
         }
     }
