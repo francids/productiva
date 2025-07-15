@@ -6,23 +6,24 @@
         <span i18n="@@settings.appearance.followSystem">Seguir sistema</span>
         <mat-slide-toggle
           [hideIcon]="true"
-          [checked]="isAutoMode"
+          [checked]="isAutoMode()"
           (change)="toggleAutoMode($event)"
         >
         </mat-slide-toggle>
       </div>
 
-      <mat-divider *ngIf="!isAutoMode" class="settings-divider"></mat-divider>
-
-      <div class="settings-item" *ngIf="!isAutoMode">
+      @if (!isAutoMode()) {
+      <mat-divider class="settings-divider"></mat-divider>
+      <div class="settings-item">
         <span i18n="@@settings.appearance.darkTheme">Tema oscuro</span>
         <mat-slide-toggle
           [hideIcon]="true"
-          [checked]="isDarkMode"
+          [checked]="isDarkMode()"
           (change)="toggleDarkMode($event)"
         >
         </mat-slide-toggle>
       </div>
+      }
     </mat-card-content>
   </mat-card>
 

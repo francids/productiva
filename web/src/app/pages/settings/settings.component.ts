@@ -1,36 +1,35 @@
 // Angular
-import { Component, OnInit } from "@angular/core";
-import { NgIf } from "@angular/common";
+import { Component, inject, signal } from "@angular/core";
 
 // Modules
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatCardModule } from "@angular/material/card";
 
 // Services
-import { TitleService } from '../../services/title.service';
+import { TitleService } from "../../services/title.service";
 import { ThemeService } from "../../services/theme.service";
 
 @Component({
   selector: "settings-page",
   templateUrl: "./settings.component.html",
   styleUrl: "./settings.component.scss",
-  imports: [MatSlideToggleModule, MatDividerModule, MatCardModule, NgIf]
+  imports: [MatSlideToggleModule, MatDividerModule, MatCardModule],
 })
-export class SettingsComponent implements OnInit {
-  isDarkMode: boolean = false;
-  isAutoMode: boolean = false;
+export class SettingsComponent {
+  private readonly titleService = inject(TitleService);
+  private readonly themeService = inject(ThemeService);
 
-  constructor(
-    private titleService: TitleService,
-    private themeService: ThemeService,
-  ) {
+  isDarkMode = signal<boolean>(false);
+  isAutoMode = signal<boolean>(false);
+
+  constructor() {
     this.titleService.updateTitle($localize`:@@settings:Configuración`);
   }
 
   ngOnInit(): void {
-    this.isDarkMode = this.themeService.isDarkModeEnabled();
-    this.isAutoMode = this.themeService.isAutoModeEnabled();
+    this.isDarkMode.set(this.themeService.isDarkModeEnabled());
+    this.isAutoMode.set(this.themeService.isAutoModeEnabled());
   }
 
   toggleDarkMode(event: any): void {
@@ -38,10 +37,10 @@ export class SettingsComponent implements OnInit {
   }
 
   toggleAutoMode(event: any): void {
-    this.isAutoMode = event.checked;
+    this.isAutoMode.set(event.checked);
     this.themeService.toggleAutoMode(event.checked);
     if (!event.checked) {
-      this.isDarkMode = this.themeService.isDarkModeEnabled();
+      this.isDarkMode.set(this.themeService.isDarkModeEnabled());
     }
   }
 }
