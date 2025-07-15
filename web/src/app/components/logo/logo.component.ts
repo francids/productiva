@@ -1,6 +1,6 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ThemeService } from '../../services/theme.service';
-import { Subscription } from 'rxjs';
+import { Component, input, OnDestroy, OnInit } from "@angular/core";
+import { ThemeService } from "../../services/theme.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-logo",
@@ -8,20 +8,20 @@ import { Subscription } from 'rxjs';
   templateUrl: "./logo.component.html",
 })
 export class LogoComponent implements OnInit, OnDestroy {
-  @Input() width: string = '500px';
-  @Input() height: string = '500px';
-  color: string = '#002109';
+  width = input<string>("500px");
+  height = input<string>("500px");
+  color: string = "#002109";
   private darkModeSubscription: Subscription | undefined;
 
-  constructor(
-    private themeService: ThemeService,
-  ) { }
+  constructor(private themeService: ThemeService) {}
 
   ngOnInit() {
     this.updateColor(this.themeService.isDarkModeEnabled());
-    this.darkModeSubscription = this.themeService.darkModeChanges$.subscribe(isDarkMode => {
-      this.updateColor(isDarkMode);
-    });
+    this.darkModeSubscription = this.themeService.darkModeChanges$.subscribe(
+      (isDarkMode) => {
+        this.updateColor(isDarkMode);
+      }
+    );
   }
 
   ngOnDestroy() {
@@ -31,6 +31,6 @@ export class LogoComponent implements OnInit, OnDestroy {
   }
 
   private updateColor(isDarkMode: boolean) {
-    this.color = isDarkMode ? '#f6fff2' : '#002109';
+    this.color = isDarkMode ? "#f6fff2" : "#002109";
   }
 }
