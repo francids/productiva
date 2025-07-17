@@ -1,12 +1,19 @@
-import { ApplicationConfig, provideZoneChangeDetection, isDevMode, importProvidersFrom, inject, provideAppInitializer } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { routes } from './app.routes';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideServiceWorker } from '@angular/service-worker';
-import { BrowserModule } from '@angular/platform-browser';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { ThemeService } from './services/theme.service';
-import { DexieService } from './services/db.service';
+import {
+  ApplicationConfig,
+  provideZonelessChangeDetection,
+  isDevMode,
+  importProvidersFrom,
+  inject,
+  provideAppInitializer,
+} from "@angular/core";
+import { provideRouter } from "@angular/router";
+import { routes } from "./app.routes";
+import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
+import { provideServiceWorker } from "@angular/service-worker";
+import { BrowserModule } from "@angular/platform-browser";
+import { provideAnimations } from "@angular/platform-browser/animations";
+import { ThemeService } from "./services/theme.service";
+import { DexieService } from "./services/db.service";
 
 export function initializeDatabase(dexieService: DexieService) {
   return () => dexieService.init();
@@ -18,20 +25,20 @@ export function initializeTheme(themeService: ThemeService) {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideZonelessChangeDetection(),
     provideRouter(routes),
     provideAnimationsAsync(),
-    provideServiceWorker('ngsw-worker.js', {
+    provideServiceWorker("ngsw-worker.js", {
       enabled: !isDevMode(),
-      registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: "registerWhenStable:30000",
     }),
     importProvidersFrom(BrowserModule),
     provideAppInitializer(() => {
-      const initializerFn = (initializeDatabase)(inject(DexieService));
+      const initializerFn = initializeDatabase(inject(DexieService));
       return initializerFn();
     }),
     provideAppInitializer(() => {
-      const initializerFn = (initializeTheme)(inject(ThemeService));
+      const initializerFn = initializeTheme(inject(ThemeService));
       return initializerFn();
     }),
     provideAnimations(),
