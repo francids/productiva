@@ -1,25 +1,15 @@
-@use "sass:map";
-@use "@angular/material" as mat;
-@include mat.elevation-classes();
-@include mat.app-background();
-
 :host {
   display: flex;
   flex-grow: 1;
 }
 
-@mixin color($theme) {
-  .box {
-    background-color: mat.get-theme-color($theme, surface-container);
-    background: linear-gradient(
-      45deg,
-      mat.get-theme-color($theme, surface-container) 0%,
-      mat.get-theme-color($theme, surface) 100%
-    );
-  }
-}
-
 .box {
+  background-color: var(--mat-sys-color-surface-container);
+  background: linear-gradient(
+    45deg,
+    var(--mat-sys-color-surface-container) 0%,
+    var(--mat-sys-color-surface) 100%
+  );
   display: flex;
   flex-grow: 1;
   align-items: end;
@@ -29,10 +19,4 @@
 
 .box p {
   margin: 0;
-}
-
-@mixin theme($theme) {
-  @if mat.theme-has($theme, color) {
-    @include color($theme);
-  }
 }

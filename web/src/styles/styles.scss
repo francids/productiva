@@ -1,40 +1,37 @@
 @use "@angular/material" as mat;
-@use "./m3-theme" as theme;
+@use "@milkdown/theme-nord/style.css";
+@use "../app/components/home-box/home-box.component.scss";
+@use "./editor.component.scss";
+@use "../app/components/tasks/task-status-select.component.scss";
 
-@use "./editor.component.scss" as editor;
-@use "../app/components/home-box/home-box.component" as home-box;
-@use "../app/components/tasks/task-status-select.component" as
-  task-status-select;
+@include mat.core();
 
-@include mat.elevation-classes();
-@include mat.app-background();
+html {
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$green-palette,
+        theme-type: light,
+      ),
+    )
+  );
+}
+
+.dark-theme {
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$green-palette,
+        theme-type: dark,
+      ),
+    )
+  );
+}
 
 html,
 body {
   height: 100%;
   margin-top: var(--ion-safe-area-top);
-  color-scheme: light;
-
-  @include mat.all-component-themes(theme.$light-theme);
-
-  // Typography levels
-  @include mat.typography-hierarchy(theme.$light-theme);
-
-  // Components
-  @include editor.theme(theme.$light-theme);
-  @include home-box.theme(theme.$light-theme);
-  @include task-status-select.theme(theme.$light-theme);
-}
-
-.darkmode {
-  color-scheme: dark;
-
-  @include mat.all-component-colors(theme.$dark-theme);
-
-  // Components
-  @include editor.theme(theme.$dark-theme);
-  @include home-box.color(theme.$dark-theme);
-  @include task-status-select.color(theme.$dark-theme);
 }
 
 body {

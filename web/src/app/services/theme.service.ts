@@ -16,7 +16,7 @@ export class ThemeService {
   private renderer = signal<Renderer2>(
     this.rendererFactory.createRenderer(null, null)
   );
-  private darkModeClass: string = "darkmode";
+  private darkModeClass: string = "dark-theme";
   private darkModeSubject: Subject<boolean> = new Subject<boolean>();
   private lightThemeColor: string = "#faf9f9";
   private darkThemeColor: string = "#101111";

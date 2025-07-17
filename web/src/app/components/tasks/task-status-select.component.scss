@@ -1,32 +1,19 @@
-@use "sass:map";
-@use "@angular/material" as mat;
-@include mat.elevation-classes();
-@include mat.app-background();
+.task-status-select {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
 
-@mixin color($theme) {
-  .task-status-select {
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-
-    &.no-started {
-      background-color: mat.get-theme-color($theme, surface);
-      color: mat.get-theme-color($theme, on-surface);
-    }
-
-    &.in-progress {
-      background-color: mat.get-theme-color($theme, secondary-container);
-      color: mat.get-theme-color($theme, on-secondary-container);
-    }
-
-    &.completed {
-      background-color: mat.get-theme-color($theme, primary-container);
-      color: mat.get-theme-color($theme, on-primary-container);
-    }
+  &.no-started {
+    background-color: var(--mat-sys-color-surface);
+    color: var(--mat-sys-color-on-surface);
   }
-}
 
-@mixin theme($theme) {
-  @if mat.theme-has($theme, color) {
-    @include color($theme);
+  &.in-progress {
+    background-color: var(--mat-sys-color-secondary-container);
+    color: var(--mat-sys-color-on-secondary-container);
+  }
+
+  &.completed {
+    background-color: var(--mat-sys-color-primary-container);
+    color: var(--mat-sys-color-on-primary-container);
   }
 }

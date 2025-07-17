@@ -1,44 +1,124 @@
-@use "sass:map";
-@use "@angular/material" as mat;
-@include mat.elevation-classes();
-@include mat.app-background();
-
-@mixin color($theme) {
-  $text: mat.get-theme-color($theme, on-surface);
-  $main: mat.get-theme-color($theme, surface);
-  $placeholder: mat.get-theme-color($theme, on-surface-variant);
-
-  .milkdown {
-    .editor {
-      color: #{$text};
-      background-color: #{$main};
-      outline: none;
-      min-height: 50vh;
-      padding-inline: 2rem;
-      padding-top: 2rem;
-      padding-bottom: 6rem;
-    }
-
-    .editor::selection {
-      background-color: color-mix(
-        in srgb,
-        #{mat.get-theme-color($theme, primary-container)},
-        transparent 60%
-      );
-    }
-
-    .editor-placeholder::before {
-      position: absolute;
-      color: color-mix(in srgb, #{$placeholder}, transparent 60%);
-      pointer-events: none;
-      height: 0;
-      content: attr(data-placeholder);
-    }
-  }
+.editor-placeholder::before {
+  content: attr(data-placeholder);
+  color: var(--mat-sys-color-on-surface-variant);
+  position: absolute;
+  opacity: 0.6;
+  cursor: text;
 }
 
-@mixin theme($theme) {
-  @if mat.theme-has($theme, color) {
-    @include color($theme);
+.milkdown-editor {
+  .editor {
+    padding: 1rem;
+    background-color: var(--mat-sys-color-surface-container-low);
+    border-radius: 0.5rem;
+    min-height: 20rem;
+    height: 100%;
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  li,
+  hr,
+  blockquote,
+  pre {
+    color: var(--mat-sys-color-on-surface);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: bold;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  h3 {
+    font-size: 1.6rem;
+  }
+
+  h4 {
+    font-size: 1.4rem;
+  }
+
+  h5 {
+    font-size: 1.2rem;
+  }
+
+  h6 {
+    font-size: 1rem;
+  }
+
+  hr {
+    border-color: var(--mat-sys-color-outline);
+  }
+
+  blockquote {
+    border-left: 4px solid var(--mat-sys-color-outline);
+    padding-left: 1rem;
+    margin-left: 0;
+  }
+
+  pre {
+    background-color: var(--mat-sys-color-surface-bright);
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+
+  code {
+    background-color: var(--mat-sys-color-surface-bright);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.3rem;
+  }
+
+  a {
+    color: var(--mat-sys-color-primary);
+  }
+
+  strong {
+    font-weight: bold;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  ul,
+  ol {
+    padding-left: 2rem;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    border: 1px solid var(--mat-sys-color-outline);
+    padding: 0.5rem;
+  }
+
+  th {
+    background-color: var(--mat-sys-color-surface-container);
   }
 }
