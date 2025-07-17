@@ -38,9 +38,9 @@ Workspace configuration is in `pnpm-workspace.yaml`.
 ## Getting Started
 
 - Install dependencies with `pnpm install`
-- Run the web app with `pnpm --prefix web start`
-- Build the web app with `pnpm --prefix web build`
-- Run the desktop app with `pnpm --prefix desktop start`
-- Build the desktop app with `pnpm --prefix desktop package`
+- Run the web app with `pnpm web:start`
+- Build the web app with `pnpm web:build`
+- Run the desktop app with `pnpm desktop:start`
+- Build the desktop app with `pnpm desktop:build`
 
 See each package's `README.md` for more details.
