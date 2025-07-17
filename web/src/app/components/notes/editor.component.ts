@@ -5,11 +5,11 @@ import {
   ElementRef,
   OnChanges,
   SimpleChanges,
-  ViewChild,
   AfterViewInit,
   OnDestroy,
   input,
   output,
+  viewChild,
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
@@ -37,8 +37,7 @@ export class EditorComponent implements AfterViewInit, OnChanges, OnDestroy {
   content = input<string>("");
   contentChange = output<string>();
 
-  @ViewChild("editorRef")
-  editorRef: ElementRef | undefined;
+  readonly editorRef = viewChild<ElementRef>("editorRef");
 
   private editor: Editor | undefined;
   private placeholders = [
@@ -73,7 +72,7 @@ export class EditorComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private async initEditor(): Promise<void> {
-    if (!this.editorRef) return;
+    if (!this.editorRef()) return;
 
     const isDocEmpty = (doc: Node) => {
       return doc.childCount <= 1 && !doc.firstChild?.content.size;
@@ -125,7 +124,7 @@ export class EditorComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     this.editor = await Editor.make()
       .config((ctx) => {
-        ctx.set(rootCtx, this.editorRef!.nativeElement);
+        ctx.set(rootCtx, this.editorRef()!.nativeElement);
         ctx.set(defaultValueCtx, this.content());
       })
       .config((ctx) => {
@@ -145,8 +144,9 @@ export class EditorComponent implements AfterViewInit, OnChanges, OnDestroy {
       .create();
 
     setTimeout(() => {
-      if (this.editorRef?.nativeElement) {
-        const editorElement = this.editorRef.nativeElement.querySelector(
+      const editorRef = this.editorRef();
+      if (editorRef?.nativeElement) {
+        const editorElement = editorRef.nativeElement.querySelector(
           '[contenteditable="true"]'
         );
         if (editorElement) {
