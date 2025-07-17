@@ -1,0 +1,12 @@
+packages:
+  - "desktop"
+  - "web"
+ignoredBuiltDependencies:
+  - "lmdb"
+onlyBuiltDependencies:
+  - "@parcel/watcher"
+  - "esbuild"
+  - "msgpackr-extract"
+  - "electron"
+  - "electron-winstaller"
+strictPeerDependencies: false

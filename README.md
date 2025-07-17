@@ -8,6 +8,12 @@
 
 **Productiva Mente** is a task and note management application designed with the Material design guidelines.
 
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="./resources/screenshots/Home%20screen%20(light).png">
+  <source media="(prefers-color-scheme: dark)" srcset="./resources/screenshots/Home%20screen%20(dark).png">
+  <img alt="Home screen" src="./resources/screenshots/Home%20screen%20(light).png">
+</picture>
+
 ## Features
 
 - **Free and Open Source**: Use and contribute to this project at no cost.
@@ -16,24 +22,25 @@
 
 ## Application Access
 
-The web app is available at: [https://productiva.francids.com/](https://productiva.francids.com/)
+The web app is available at: [https://productiva.francids.com/](https://productiva.francids.com/)s
 
-## Screenshots
+## Monorepo Structure
 
-<picture>
-  <source media="(prefers-color-scheme: light)" srcset="./resources/screenshots/Home%20screen%20(light).png">
-  <source media="(prefers-color-scheme: dark)" srcset="./resources/screenshots/Home%20screen%20(dark).png">
-  <img alt="Home screen" src="./resources/screenshots/Home%20screen%20(light).png">
-</picture>
+This repository uses [pnpm](https://pnpm.io/) to manage multiple applications:
 
-<picture>
-  <source media="(prefers-color-scheme: light)" srcset="./resources/screenshots/Notes%20screen%20(light).png">
-  <source media="(prefers-color-scheme: dark)" srcset="./resources/screenshots/Notes%20screen%20(dark).png">
-  <img alt="Notes screen" src="./resources/screenshots/Notes%20screen%20(light).png">
-</picture>
+- `web`: Angular web application
+- `desktop`: Electron desktop application
 
-<picture>
-  <source media="(prefers-color-scheme: light)" srcset="./resources/screenshots/Tasks%20screen%20(light).png">
-  <source media="(prefers-color-scheme: dark)" srcset="./resources/screenshots/Tasks%20screen%20(dark).png">
-  <img alt="Tasks screen" src="./resources/screenshots/Tasks%20screen%20(light).png">
-</picture>
+Workspace configuration is in `pnpm-workspace.yaml`.
+
+> **Note**: The mobile application code is included in this repository under [`mobile`](./mobile). It is developed separately using Jetpack Compose.
+
+## Getting Started
+
+- Install dependencies with `pnpm install`
+- Run the web app with `pnpm --prefix web start`
+- Build the web app with `pnpm --prefix web build`
+- Run the desktop app with `pnpm --prefix desktop start`
+- Build the desktop app with `pnpm --prefix desktop package`
+
+See each package's `README.md` for more details.

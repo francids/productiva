@@ -4,14 +4,19 @@
     "name": "Francisco Mesa",
     "url": "https://francids.com/"
   },
-  "packageManager": "pnpm@10.8.1",
+  "packageManager": "pnpm@10.12.1",
   "scripts": {
-    "prepare": "husky"
+    "prepare": "husky",
+    "web:start": "pnpm --prefix web start",
+    "web:build": "pnpm --prefix web build",
+    "desktop:start": "concurrently \"pnpm web:start\" \"pnpm --prefix desktop start\"",
+    "desktop:build": "pnpm --prefix desktop build"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.0",
     "@commitlint/config-angular": "^19.8.0",
     "@commitlint/types": "^19.8.0",
-    "husky": "^9.1.7"
+    "husky": "^9.1.7",
+    "concurrently": "^9.2.0"
   }
 }
