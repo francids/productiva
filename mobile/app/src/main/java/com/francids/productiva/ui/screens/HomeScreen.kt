@@ -15,12 +15,11 @@ import androidx.compose.material.icons.rounded.Pentagon
 import androidx.compose.material.icons.rounded.Square
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.FloatingActionButtonMenu
 import androidx.compose.material3.FloatingActionButtonMenuItem
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.IconButtonDefaults.smallContainerSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PrimaryScrollableTabRow
 import androidx.compose.material3.Scaffold
@@ -30,6 +29,7 @@ import androidx.compose.material3.ToggleFloatingActionButton
 import androidx.compose.material3.ToggleFloatingActionButtonDefaults.animateIcon
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.animateFloatingActionButton
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -85,13 +85,19 @@ fun HomeScreen(
                     )
                 },
                 actions = {
-                    IconButton(
-                        onClick = { },
-                        modifier = Modifier.size(
-                            smallContainerSize(
-                                IconButtonDefaults.IconButtonWidthOption.Narrow,
-                            ),
+                    FilledTonalIconButton(
+                        onClick = {},
+                        colors = IconButtonDefaults.filledTonalIconButtonColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                            contentColor = MaterialTheme.colorScheme.onSurface,
                         ),
+                        modifier = Modifier
+                            .minimumInteractiveComponentSize()
+                            .size(
+                                size = IconButtonDefaults.smallContainerSize(
+                                    widthOption = IconButtonDefaults.IconButtonWidthOption.Narrow,
+                                )
+                            ),
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.MoreVert,

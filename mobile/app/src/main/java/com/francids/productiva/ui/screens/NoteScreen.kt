@@ -20,14 +20,13 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.IconButtonDefaults.smallContainerSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -129,13 +128,19 @@ private fun NoteTopAppBar(
             }
         },
         actions = {
-            IconButton(
-                onClick = { },
-                modifier = Modifier.size(
-                    smallContainerSize(
-                        IconButtonDefaults.IconButtonWidthOption.Narrow,
-                    ),
+            FilledTonalIconButton(
+                onClick = {},
+                colors = IconButtonDefaults.filledTonalIconButtonColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                    contentColor = MaterialTheme.colorScheme.onSurface,
                 ),
+                modifier = Modifier
+                    .minimumInteractiveComponentSize()
+                    .size(
+                        size = IconButtonDefaults.smallContainerSize(
+                            widthOption = IconButtonDefaults.IconButtonWidthOption.Narrow,
+                        ),
+                    ),
             ) {
                 Icon(
                     imageVector = Icons.Rounded.MoreVert,
