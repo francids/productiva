@@ -31,6 +31,7 @@ const Configuration: UserConfig = {
         "config",
         "deps",
         "resources",
+        "ai"
       ],
     ],
     "scope-empty": [
