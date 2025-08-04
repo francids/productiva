@@ -4,7 +4,7 @@
     "name": "Francisco Mesa",
     "url": "https://francids.com/"
   },
-  "packageManager": "pnpm@10.12.1",
+  "packageManager": "pnpm@10.14.0",
   "scripts": {
     "prepare": "husky",
     "web:start": "pnpm --prefix web start",
@@ -16,7 +16,7 @@
     "@commitlint/cli": "^19.8.0",
     "@commitlint/config-angular": "^19.8.0",
     "@commitlint/types": "^19.8.0",
-    "husky": "^9.1.7",
-    "concurrently": "^9.2.0"
+    "concurrently": "^9.2.0",
+    "husky": "^9.1.7"
   }
 }
