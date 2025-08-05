@@ -1,17 +1,40 @@
 package com.francids.productiva.ui.screens
 
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.francids.productiva.data.models.Note
 
 class NoteViewModel : ViewModel() {
-    private val _noteContent = MutableStateFlow(TextFieldValue(""))
+    val note = mutableStateOf<Note?>(null)
+    var newTitle by mutableStateOf("")
+    var newContent by mutableStateOf("")
 
-    val noteContent: StateFlow<TextFieldValue> = _noteContent.asStateFlow()
+    init {
+        note.value?.let {
+            newTitle = it.title
+            newContent = it.content
+        }
+    }
 
-    fun updateNoteContent(newContent: TextFieldValue) {
-        _noteContent.value = newContent
+    private fun updateNote() {
+        note.value?.let { currentNote ->
+            val updatedNote = currentNote.copy(
+                title = newTitle,
+                content = newContent,
+            )
+            print(updatedNote)
+        }
+    }
+
+    fun onTitleChange(newText: String) {
+        newTitle = newText
+        updateNote()
+    }
+
+    fun onContentChange(newText: String) {
+        newContent = newText
+        updateNote()
     }
 }

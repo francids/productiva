@@ -1,20 +1,27 @@
 package com.francids.productiva.ui.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.MoreVert
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledTonalIconButton
@@ -22,22 +29,24 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -52,7 +61,178 @@ fun NoteScreen(
 ) {
     val focusRequester = remember { FocusRequester() }
 
-    val placeholders = remember {
+    print(itemId)
+
+    Scaffold(
+        containerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
+        topBar = {
+            NoteTopAppBar(
+                navController = navController,
+            )
+        },
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = innerPadding.calculateTopPadding())
+                .background(MaterialTheme.colorScheme.surface)
+        ) {
+            val scrollState = rememberScrollState()
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(scrollState)
+                    .weight(1f)
+                    .imePadding(),
+            ) {
+                NoteTitleField(
+                    viewModel = viewModel,
+                    focusRequester = focusRequester,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                )
+                NoteContentField(
+                    viewModel = viewModel,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        if (viewModel.newTitle.isEmpty()) {
+            focusRequester.requestFocus()
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+private fun NoteTopAppBar(
+    navController: NavController,
+) {
+    var showMenu by remember { mutableStateOf(false) }
+    val topBarColors = TopAppBarDefaults.topAppBarColors(
+        containerColor = Color.Transparent,
+        scrolledContainerColor = Color.Transparent,
+        navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+        titleContentColor = MaterialTheme.colorScheme.onSurface,
+        actionIconContentColor = MaterialTheme.colorScheme.onSurface,
+    )
+
+    Column {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .statusBarsPadding()
+                .background(topBarColors.containerColor)
+                .padding(vertical = 8.dp, horizontal = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            FilledTonalIconButton(
+                onClick = { navController.popBackStack() },
+                colors = IconButtonDefaults.filledTonalIconButtonColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                    contentColor = MaterialTheme.colorScheme.onSurface,
+                ),
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                    contentDescription = "Back",
+                )
+            }
+
+            Box {
+                FilledTonalIconButton(
+                    onClick = { showMenu = !showMenu },
+                    colors = IconButtonDefaults.iconButtonColors(
+                        contentColor = MaterialTheme.colorScheme.onSurface,
+                    ),
+                    modifier = Modifier
+                        .minimumInteractiveComponentSize()
+                        .size(
+                            size = IconButtonDefaults.smallContainerSize(
+                                widthOption = IconButtonDefaults.IconButtonWidthOption.Narrow,
+                            ),
+                        ),
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.MoreVert,
+                        contentDescription = "More options",
+                    )
+                }
+                DropdownMenu(
+                    expanded = showMenu,
+                    onDismissRequest = { showMenu = false },
+                ) {
+                    DropdownMenuItem(
+                        text = {
+                            Text(text = "Delete")
+                        },
+                        onClick = {
+                            showMenu = false
+                        },
+                    )
+                }
+            }
+        }
+        HorizontalDivider()
+    }
+}
+
+@Composable
+private fun NoteTitleField(
+    viewModel: NoteViewModel,
+    focusRequester: FocusRequester,
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier.padding(
+            top = 16.dp,
+            bottom = 16.dp,
+        ),
+        contentAlignment = Alignment.CenterStart,
+    ) {
+        BasicTextField(
+            value = viewModel.newTitle,
+            onValueChange = { viewModel.onTitleChange(newText = it) },
+            textStyle = MaterialTheme.typography.titleLarge.copy(
+                color = MaterialTheme.colorScheme.onSurface
+            ),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next,
+            ),
+            cursorBrush = SolidColor(
+                value = MaterialTheme.colorScheme.primary,
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .focusRequester(focusRequester),
+            decorationBox = { innerTextField ->
+                if (viewModel.newTitle.isEmpty()) {
+                    Text(
+                        text = "Untitled",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                        overflow = TextOverflow.Clip,
+                    )
+                }
+                innerTextField()
+            },
+        )
+    }
+}
+
+@Composable
+private fun NoteContentField(
+    viewModel: NoteViewModel,
+    modifier: Modifier = Modifier,
+) {
+    val placeholder = remember {
         listOf(
             "Write your note here...",
             "What do you have in mind today?",
@@ -69,132 +249,19 @@ fun NoteScreen(
         ).shuffled().first()
     }
 
-    Scaffold(
-        containerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
-        topBar = {
-            NoteTopAppBar(
-                title = if (itemId != null) "Note" else "New Note",
-                onNavigateBack = { navController.popBackStack() },
-            )
-        },
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = innerPadding.calculateTopPadding())
-        ) {
-            NoteContentField(
-                viewModel = viewModel,
-                placeholder = placeholders,
-                onContentChange = viewModel::updateNoteContent,
-                focusRequester = focusRequester,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(1f)
-                    .imePadding()
-            )
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
-@Composable
-private fun NoteTopAppBar(
-    title: String,
-    onNavigateBack: () -> Unit,
-) {
-    MediumTopAppBar(
-        title = {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleLarge,
-                maxLines = Int.MAX_VALUE,
-                overflow = TextOverflow.Clip,
-            )
-        },
-        navigationIcon = {
-            FilledTonalIconButton(
-                onClick = onNavigateBack,
-                colors = IconButtonDefaults.filledTonalIconButtonColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainer,
-                    contentColor = MaterialTheme.colorScheme.onSurface,
-                ),
-                modifier = Modifier.padding(horizontal = 8.dp),
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                    contentDescription = "Back",
-                )
-            }
-        },
-        actions = {
-            FilledTonalIconButton(
-                onClick = {},
-                colors = IconButtonDefaults.filledTonalIconButtonColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainer,
-                    contentColor = MaterialTheme.colorScheme.onSurface,
-                ),
-                modifier = Modifier
-                    .minimumInteractiveComponentSize()
-                    .size(
-                        size = IconButtonDefaults.smallContainerSize(
-                            widthOption = IconButtonDefaults.IconButtonWidthOption.Narrow,
-                        ),
-                    ),
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.MoreVert,
-                    contentDescription = "More options",
-                )
-            }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.Transparent,
-            scrolledContainerColor = Color.Transparent,
-            navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
-            titleContentColor = MaterialTheme.colorScheme.onSurface,
-            actionIconContentColor = MaterialTheme.colorScheme.onSurface,
-        ),
-    )
-}
-
-
-@Composable
-private fun NoteContentField(
-    viewModel: NoteViewModel,
-    placeholder: String,
-    onContentChange: (TextFieldValue) -> Unit,
-    focusRequester: FocusRequester,
-    modifier: Modifier = Modifier
-) {
-    val noteContent by viewModel.noteContent.collectAsState()
-
-    HorizontalDivider()
     Column(
-        modifier = modifier
-            .background(MaterialTheme.colorScheme.surface)
-            .padding(horizontal = 16.dp)
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .pointerInput(Unit) {
-                detectTapGestures(onTap = { focusRequester.requestFocus() })
-            },
+        modifier = modifier.padding(horizontal = 16.dp),
     ) {
-        Box(
-            modifier = Modifier.height(16.dp),
-        )
-
         BasicTextField(
-            value = noteContent,
-            onValueChange = onContentChange,
-            modifier = Modifier.focusRequester(focusRequester),
+            value = viewModel.newContent,
+            onValueChange = { viewModel.onContentChange(newText = it) },
             textStyle = MaterialTheme.typography.bodyLarge.copy(
                 color = MaterialTheme.colorScheme.onSurface,
                 lineHeight = 28.sp,
             ),
             cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
             decorationBox = { innerTextField ->
-                if (noteContent.text.isEmpty()) {
+                if (viewModel.newContent.isEmpty()) {
                     Text(
                         text = placeholder,
                         style = MaterialTheme.typography.bodyLarge,
