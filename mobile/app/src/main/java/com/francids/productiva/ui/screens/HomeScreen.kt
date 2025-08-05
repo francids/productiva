@@ -55,10 +55,7 @@ import com.francids.productiva.ui.screens.tabs.NotesTabView
 import com.francids.productiva.ui.screens.tabs.TasksTabView
 import kotlinx.coroutines.launch
 
-@OptIn(
-    ExperimentalMaterial3Api::class,
-    ExperimentalMaterial3ExpressiveApi::class,
-)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun HomeScreen(
     navController: NavController,

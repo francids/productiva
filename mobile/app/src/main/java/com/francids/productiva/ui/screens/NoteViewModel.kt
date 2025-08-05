@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.francids.productiva.data.models.Note
+import kotlin.time.ExperimentalTime
 
 class NoteViewModel : ViewModel() {
     val note = mutableStateOf<Note?>(null)
@@ -18,6 +19,7 @@ class NoteViewModel : ViewModel() {
         }
     }
 
+    @OptIn(ExperimentalTime::class)
     private fun updateNote() {
         note.value?.let { currentNote ->
             val updatedNote = currentNote.copy(
