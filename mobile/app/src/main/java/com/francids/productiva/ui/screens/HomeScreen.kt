@@ -86,8 +86,7 @@ fun HomeScreen(
                 actions = {
                     FilledTonalIconButton(
                         onClick = {},
-                        colors = IconButtonDefaults.filledTonalIconButtonColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                        colors = IconButtonDefaults.iconButtonColors(
                             contentColor = MaterialTheme.colorScheme.onSurface,
                         ),
                         modifier = Modifier
