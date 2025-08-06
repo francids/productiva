@@ -52,6 +52,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.francids.productiva.ui.screens.tabs.ListsTabView
 import com.francids.productiva.ui.screens.tabs.NotesTabView
+import com.francids.productiva.ui.screens.tabs.NotesTabViewModel
 import com.francids.productiva.ui.screens.tabs.TasksTabView
 import kotlinx.coroutines.launch
 
@@ -60,6 +61,7 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     navController: NavController,
     viewModel: HomeViewModel,
+    noteTabViewModel: NotesTabViewModel,
 ) {
     val tabs = listOf(
         Triple(Icons.Rounded.Circle, "Notes", "note"),
@@ -114,7 +116,17 @@ fun HomeScreen(
                 SplitButtonLayout(
                     leadingButton = {
                         SplitButtonDefaults.LeadingButton(
-                            onClick = { },
+                            onClick = {
+                                when (pagerState.currentPage) {
+                                    0 -> {
+                                        val newNoteId = viewModel.createNote()
+                                        navController.navigate("notes/$newNoteId")
+                                    }
+
+                                    1 -> viewModel.createTask()
+                                    2 -> viewModel.createList()
+                                }
+                            },
                             modifier = Modifier.heightIn(SplitButtonDefaults.MediumContainerHeight),
                             contentPadding = SplitButtonDefaults.MediumLeadingButtonContentPadding,
                         ) {
@@ -160,18 +172,28 @@ fun HomeScreen(
                             ) {
                                 val otherTabs =
                                     tabs.filter { it.second != tabs[pagerState.currentPage].second }
-                                val otherValues = otherTabs.map { it.third }
 
-                                otherValues.forEachIndexed { index, value ->
+                                otherTabs.forEachIndexed { index, tab ->
                                     DropdownMenuItem(
                                         leadingIcon = {
                                             Icon(
-                                                Icons.Rounded.Add,
-                                                contentDescription = "Add $value",
+                                                imageVector = Icons.Rounded.Add,
+                                                contentDescription = "Add ${tab.third}",
                                             )
                                         },
-                                        text = { Text("Add $value") },
-                                        onClick = { },
+                                        text = { Text("Add ${tab.third}") },
+                                        onClick = {
+                                            when (tab.third) {
+                                                "note" -> {
+                                                    val newNoteId = viewModel.createNote()
+                                                    navController.navigate("notes/$newNoteId")
+                                                }
+
+                                                "task" -> viewModel.createTask()
+                                                "list" -> viewModel.createList()
+                                            }
+                                            checked = false
+                                        },
                                     )
                                 }
                             }
@@ -215,7 +237,11 @@ fun HomeScreen(
                 modifier = Modifier.fillMaxWidth(),
             ) { page ->
                 when (page) {
-                    0 -> NotesTabView(navController)
+                    0 -> NotesTabView(
+                        navController = navController,
+                        viewModel = noteTabViewModel,
+                    )
+
                     1 -> TasksTabView()
                     2 -> ListsTabView()
                 }

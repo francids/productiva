@@ -56,18 +56,16 @@ import androidx.navigation.NavController
 @Composable
 fun NoteScreen(
     navController: NavController,
-    itemId: String?,
     viewModel: NoteViewModel = viewModel(),
 ) {
     val focusRequester = remember { FocusRequester() }
-
-    print(itemId)
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
         topBar = {
             NoteTopAppBar(
                 navController = navController,
+                viewModel = viewModel,
             )
         },
     ) { innerPadding ->
@@ -111,6 +109,7 @@ fun NoteScreen(
 @Composable
 private fun NoteTopAppBar(
     navController: NavController,
+    viewModel: NoteViewModel,
 ) {
     var showMenu by remember { mutableStateOf(false) }
     val topBarColors = TopAppBarDefaults.topAppBarColors(
@@ -174,6 +173,8 @@ private fun NoteTopAppBar(
                         },
                         onClick = {
                             showMenu = false
+                            viewModel.deleteNote()
+                            navController.popBackStack()
                         },
                     )
                 }

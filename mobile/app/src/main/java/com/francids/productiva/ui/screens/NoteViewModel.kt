@@ -4,29 +4,29 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.francids.productiva.data.models.Note
-import kotlin.time.ExperimentalTime
+import com.francids.productiva.data.repositories.NoteRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
-class NoteViewModel : ViewModel() {
-    val note = mutableStateOf<Note?>(null)
+class NoteViewModel(
+    private val repository: NoteRepository,
+    private val noteId: String,
+) : ViewModel() {
+    private val _note = MutableStateFlow<Note?>(null)
+    val note: StateFlow<Note?> = _note
     var newTitle by mutableStateOf("")
     var newContent by mutableStateOf("")
 
     init {
-        note.value?.let {
-            newTitle = it.title
-            newContent = it.content
-        }
-    }
-
-    @OptIn(ExperimentalTime::class)
-    private fun updateNote() {
-        note.value?.let { currentNote ->
-            val updatedNote = currentNote.copy(
-                title = newTitle,
-                content = newContent,
-            )
-            print(updatedNote)
+        viewModelScope.launch {
+            repository.getNoteById(noteId)?.let { note ->
+                _note.value = note
+                newTitle = note.title
+                newContent = note.content
+            }
         }
     }
 
@@ -38,5 +38,25 @@ class NoteViewModel : ViewModel() {
     fun onContentChange(newText: String) {
         newContent = newText
         updateNote()
+    }
+
+    private fun updateNote() {
+        viewModelScope.launch {
+            _note.value?.let { currentNote ->
+                val updatedNote = currentNote.copy(
+                    title = newTitle,
+                    content = newContent,
+                )
+                repository.updateNote(updatedNote)
+            }
+        }
+    }
+
+    fun deleteNote() {
+        viewModelScope.launch {
+            _note.value?.let { note ->
+                repository.deleteNote(note)
+            }
+        }
     }
 }
