@@ -1,18 +1,14 @@
 package com.francids.productiva.ui.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
@@ -20,6 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.MoreVert
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -45,6 +42,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
@@ -112,74 +110,76 @@ private fun NoteTopAppBar(
     viewModel: NoteViewModel,
 ) {
     var showMenu by remember { mutableStateOf(false) }
-    val topBarColors = TopAppBarDefaults.topAppBarColors(
-        containerColor = Color.Transparent,
-        scrolledContainerColor = Color.Transparent,
-        navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
-        titleContentColor = MaterialTheme.colorScheme.onSurface,
-        actionIconContentColor = MaterialTheme.colorScheme.onSurface,
-    )
-
     Column {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .statusBarsPadding()
-                .background(topBarColors.containerColor)
-                .padding(vertical = 8.dp, horizontal = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            FilledTonalIconButton(
-                onClick = { navController.popBackStack() },
-                colors = IconButtonDefaults.filledTonalIconButtonColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
-                    contentColor = MaterialTheme.colorScheme.onSurface,
-                ),
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                    contentDescription = "Back",
+        CenterAlignedTopAppBar(
+            title = {
+                Text(
+                    text = viewModel.noteInfo.value,
+                    style = MaterialTheme.typography.labelLargeEmphasized,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.graphicsLayer(alpha = 0.25f)
                 )
-            }
-
-            Box {
+            },
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = Color.Transparent,
+                scrolledContainerColor = Color.Transparent,
+                navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+                titleContentColor = MaterialTheme.colorScheme.onSurface,
+                actionIconContentColor = MaterialTheme.colorScheme.onSurface,
+            ),
+            navigationIcon = {
                 FilledTonalIconButton(
-                    onClick = { showMenu = !showMenu },
-                    colors = IconButtonDefaults.iconButtonColors(
+                    onClick = { navController.popBackStack() },
+                    colors = IconButtonDefaults.filledTonalIconButtonColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
                         contentColor = MaterialTheme.colorScheme.onSurface,
                     ),
-                    modifier = Modifier
-                        .minimumInteractiveComponentSize()
-                        .size(
-                            size = IconButtonDefaults.smallContainerSize(
-                                widthOption = IconButtonDefaults.IconButtonWidthOption.Narrow,
-                            ),
-                        ),
                 ) {
                     Icon(
-                        imageVector = Icons.Rounded.MoreVert,
-                        contentDescription = "More options",
+                        imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                        contentDescription = "Back",
                     )
                 }
-                DropdownMenu(
-                    expanded = showMenu,
-                    onDismissRequest = { showMenu = false },
-                ) {
-                    DropdownMenuItem(
-                        text = {
-                            Text(text = "Delete")
-                        },
-                        onClick = {
-                            showMenu = false
-                            viewModel.deleteNote()
-                            navController.popBackStack()
-                        },
-                    )
+            },
+            actions = {
+                Box {
+                    FilledTonalIconButton(
+                        onClick = { showMenu = !showMenu },
+                        colors = IconButtonDefaults.iconButtonColors(
+                            contentColor = MaterialTheme.colorScheme.onSurface,
+                        ),
+                        modifier = Modifier
+                            .minimumInteractiveComponentSize()
+                            .size(
+                                size = IconButtonDefaults.smallContainerSize(
+                                    widthOption = IconButtonDefaults.IconButtonWidthOption.Narrow,
+                                ),
+                            ),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.MoreVert,
+                            contentDescription = "More options",
+                        )
+                    }
+                    DropdownMenu(
+                        expanded = showMenu,
+                        onDismissRequest = { showMenu = false },
+                    ) {
+                        DropdownMenuItem(
+                            text = {
+                                Text(text = "Delete")
+                            },
+                            onClick = {
+                                showMenu = false
+                                viewModel.deleteNote()
+                                navController.popBackStack()
+                            },
+                        )
+                    }
                 }
-            }
-        }
+            },
+        )
         HorizontalDivider()
     }
 }

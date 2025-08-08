@@ -10,7 +10,12 @@ import com.francids.productiva.data.repositories.NoteRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
+@OptIn(ExperimentalTime::class)
 class NoteViewModel(
     private val repository: NoteRepository,
     private val noteId: String,
@@ -19,6 +24,7 @@ class NoteViewModel(
     val note: StateFlow<Note?> = _note
     var newTitle by mutableStateOf("")
     var newContent by mutableStateOf("")
+    val noteInfo = mutableStateOf("")
 
     init {
         viewModelScope.launch {
@@ -26,6 +32,10 @@ class NoteViewModel(
                 _note.value = note
                 newTitle = note.title
                 newContent = note.content
+                val updatedAtInstant = Instant.parse(note.updatedAt)
+                val localDate =
+                    updatedAtInstant.toLocalDateTime(TimeZone.currentSystemDefault()).date
+                noteInfo.value = "Updated: $localDate"
             }
         }
     }
