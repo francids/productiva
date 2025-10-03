@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: "npm"
     directory: "web/"
     schedule:
-      interval: "weekly"
+      interval: monthly
     commit-message:
       prefix: "deps(web)"
       prefix-development: "chore(web)"
