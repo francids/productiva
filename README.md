@@ -22,7 +22,7 @@
 
 ## Application Access
 
-The web app is available at: [https://productiva.francids.com/](https://productiva.francids.com/)s
+The web app is available at: [https://productiva.francids.com/](https://productiva.francids.com/)
 
 ## Monorepo Structure
 
