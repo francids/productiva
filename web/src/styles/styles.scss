@@ -1,8 +1,6 @@
 @use "@angular/material" as mat;
 @use "@milkdown/theme-nord/style.css";
-@use "../app/components/home-box/home-box.component.scss";
 @use "./editor.component.scss";
-@use "../app/components/tasks/task-status-select.component.scss";
 
 @include mat.core();
 
@@ -11,6 +9,7 @@ html {
     (
       color: (
         primary: mat.$green-palette,
+        tertiary: mat.$blue-palette,
         theme-type: light,
       ),
     )
@@ -22,6 +21,7 @@ html {
     (
       color: (
         primary: mat.$green-palette,
+        tertiary: mat.$blue-palette,
         theme-type: dark,
       ),
     )
@@ -32,6 +32,8 @@ html,
 body {
   height: 100%;
   margin-top: var(--ion-safe-area-top);
+  background-color: var(--mat-sys-color-background);
+  color: var(--mat-sys-color-on-background);
 }
 
 body {
@@ -62,4 +64,92 @@ body {
   @media (min-width: 1400px) {
     width: 1280px;
   }
+}
+
+.mat-mdc-unelevated-button {
+  --mdc-unelevated-button-container-shape: 20px;
+  padding: 10px 20px !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  transition: background-color 0.3s ease;
+}
+
+.mat-mdc-dialog-container {
+  --mdc-dialog-container-shape: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.mat-mdc-dialog-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--mat-sys-color-on-surface);
+  margin-bottom: 10px;
+}
+
+.mat-mdc-dialog-content {
+  font-size: 16px;
+  color: var(--mat-sys-color-on-surface-variant);
+  margin-bottom: 20px;
+}
+
+.mat-mdc-dialog-actions {
+  justify-content: flex-end;
+}
+
+.mat-mdc-dialog-actions button {
+  margin-left: 10px;
+}
+
+.mat-mdc-text-field-wrapper {
+  border-radius: 10px;
+  padding: 10px;
+  background-color: var(--mat-sys-color-surface-container-highest);
+}
+
+.mat-mdc-form-field-error {
+  color: var(--mat-sys-color-error);
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.mat-mdc-select-panel {
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.mat-mdc-progress-bar {
+  --mdc-linear-progress-track-shape: 5px;
+}
+
+.mat-mdc-snack-bar-container {
+  --mdc-snackbar-container-shape: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.mat-mdc-tab-group {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.mat-mdc-tab-header {
+  background-color: var(--mat-sys-color-surface-container);
+}
+
+.mat-mdc-tab-label {
+  color: var(--mat-sys-color-on-surface-variant);
+  font-weight: 500;
+}
+
+.mat-mdc-tab-label.mat-mdc-tab-label-active {
+  color: var(--mat-sys-color-primary);
+}
+
+.mat-mdc-tab-ink-bar {
+  background-color: var(--mat-sys-color-primary);
+}
+
+.mat-mdc-tooltip {
+  --mdc-tooltip-container-shape: 5px;
+  font-size: 12px;
 }
