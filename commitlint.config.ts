@@ -1,15 +1,10 @@
-import type { UserConfig } from '@commitlint/types';
-import { RuleConfigSeverity } from '@commitlint/types';
+import type { UserConfig } from "@commitlint/types";
+import { RuleConfigSeverity } from "@commitlint/types";
 
 const Configuration: UserConfig = {
-  extends: [
-    "@commitlint/config-angular"
-  ],
+  extends: ["@commitlint/config-angular"],
   rules: {
-    "type-empty": [
-      RuleConfigSeverity.Error,
-      "never",
-    ],
+    "type-empty": [RuleConfigSeverity.Error, "never"],
     "type-enum": [
       RuleConfigSeverity.Error,
       "always",
@@ -31,13 +26,10 @@ const Configuration: UserConfig = {
         "config",
         "deps",
         "resources",
-        "ai"
+        "ai",
       ],
     ],
-    "scope-empty": [
-      RuleConfigSeverity.Warning,
-      "never",
-    ],
+    "scope-empty": [RuleConfigSeverity.Warning, "never"],
     "scope-enum": [
       RuleConfigSeverity.Warning,
       "always",
@@ -51,14 +43,10 @@ const Configuration: UserConfig = {
         "ci",
         "deps",
         "config",
-        "test"
+        "test",
       ],
     ],
-    "subject-case": [
-      RuleConfigSeverity.Error,
-      "always",
-      ["sentence-case"],
-    ],
+    "subject-case": [RuleConfigSeverity.Error, "always", ["sentence-case"]],
   },
 };
 
