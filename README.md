@@ -1,12 +1,10 @@
-![Productiva Mente Icon](./resources/Icon.svg)
+![Productiva Icon](./resources/Icon.svg)
 
-# Productiva Mente
+# Productiva
 
-![Productiva Mente Web Version](https://img.shields.io/badge/Productiva%20Mente%20Web-v1.3.1-6cfe8f)
-[![Frontend Netlify Status](https://api.netlify.com/api/v1/badges/765e73e4-2d31-4ea1-958c-fea0d7118eaa/deploy-status)](https://app.netlify.com/sites/productiva-mente/deploys)
-[![docs-pages-build-deployment](https://github.com/francids/productiva-mente/actions/workflows/pages/pages-build-deployment/badge.svg?branch=docs%2Fproduction)](https://github.com/francids/productiva-mente/actions/workflows/pages/pages-build-deployment)
+![Productiva Web Version](https://img.shields.io/badge/Productiva%20Web-v1.3.1-6cfe8f)
 
-**Productiva Mente** is a task and note management application designed with the Material design guidelines.
+**Productiva** is a task and note management application designed with the Material design guidelines.
 
 <picture>
   <source media="(prefers-color-scheme: light)" srcset="./resources/screenshots/Home%20screen%20(light).png">
@@ -24,23 +22,9 @@
 
 The web app is available at: [https://productiva.francids.com/](https://productiva.francids.com/)
 
-## Monorepo Structure
+## Project Structure
 
-This repository uses [pnpm](https://pnpm.io/) to manage multiple applications:
+This repository contains two applications:
 
-- `web`: Angular web application
-- `desktop`: Electron desktop application
-
-Workspace configuration is in `pnpm-workspace.yaml`.
-
-> **Note**: The mobile application code is included in this repository under [`mobile`](./mobile). It is developed separately using Jetpack Compose.
-
-## Getting Started
-
-- Install dependencies with `pnpm install`
-- Run the web app with `pnpm web:start`
-- Build the web app with `pnpm web:build`
-- Run the desktop app with `pnpm desktop:start`
-- Build the desktop app with `pnpm desktop:build`
-
-See each package's `README.md` for more details.
+- `web`: Angular web application with Material Design 3.
+- `mobile`: Jetpack Compose Android application.
